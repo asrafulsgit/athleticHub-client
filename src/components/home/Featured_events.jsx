@@ -59,7 +59,8 @@ const Featured_events = () => {
         {events.map((event, index) => (
           <div
             key={index}
-            className="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300"
+            className="bg-white rounded-lg border border-gray-200 
+            overflow-hidden hover:shadow-sm transition-shadow duration-300"
           >
             <img
               src={event.image}

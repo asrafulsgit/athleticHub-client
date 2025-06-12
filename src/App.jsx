@@ -1,5 +1,6 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
+import Navbar from './components/navbar/Navbar'
 
 const App = () => {
   // const {loading,isDark,isMobileNav}=useContext(AuthContext)
@@ -28,17 +29,17 @@ const App = () => {
       <> 
       {/* <Toastify />  */}
       {/* <ScrollVehaviour /> */}
-      <div className="">
+      <div className="inter-family">
   
         {/* navbar  */}
-     
+         <Navbar />
   
         {/*mobile nav*/}
           
          
    
         {/* Main Content */}
-          <main className="pt-15">
+          <main >
                 <Outlet />     
           </main>
           <div>

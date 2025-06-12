@@ -9,7 +9,7 @@ import {
 
 import {GoogleAuthProvider,signInWithPopup} from 'firebase/auth';
 const googleProvider = new GoogleAuthProvider();
-import {app} from "../components/firebase_config";
+import {app} from "./firebase_config";
 import { ToastContainer } from "react-toastify";
 
 
