@@ -2,7 +2,7 @@ import React from 'react'
 
 const Action = () => {
   return (
-    <div className="bg-blue-600 py-16">
+    <div className="bg-blue-600 py-16 border-b border-blue-300">
       <div className="max-w-4xl mx-auto text-center px-4">
         <h2 className="text-3xl font-bold text-white mb-4">
           Ready to Start Your Athletic Journey?

@@ -119,11 +119,6 @@ const Register = () => {
                 {/* Google SVG Icon */}
                 Google
               </button>
-
-              <button type="button" id="githubRegister" className="flex items-center justify-center px-4 py-3 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200">
-                {/* GitHub SVG Icon */}
-                GitHub
-              </button>
             </div>
           </form>
         </div>

@@ -12,7 +12,7 @@ import Update_event from "../components/manage_events/Update_events";
 import Create_event from "../components/manage_events/Create_event";
 import Profile from "../components/profile/Profile";
 
-const Router =createBrowserRouter([
+const Router = createBrowserRouter([
     {
         path : '/',
         Component : App,

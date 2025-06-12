@@ -9,7 +9,7 @@ const Navbar = () => {
        bg-white border-b border-gray-200"
     >
       {/* Logo Section */}
-      <div className="flex items-center justify-center h-16">
+      <NavLink to='/'> <div className="flex items-center justify-center h-16">
         <div className="flex items-center space-x-2">
           <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
             <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -18,7 +18,7 @@ const Navbar = () => {
           </div>
           <span className="text-xl font-bold text-gray-900">AthleticHub</span>
         </div>
-      </div>
+      </div></NavLink>
       {/* Navigation Menu */}
       <div className="flex gap-5 nav-item-active">
          <NavLink to='/'  className='px-3 py-1 
@@ -33,13 +33,13 @@ const Navbar = () => {
          hover:border-gray-200">Events</NavLink>
       </div>
       <div className="flex gap-5">
-        <button className='w-full font-medium text-blue-600  px-4 py-1 rounded-sm
+        <NavLink to='/signin'><button className='w-full cursor-pointer font-medium text-blue-600  px-4 py-1 rounded-sm
          bg-blue-100 transition-colors duration-200 '> 
-         <NavLink >Signin</NavLink>
-         </button>
-        <button className='w-full bg-blue-600 text-white px-4 py-1 rounded-sm
-         hover:bg-blue-700 transition-colors duration-200'>
-         <NavLink >Login</NavLink>   </button> 
+         Signin
+         </button></NavLink>
+        <NavLink to='/login'><button className='w-full bg-blue-600 text-white px-4 py-1 rounded-sm
+         hover:bg-blue-700 cursor-pointer transition-colors duration-200'>
+         Login  </button></NavLink>  
       </div>
     </nav>
   );
