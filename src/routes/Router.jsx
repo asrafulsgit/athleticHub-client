@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import Landing from "../pages/Landing";
+import Events from "../components/events/Events";
 
 const Router =createBrowserRouter([
     {
@@ -11,10 +12,10 @@ const Router =createBrowserRouter([
                index : true,
                Component : Landing ,
             },
-    //         { 
-    //             path : 'explore-gardeners',
-    //             element :  <Explore_gardener /> 
-    //         },
+            { 
+                path : 'events',
+                element :  <Events /> 
+            },
     //         { 
     //             path : 'browse-tips',
     //             element : <Browse_tips /> 

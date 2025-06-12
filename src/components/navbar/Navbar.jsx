@@ -8,8 +8,7 @@ const Navbar = () => {
        bg-white border-b border-gray-200"
     >
       {/* Logo Section */}
-      <div className="flex items-center justify-center h-16 
-      px-4 ">
+      <div className="flex items-center justify-center h-16">
         <div className="flex items-center space-x-2">
           <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
             <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -33,8 +32,13 @@ const Navbar = () => {
          hover:border-gray-200">Events</NavLink>
       </div>
       <div className="flex gap-5">
-         <NavLink >Register</NavLink>
-         <NavLink >Login</NavLink>
+        <button className='w-full font-medium text-blue-600  px-4 py-1 rounded-sm
+         bg-blue-100 transition-colors duration-200 '> 
+         <NavLink >Signin</NavLink>
+         </button>
+        <button className='w-full bg-blue-600 text-white px-4 py-1 rounded-sm
+         hover:bg-blue-700 transition-colors duration-200'>
+         <NavLink >Login</NavLink>   </button> 
       </div>
     </nav>
   );
