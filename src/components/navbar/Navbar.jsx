@@ -54,9 +54,9 @@ const Navbar = () => {
 
       {/* login/logout */}
       {!isLoggedIn ? <div className="flex gap-5">
-        <NavLink to='/signin'><button className='w-full cursor-pointer font-medium text-blue-600  px-4 py-1 rounded-sm
+        <NavLink to='/signup'><button className='w-full cursor-pointer font-medium text-blue-600  px-4 py-1 rounded-sm
          bg-blue-100 transition-colors duration-200 '> 
-         Signin
+         Signup
          </button></NavLink>
         <NavLink to='/login'><button className='w-full bg-blue-600 text-white px-4 py-1 rounded-sm
          hover:bg-blue-700 cursor-pointer transition-colors duration-200'>

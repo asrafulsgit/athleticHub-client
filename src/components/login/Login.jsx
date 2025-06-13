@@ -1,36 +1,34 @@
+
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [successToast, setSuccessToast] = useState(false);
-  const [errorToast, setErrorToast] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(
-    "Invalid email or password. Please try again."
-  );
-
-  const togglePassword = () => setShowPassword((prev) => !prev);
-
+  const [loginInfo, setLoginInfo] = useState({
+      email: "",
+      password: "",
+    });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setLoginInfo((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Placeholder login logic
-    // For demo: if email is "test@example.com" and password "1234" show success else error
-    const email = e.target.email.value;
-    const password = e.target.password.value;
-    if (email === "test@example.com" && password === "1234") {
-      setSuccessToast(true);
-      setErrorToast(false);
-    } else {
-      setErrorMessage("Invalid email or password. Please try again.");
-      setErrorToast(true);
-      setSuccessToast(false);
-    }
+     try {
+      
+     } catch (error) {
+      
+     }
   };
 
   return (
     <section
       id="login"
-      className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
-      style={{ display: "block" }}
+      className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 
+      sm:px-6 lg:px-8"
     >
       <div className="max-w-md w-full space-y-8">
         {/* Header */}
@@ -76,9 +74,11 @@ const Login = () => {
                 type="email"
                 id="email"
                 name="email"
+                onChange={handleChange}
+                value={loginInfo.email}
                 required
                 placeholder="Enter your email"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none transition-colors duration-200"
               />
             </div>
 
@@ -95,15 +95,16 @@ const Login = () => {
                   type={showPassword ? "text" : "password"}
                   id="password"
                   name="password"
+                  onChange={handleChange}
+                  value={loginInfo.password}
                   required
                   placeholder="Enter your password"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 pr-12"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none transition-colors duration-200 pr-12"
                 />
                 <button
                   type="button"
-                  onClick={togglePassword}
+                  onClick={()=>setShowPassword(!showPassword)}
                   className="absolute right-3 top-3 text-gray-400 hover:text-gray-600 transition-colors duration-200"
-                  aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   {showPassword ? (
                     <svg
@@ -180,7 +181,6 @@ const Login = () => {
             </div>
 
             {/* Social Login Buttons */}
-           
               <button
                 type="button"
                 id="googleLogin"
@@ -213,22 +213,17 @@ const Login = () => {
                 </svg>
                 Google
               </button>
-            
+            <div className="mt-6 text-center">
+              <p className="text-sm text-gray-600">
+                Don't have an account? 
+                <Link to='/signup' className="hover:text-blue-500 font-medium transition-colors duration-200">
+                  Sign up here
+                </Link>
+              </p>
+            </div>
           </form>
         </div>
       </div>
-
-      {/* Toasts */}
-      {successToast && (
-        <div className="fixed bottom-6 right-6 bg-green-600 text-white px-6 py-4 rounded-lg shadow-md">
-          Login successful!
-        </div>
-      )}
-      {errorToast && (
-        <div className="fixed bottom-6 right-6 bg-red-600 text-white px-6 py-4 rounded-lg shadow-md">
-          {errorMessage}
-        </div>
-      )}
     </section>
   );
 };

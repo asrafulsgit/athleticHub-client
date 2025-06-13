@@ -1,41 +1,42 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 const events = [
-  {
+  { id : 1,
     title: "City Marathon Championship",
     date: "March 15, 2024",
     location: "Central Park, New York",
     image: "https://placehold.co/400x250?text=Marathon+Event",
     alt: "Marathon Event",
   },
-  {
+  {id : 2,
     title: "State Swimming Championships",
     date: "March 22, 2024",
     location: "Aquatic Center, Los Angeles",
     image: "https://placehold.co/400x250?text=Swimming+Competition",
     alt: "Swimming Competition",
   },
-  {
+  {id : 3,
     title: "Regional Track & Field Meet",
     date: "April 5, 2024",
     location: "Olympic Stadium, Chicago",
     image: "https://placehold.co/400x250?text=Track+Field",
     alt: "Track and Field",
   },
-  {
+  {id : 4,
     title: "Mountain Bike Challenge",
     date: "April 12, 2024",
     location: "Rocky Mountains, Colorado",
     image: "https://placehold.co/400x250?text=Cycling+Race",
     alt: "Cycling Race",
   },
-  {
+  {id : 5,
     title: "3v3 Basketball Tournament",
     date: "April 18, 2024",
     location: "Sports Complex, Miami",
     image: "https://placehold.co/400x250?text=Basketball+Tournament",
     alt: "Basketball Tournament",
   },
-  {
+  {id : 6,
     title: "Open Tennis Championship",
     date: "April 25, 2024",
     location: "Tennis Club, Phoenix",
@@ -63,28 +64,28 @@ const Featured_events = () => {
             overflow-hidden hover:shadow-sm transition-shadow duration-300"
           >
             <img
-              src={event.image}
-              alt={event.alt}
+              src={event?.image}
+              alt={event?.alt}
               className="w-full h-48 object-cover"
             />
             <div className="p-6">
               <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                {event.title}
+                {event?.title}
               </h3>
-              <p className="text-gray-600 mb-2">{event.date}</p>
-              <p className="text-gray-600 mb-4">{event.location}</p>
-              <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-200">
+              <p className="text-gray-600 mb-2">{event?.date}</p>
+              <p className="text-gray-600 mb-4">{event?.location}</p>
+             <Link to={`/event-details/${event?.id}`}> <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-200">
                 View Details
-              </button>
+              </button></Link>
             </div>
           </div>
         ))}
       </div>
 
       <div className="text-center">
-        <button className="bg-gray-900 text-white px-8 py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors duration-200">
+       <Link to='/events'> <button className="bg-gray-900 text-white px-8 py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors duration-200">
           See All Events
-        </button>
+        </button></Link>
       </div>
     </div>
   );

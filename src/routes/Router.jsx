@@ -57,7 +57,7 @@ const Router = createBrowserRouter([
                 element : <UnAuth_middleware><Login />  </UnAuth_middleware> 
             },
             { 
-                path : 'signin', 
+                path : 'signup', 
                 element : <UnAuth_middleware><Register />  </UnAuth_middleware> 
             },
     //         { 

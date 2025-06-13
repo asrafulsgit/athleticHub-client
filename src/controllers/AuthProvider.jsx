@@ -20,7 +20,7 @@ const auth = getAuth(app)
 const AuthProvider = ({children})=>{
     const [isDark,setIsDark]=useState(JSON.parse(localStorage.getItem('isDark')))
     const [userInfo,setUserInfo]=useState(null)
-    const [isLoggedIn,setIsLoggedIn]=useState(false)
+    const [isLoggedIn,setIsLoggedIn]=useState(true)
     const [loading,setLoading]=useState(true)
     const [isMobileNav,setIsMobileNav] = useState(false)
 
