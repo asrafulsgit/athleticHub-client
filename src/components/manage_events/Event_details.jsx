@@ -1,75 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-const events = [
-  { id : 1,
-    title: "City Marathon Championship",
-    date: "March 15, 2024",
-    time : "7:00 AM",
-    fee : 50,
-    location: "Central Park, New York",
-    image: "https://placehold.co/400x250?text=Marathon+Event",
-    alt: "Marathon Event",
-    description : "Join thousands of runners in this premier marathon event through the heart of New York City. This 26.2-mile race takes you through all five boroughs, offering stunning views and incredible crowd support throughout the entire course."
-  },
-  {id : 2,
-    title: "State Swimming Championships",
-    date: "March 22, 2024",
-    time : "2:00 AM",
-    fee : 40,
-    location: "Aquatic Center, Los Angeles",
-    image: "https://placehold.co/400x250?text=Swimming+Competition",
-    alt: "Swimming",
-    description : "Join thousands of runners in this premier marathon event through the heart of New York City. This 26.2-mile race takes you through all five boroughs, offering stunning views and incredible crowd support throughout the entire course."
-  },
-  {id : 3,
-    title: "Regional Track & Field Meet",
-    date: "April 5, 2024",
-    time : "7:00 AM",
-    fee : 50,
-    location: "Olympic Stadium, Chicago",
-    image: "https://placehold.co/400x250?text=Track+Field",
-    alt: "Track and Field",
-  },
-  {id : 4,
-    title: "Mountain Bike Challenge",
-    date: "April 12, 2024",
-    time : "7:00 AM",
-    fee : 50,
-    location: "Rocky Mountains, Colorado",
-    image: "https://placehold.co/400x250?text=Cycling+Race",
-    alt: "Cycling",
-  },
-  {id : 5,
-    title: "3v3 Basketball Tournament",
-    date: "April 18, 2024",
-    time : "7:00 AM",
-    fee : 50,
-    location: "Sports Complex, Miami",
-    image: "https://placehold.co/400x250?text=Basketball+Tournament",
-    alt: "Basketball",
-  },
-  {id : 6,
-    title: "Open Tennis Championship",
-    date: "April 25, 2024",
-    time : "7:00 AM",
-    fee : 50,
-    location: "Tennis Club, Phoenix",
-    image: "https://placehold.co/400x250?text=Tennis+Championship",
-    alt: "Tennis",
-  },
-];
+import { events } from "../../utilities/events";
+
 const Event_details = () => {
   const {id}=useParams()
   const [event,setEvent]=useState({})
   
   useEffect(()=>{
-      const filterEvent = events.find(event => event.id == id)
-      console.log(filterEvent)
+      const filterEvent = events.find(event => event._id == id)
+      setEvent(filterEvent)
   },[])
   return (
     <section  className="min-h-screen bg-gray-50 py-8">
-      <div className="mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 px-4">
           {/* Main Event Details */}
           <div className="lg:col-span-2">
             {/* Event Image */}
@@ -85,13 +28,13 @@ const Event_details = () => {
             <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">
               <div className="flex items-center justify-between mb-4">
                 <span className="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">
-                  {event.alt}
+                  {event?.type}
                 </span>
-                <span className="text-sm text-gray-500">Event ID: {event.id}</span>
+                <span className="text-sm text-gray-500">Event ID: {event?._id}</span>
               </div>
 
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{event?.title}</h1>
-
+              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                {event?.name}</h1>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 {[
                   { label: "Date", value: event?.date, iconPath: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" },
@@ -122,14 +65,13 @@ const Event_details = () => {
                 <h3 className="text-lg font-semibold text-gray-900 mb-3">Event Organizer</h3>
                 <div className="flex items-center">
                   <img
-                    src="https://avatar.iran.liara.run/public/15"
+                    src={event?.organizer?.image || "https://avatar.iran.liara.run/public/15"}
                     alt="Sarah Johnson"
                     className="w-12 h-12 rounded-full mr-4"
                   />
                   <div>
-                    <p className="font-semibold text-gray-900">Sarah Johnson</p>
-                    <p className="text-sm text-gray-600">sarah.johnson@athletichub.com</p>
-                    <p className="text-sm text-gray-500">Event Organizer since 2020</p>
+                    <p className="font-semibold text-gray-900">{event?.organizer?.name}</p>
+                    <p className="text-sm text-gray-600">{event?.organizer?.email}</p>
                   </div>
                 </div>
               </div>
@@ -156,11 +98,169 @@ const Event_details = () => {
           </div>
 
           {/* Booking Sidebar will be added next */}
-
+            <BookingCard event={event} />
         </div>
-      </div>
     </section>
   );
 };
+
+
+const BookingCard =({event})=> {
+  const [form, setForm] = useState({
+    name:  'Asraful',
+    email:  'sourob@gmail.com',
+    phone: '',
+  });
+ const handleChange=(e)=>{
+   const {name,value}=e.target;
+   setForm((prev)=>{
+    return{
+      ...prev,
+      [name] : value
+    }
+   })
+ }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission logic
+    console.log(form);
+  };
+
+  return (
+    <div className="lg:col-span-1">
+      {/* Booking Card */}
+      <div className="bg-white rounded-lg border border-gray-200 p-6 sticky top-8">
+        <div className="text-center mb-6">
+          <p className="text-3xl font-bold text-gray-900 mb-2">${event?.fee}</p>
+          <p className="text-sm text-gray-600">Registration Fee</p>
+        </div>
+
+        {/* Form */}
+        <form className="space-y-4" onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+              Participant Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              value={form?.name}
+              readOnly
+              disabled
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              Email Address
+            </label>
+            <input
+              type="email"
+              id="email"
+              value={form?.email}
+              readOnly
+              disabled
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="participantPhone" className="block text-sm font-medium text-gray-700 mb-2">
+              Phone Number
+            </label>
+            <input
+              type="tel"
+              id="phone"
+              placeholder="+88 01825623548"
+              name="phone"
+              value={form.phone}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg 
+              outline-none"
+            />
+          </div>
+         
+
+          <div className="flex items-start">
+            <input
+              type="checkbox"
+              id="termsAgreed"
+              className="mt-1 mr-3"
+            />
+            <label htmlFor="termsAgreed" className="text-sm text-gray-700">
+              I agree to the{' '}
+              <a href="#" className="text-blue-600 hover:text-blue-800">
+                terms and conditions
+              </a>{' '}
+              and{' '}
+              <a href="#" className="text-blue-600 hover:text-blue-800">
+                waiver of liability
+              </a>
+            </label>
+          </div>
+
+          <button
+            type="submit"
+            className="w-full cursor-pointer bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200"
+          >
+            Book Now - $45.00
+          </button>
+        </form>
+
+        {/* Availability Stats */}
+        {/* <div className="mt-6 pt-6 border-t border-gray-200">
+          <div className="flex items-center justify-between text-sm text-gray-600 mb-2">
+            <span>Spots Available</span>
+            <span className="font-semibold text-green-600">247 / 500</span>
+          </div>
+          <div className="w-full bg-gray-200 rounded-full h-2">
+            <div className="bg-green-500 h-2 rounded-full" style={{ width: '49.4%' }}></div>
+          </div>
+        </div> */}
+
+        {/* Payment Info */}
+        {/* <div className="mt-4 text-center">
+          <p className="text-xs text-gray-500">Secure payment processing</p>
+          <div className="flex justify-center items-center mt-2 space-x-2">
+            <svg className="w-8 h-5" viewBox="0 0 32 20" fill="none">
+              <rect width="32" height="20" rx="4" fill="#1434CB" />
+              <path d="M8.5 8.5h15v3h-15v-3z" fill="white" />
+            </svg>
+            <svg className="w-8 h-5" viewBox="0 0 32 20" fill="none">
+              <rect width="32" height="20" rx="4" fill="#EB001B" />
+              <circle cx="12" cy="10" r="6" fill="#FF5F00" />
+              <circle cx="20" cy="10" r="6" fill="#F79E1B" />
+            </svg>
+          </div>
+        </div> */}
+      </div>
+
+      {/* Event Stats */}
+      {/* <div className="bg-white rounded-lg border border-gray-200 p-6 mt-6">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">Event Statistics</h3>
+        <div className="space-y-3">
+          <div className="flex justify-between">
+            <span className="text-gray-600">Total Participants</span>
+            <span className="font-semibold">253</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-gray-600">Average Finish Time</span>
+            <span className="font-semibold">4:15:32</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-gray-600">Course Distance</span>
+            <span className="font-semibold">26.2 miles</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-gray-600">Elevation Gain</span>
+            <span className="font-semibold">1,200 ft</span>
+          </div>
+        </div>
+      </div> */}
+    </div>
+  );
+}
+
 
 export default Event_details;

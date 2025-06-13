@@ -1,99 +1,29 @@
 import React from "react";
+import { events } from "../../utilities/events";
+import { Link } from "react-router-dom";
 
-const events = [
-  {
-    id: 1,
-    type: "Running",
-    typeColor: "blue",
-    date: "March 15, 2024",
-    title: "City Marathon Championship",
-    location: "Central Park, New York",
-    description: "Join thousands of runners in this premier marathon event through the heart of New York City.",
-    price: "$45",
-    image: "https://placehold.co/400x250?text=Marathon",
-    alt: "City Marathon Championship",
-  },
-  {
-    id: 2,
-    type: "Swimming",
-    typeColor: "green",
-    date: "March 22, 2024",
-    title: "State Swimming Championships",
-    location: "Aquatic Center, Los Angeles",
-    description: "Compete against the best swimmers in the state across multiple categories and distances.",
-    price: "$35",
-    image: "https://placehold.co/400x250?text=Swimming",
-    alt: "State Swimming Championships",
-  },
-  {
-    id: 3,
-    type: "Cycling",
-    typeColor: "yellow",
-    date: "April 5, 2024",
-    title: "Tour de California",
-    location: "San Francisco to San Diego",
-    description: "An epic multi-stage cycling race down the scenic coast of California.",
-    price: "$60",
-    image: "https://placehold.co/400x250?text=Cycling",
-    alt: "Tour de California",
-  },
-  {
-    id: 4,
-    type: "Basketball",
-    typeColor: "purple",
-    date: "April 12, 2024",
-    title: "National Youth Basketball Tournament",
-    location: "United Center, Chicago",
-    description: "Show off your hoops skills in this highly competitive youth basketball championship.",
-    price: "$25",
-    image: "https://placehold.co/400x250?text=Basketball",
-    alt: "Youth Basketball Tournament",
-  },
-  {
-    id: 5,
-    type: "Track & Field",
-    typeColor: "red",
-    date: "May 3, 2024",
-    title: "Spring Track Invitational",
-    location: "Memorial Stadium, Austin",
-    description: "Sprint, jump, and throw at this exciting spring season opener for all track and field athletes.",
-    price: "$30",
-    image: "https://placehold.co/400x250?text=Track+%26+Field",
-    alt: "Spring Track Invitational",
-  },
-  {
-    id: 6,
-    type: "Tennis",
-    typeColor: "pink",
-    date: "May 18, 2024",
-    title: "Open City Tennis Challenge",
-    location: "Bayfront Tennis Club, Miami",
-    description: "Compete for glory in singles and doubles in this open tournament for all age groups.",
-    price: "$40",
-    image: "https://placehold.co/400x250?text=Tennis",
-    alt: "Open City Tennis Challenge",
-  },
-];
+
 
 
 const EventCard = ({ event }) => (
   <div className="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300">
-    <img src={event.image} alt={event.alt} className="w-full h-48 object-cover" />
+    <img src={event?.image} alt={event.name} className="w-full h-48 bg-gray-300 object-cover" />
     <div className="p-6">
       <div className="flex items-center justify-between mb-2">
-        <span className={`bg-${event.typeColor}-100 text-${event.typeColor}-800 text-xs font-medium px-2.5 py-0.5 rounded`}>
-          {event.type}
+        <span className={`bg-blue-100 text-blue-800 text-xs font-medium 
+          px-2.5 py-0.5 rounded`}>
+          {event?.type}
         </span>
-        <span className="text-sm text-gray-500">{event.date}</span>
+        <span className="text-sm text-gray-500">{event?.date}</span>
       </div>
-      <h3 className="text-xl font-semibold text-gray-900 mb-2">{event.title}</h3>
-      <p className="text-gray-600 mb-2">{event.location}</p>
-      <p className="text-gray-700 text-sm mb-4">{event.description}</p>
+      <h3 className="text-xl font-semibold text-gray-900 mb-2">{event?.name}</h3>
+      <p className="text-gray-600 mb-2">{event?.location}</p>
+      <p className="text-gray-700 text-sm mb-4">{event?.description}</p>
       <div className="flex items-center justify-between">
-        <span className="text-lg font-bold text-green-600">{event.price}</span>
-        <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200">
+        <span className="text-lg font-bold text-green-600">${event?.fee}</span>
+       <Link to={`/event-details/${event?._id}`} > <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200">
           View Details
-        </button>
+        </button></Link>
       </div>
     </div>
   </div>

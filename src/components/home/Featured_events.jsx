@@ -74,7 +74,7 @@ const Featured_events = () => {
               </h3>
               <p className="text-gray-600 mb-2">{event?.date}</p>
               <p className="text-gray-600 mb-4">{event?.location}</p>
-             <Link to={`/event-details/${event?.id}`}> <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-200">
+             <Link to={`/event-details/${event?.id}`}> <button className="w-full cursor-pointer bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-200">
                 View Details
               </button></Link>
             </div>

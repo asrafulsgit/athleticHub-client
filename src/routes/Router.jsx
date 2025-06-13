@@ -12,6 +12,7 @@ import Update_event from "../components/manage_events/Update_events";
 import Create_event from "../components/manage_events/Create_event";
 import Profile from "../components/profile/Profile";
 import Manage_events from "../components/manage_events/Manage_events";
+import Book_event from "../components/book_event/Book_event";
 
 const Router = createBrowserRouter([
     {
@@ -47,6 +48,10 @@ const Router = createBrowserRouter([
             { 
                 path : 'my-bookings',
                 element : <Auth_middleware><My_bookings /></Auth_middleware> 
+            },
+            { 
+                path : 'book-event',
+                element : <Auth_middleware><Book_event /></Auth_middleware>
             },
             { 
                 path : 'profile',

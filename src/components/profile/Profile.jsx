@@ -15,7 +15,7 @@ const Profile = () => {
   ];
 
   return (
-    <div className="max-w-4xl mx-auto px-4">
+    <div className="max-w-4xl mx-auto px-4 py-10">
       {/* Profile Header */}
       <div className="bg-white rounded-lg border border-gray-200 p-6 mb-8">
         <div className="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-6">

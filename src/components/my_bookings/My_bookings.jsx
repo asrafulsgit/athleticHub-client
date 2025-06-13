@@ -1,36 +1,74 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const My_bookings = () => {
-  const bookings = [
-    {
-      id: 1,
-      image: 'https://placehold.co/100x100?text=Marathon',
-      title: 'City Marathon Championship',
-      category: 'Running',
-      date: 'March 15, 2024',
-      location: 'Central Park, NY',
-      status: 'Confirmed',
-      fee: '$45.00'
-    },
-    {
-      id: 2,
-      image: 'https://placehold.co/100x100?text=Swimming',
-      title: 'State Swimming Championships',
-      category: 'Swimming',
-      date: 'March 22, 2024',
-      location: 'Olympic Pool, CA',
-      status: 'Confirmed',
-      fee: '$55.00'
+  const initBookings = [
+      {
+    _id: "665e5d4a6f5c9bcd123a0008",
+    name: "Kickboxing Clash",
+    type: "Kickboxing",
+    date: "2025-09-05",
+    time: "5:00 PM",
+    location: "Mirpur Combat Zone",
+    fee: 20,
+    description: "One-on-one competitive kickboxing bouts across multiple weight classes.",
+    image: "https://example.com/images/kickboxing.jpg",
+    participants: "40 fighters",
+    requirements: "Mouthguard, gloves, medical form",
+    organizer: {
+      image: "",
+      name: "John Athlete",
+      email: "john@athletichub.com"
     }
+  },
+  {
+    _id: "665e5d4a6f5c9bcd123a0009",
+    name: "National Badminton Series",
+    type: "Badminton",
+    date: "2025-07-12",
+    time: "9:00 AM",
+    location: "Indoor Sports Complex, Uttara",
+    fee: 20,
+    description: "A national-level badminton competition with singles and doubles events.",
+    image: "https://example.com/images/badminton.jpg",
+    participants: "80+ players",
+    requirements: "Badminton gear, registration receipt",
+    organizer: {
+      image: "",
+      name: "John Athlete",
+      email: "john@athletichub.com"
+    }
+  },
+  {
+    _id: "665e5d4a6f5c9bcd123a0010",
+    name: "Kids' Athletic Fun Day",
+    type: "Kids Sports",
+    date: "2025-06-30",
+    time: "9:00 AM",
+    location: "Savar Sports Ground",
+    fee: 20,
+    description: "Fun races, sack race, tug-of-war, and more for children aged 5–12.",
+    image: "https://example.com/images/kids-sports.jpg",
+    participants: "100+ kids",
+    requirements: "Parental consent, sports outfit",
+    organizer: {
+      image: "",
+      name: "John Athlete",
+      email: "john@athletichub.com"
+    }
+  }
   ];
+   const [table,setTable]=useState(true)
+   const [bookings,setBookings]=useState(initBookings)
 
-  const cancelBooking = (id) => {
-    console.log('Cancel booking:', id);
-  };
+
+    const cancelBooking = (id) => {
+      alert('Cancel booking:', id);
+    };
 
   return (
     <section id="my-bookings" className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4">
+        {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
           <div>
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">My Bookings</h1>
@@ -39,13 +77,17 @@ const My_bookings = () => {
           <div className="flex items-center space-x-2 mt-4 md:mt-0">
             <span className="text-sm text-gray-600">View:</span>
             <div className="flex bg-gray-200 rounded-lg p-1">
-              <button className="px-3 py-1 text-sm font-medium text-white bg-blue-600 rounded-md transition-colors duration-200">
+              <button onClick={()=>setTable(!table)}
+              className={`px-3 py-1 text-sm font-medium text-gray-600 cursor-pointer hover:text-gray-900  ${table && 'bg-blue-600 text-white'} 
+              rounded-md transition-colors duration-200`}>
                 <svg className="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
                 </svg>
                 Table
               </button>
-              <button className="px-3 py-1 text-sm font-medium text-gray-600 hover:text-gray-900 rounded-md transition-colors duration-200">
+              <button onClick={()=>setTable(!table)}
+              className={`px-3 py-1 text-sm font-medium text-gray-600 cursor-pointer ${!table && 'bg-blue-600 text-white'}
+              hover:text-gray-900 rounded-md transition-colors duration-200`}>
                 <svg className="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                 </svg>
@@ -54,27 +96,10 @@ const My_bookings = () => {
             </div>
           </div>
         </div>
+       {/* stats cards */}
+        <StatCards />
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          {/* Stats cards can be extracted to a component later */}
-          {/* Example card below */}
-          <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <div className="flex items-center">
-              <div className="p-2 bg-blue-100 rounded-lg">
-                <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
-                </svg>
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Total Bookings</p>
-                <p className="text-2xl font-bold text-gray-900">5</p>
-              </div>
-            </div>
-          </div>
-          {/* Additional cards omitted for brevity */}
-        </div>
-
-        <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+        {table ?<div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
           <div className="px-6 py-4 border-b border-gray-200">
             <h3 className="text-lg font-semibold text-gray-900">Your Event Bookings</h3>
           </div>
@@ -85,31 +110,29 @@ const My_bookings = () => {
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Event</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fee</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {bookings.map(({ id, image, title, category, date, location, status, fee }) => (
-                  <tr key={id} className="hover:bg-gray-50">
+                {bookings.map(({ _id, image, name, type, date, location, fee }) => (
+                  <tr key={_id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        <img className="h-10 w-10 rounded-lg object-cover" src={image} alt={title} />
+                        <img className="h-10 w-10 rounded-lg object-cover" src={image} alt={name} />
                         <div className="ml-4">
-                          <div className="text-sm font-medium text-gray-900">{title}</div>
-                          <div className="text-sm text-gray-500">{category}</div>
+                          <div className="text-sm font-medium text-gray-900">{name}</div>
+                          <div className="text-sm text-gray-500">{type}</div>
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{date}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{location}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">{status}</span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{fee}</td>
+                
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${fee}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <button className="text-red-600 hover:text-red-900 transition-colors duration-200" onClick={() => cancelBooking(id)}>
+                      <button className="text-red-600 cursor-pointer hover:text-red-900 transition-colors duration-200" onClick={() => cancelBooking(id)}>
                         Cancel
                       </button>
                     </td>
@@ -118,9 +141,129 @@ const My_bookings = () => {
               </tbody>
             </table>
           </div>
+        </div> : 
+        <div className='overflow-hidden'>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Your Event Bookings</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+             {bookings.map((event,index)=>{
+              
+              return(
+                <div key={index} className="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300">
+      <img src={event?.image} alt={event?.type} className="w-full h-48 bg-gray-300 object-cover" />
+      <div className="p-6">
+        <div className="flex items-center justify-between mb-2">
+          <span className={`bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded`}>
+            {event?.type}
+          </span>
+          <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800`}>
+            {event?.status}
+          </span>
+        </div>
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">{event?.name}</h3>
+        <p className="text-gray-600 mb-2 flex items-center"><svg className="w-5 h-5 text-gray-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg> {event?.date}</p>
+        <p className="text-gray-600 mb-4 flex items-center"><svg className="w-5 h-5 text-gray-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg> {event?.location}</p>
+        <div className="flex items-center justify-between">
+          <span className="text-lg font-bold text-green-600">${event?.fee}</span>
+          {/* {isCompleted ? (
+            <span className="text-gray-400 text-sm">Completed</span>
+          ) : ( */}
+            <button className="bg-red-600 cursor-pointer text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-200">
+              Cancel
+            </button>
+          {/* // )} */}
         </div>
       </div>
+    </div>
+              )
+             })}
+             </div> 
+        </div>
+        }
+       
+      </div>
     </section>
+  );
+};
+
+
+const StatCards = () => {
+  const cards = [
+    {
+      label: "Total Bookings",
+      value: 5,
+      iconBg: "bg-blue-100",
+      iconColor: "text-blue-600",
+      iconPath:
+        "M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z",
+    },
+    {
+      label: "Upcoming Events",
+      value: 3,
+      iconBg: "bg-green-100",
+      iconColor: "text-green-600",
+      iconPath:
+        "M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z",
+    },
+    {
+      label: "Completed",
+      value: 2,
+      iconBg: "bg-yellow-100",
+      iconColor: "text-yellow-600",
+      iconPath:
+        "M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z",
+    },
+    {
+      label: "Total Spent",
+      value: "$215",
+      iconBg: "bg-purple-100",
+      iconColor: "text-purple-600",
+      iconPath1:
+        "M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z",
+      iconPath2:
+        "M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z",
+    },
+  ];
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+      {cards.map((card, index) => (
+        <div
+          key={index}
+          className="bg-white rounded-lg border border-gray-200 p-6"
+        >
+          <div className="flex items-center">
+            <div className={`p-2 rounded-lg ${card.iconBg}`}>
+              <svg
+                className={`w-6 h-6 ${card.iconColor}`}
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d={card.iconPath || card.iconPath1}
+                  clipRule="evenodd"
+                />
+                {card.iconPath2 && (
+                  <path
+                    fillRule="evenodd"
+                    d={card.iconPath2}
+                    clipRule="evenodd"
+                  />
+                )}
+              </svg>
+            </div>
+            <div className="ml-4">
+              <p className="text-sm font-medium text-gray-600">{card.label}</p>
+              <p className="text-2xl font-bold text-gray-900">{card.value}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
   );
 };
 
