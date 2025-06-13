@@ -1,6 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 const Manage_events = () => {
+  const initEvents=[
+                  {
+                    id: 1,
+                    title: "City Marathon Championship",
+                    sub: "Running • Central Park, NY",
+                    date: "March 15, 2024",
+                    participants: "45 / 100",
+                    status: "Active",
+                    revenue: "$2,025",
+                    img: "https://placehold.co/100x100?text=Marathon",
+                  },
+                  {
+                    id: 2,
+                    title: "State Swimming Championships",
+                    sub: "Swimming • Los Angeles, CA",
+                    date: "March 22, 2024",
+                    participants: "32 / 50",
+                    status: "Active",
+                    revenue: "$2,120",
+                    img: "https://placehold.co/100x100?text=Swimming",
+                  },
+                ]
+  const [events,setEvents]=useState(initEvents)
   return (
     <section id="manage-events" className="min-h-screen bg-gray-50 py-8 block">
       <div className="max-w-7xl mx-auto px-4">
@@ -11,12 +35,14 @@ const Manage_events = () => {
             <p className="text-lg text-gray-600">Organize and manage your created athletic events</p>
           </div>
           <div className="mt-4 md:mt-0">
-            <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium flex items-center">
+           <NavLink to='/create-event' > 
+           <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium flex items-center">
               <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
               </svg>
               Create New Event
             </button>
+            </NavLink>
           </div>
         </div>
 
@@ -61,28 +87,7 @@ const Manage_events = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {[
-                  {
-                    id: 1,
-                    title: "City Marathon Championship",
-                    sub: "Running • Central Park, NY",
-                    date: "March 15, 2024",
-                    participants: "45 / 100",
-                    status: "Active",
-                    revenue: "$2,025",
-                    img: "https://placehold.co/100x100?text=Marathon",
-                  },
-                  {
-                    id: 2,
-                    title: "State Swimming Championships",
-                    sub: "Swimming • Los Angeles, CA",
-                    date: "March 22, 2024",
-                    participants: "32 / 50",
-                    status: "Active",
-                    revenue: "$2,120",
-                    img: "https://placehold.co/100x100?text=Swimming",
-                  },
-                ].map((event) => (
+                {events.map((event) => (
                   <tr key={event.id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">

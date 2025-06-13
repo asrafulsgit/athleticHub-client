@@ -11,6 +11,7 @@ import My_bookings from "../components/my_bookings/My_bookings";
 import Update_event from "../components/manage_events/Update_events";
 import Create_event from "../components/manage_events/Create_event";
 import Profile from "../components/profile/Profile";
+import Manage_events from "../components/manage_events/Manage_events";
 
 const Router = createBrowserRouter([
     {
@@ -27,8 +28,12 @@ const Router = createBrowserRouter([
             },
             { 
                 path : 'event-details/:id',
-                element : <Event_details />,
+                element : <Auth_middleware><Event_details /></Auth_middleware>,
                 // errorElement : <NotFoundPage />
+            },
+            { 
+                path : 'manage-events',
+                element : <Auth_middleware><Manage_events /></Auth_middleware>,
             },
             { 
                 path : 'update-event/:id',

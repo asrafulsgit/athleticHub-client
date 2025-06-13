@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 const Action = () => {
   return (
@@ -11,12 +12,12 @@ const Action = () => {
           Join our community of athletes and discover your next challenge
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <button className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-200">
+         <NavLink to='/events'> <button className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-200">
             Browse Events
-          </button>
-          <button className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors duration-200">
+          </button></NavLink>
+          <NavLink to='/signin'><button className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors duration-200">
             Create Account
-          </button>
+          </button></NavLink> 
         </div>
       </div>
     </div>

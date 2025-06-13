@@ -7,11 +7,24 @@ const Footer = () => {
       <div className="flex flex-col md:flex-row justify-between gap-8 mb-12">
      
         <div className='flex-1/3'>
-          <h3 className=" text-[22px] font-[700] nunito-family  mb-4 flex gap-1 items-center" >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
-            </svg> Garden Hub</h3>
-          <p className="text-gray-300 mb-4 roboto-family">Cultivating community and sustainable gardening practices since 2010.</p>
+          <h3 className="flex  text-[22px] font-[700] nunito-family  mb-4   gap-1 " >
+             <svg
+  width="32"
+  height="32"
+  viewBox="5 7 64 64"
+  xmlns="http://www.w3.org/2000/svg"
+  fill="#fff"
+>
+  <g transform="translate(0, 0) scale(0.85)">
+    <polygon points="71,48.7 71,18.2 54.8,9 38.7,9 63,22.8 63,36.7 63,53.3" />
+    <polygon points="29,66 54.8,81 54.7,81 55.1,81.3 71.7,71.7 79.7,57.8 55.3,72 29,56.8" />
+    <polygon points="61.2,57 61.3,57 46.9,65.2 54.8,69.8 81,54.5 81,35.2 73,21.3 73,49.8" />
+    <polygon points="61,23.9 34.8,8.7 18.2,18.3 10.2,32.3 35,18 47,25 46.8,25 61,33.2" />
+    <polygon points="35.2,20.3 9,35.6 9,54.8 17,68.7 17,40.2 28.8,33.2 28.8,33.2 43.2,24.9" />
+    <polygon points="19,41.3 19,71.8 35.2,81 51.4,81 27,67.2 27,53.3 27,36.7" />
+  </g>
+</svg> <span className='ml-1'>AthleticHub</span></h3>
+          <p className="text-gray-300 mb-4 roboto-family">Driven by passion, built for performance — explore, compete, and stay connected with AthleticHub.</p>
           <div className="flex space-x-4">
             <a href="#" className="text-white hover:text-blue-300 transition-colors duration-300">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
@@ -36,7 +49,7 @@ const Footer = () => {
           </div>
         </div>
         
-        <div className='flex-1/3 '>
+        <div className='flex-1/3'>
           <h3 className="text-xl font-bold mb-4 nunito-family">Quick Links</h3>
           <ul className="space-y-2 roboto-family">
               <li>
