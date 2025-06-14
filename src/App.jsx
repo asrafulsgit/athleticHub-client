@@ -1,35 +1,32 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import Navbar from './components/navbar/Navbar'
 import Footer from './components/footer/Footer'
+import Toastify from './components/aditionals/Toastify'
+import ScrollVehaviour from './components/aditionals/ScrollVehaviour'
+import Loader from './components/aditionals/Loader'
+import { AuthContext } from './controllers/AuthProvider'
 
 const App = () => {
-  // const {loading,isDark,isMobileNav}=useContext(AuthContext)
-  //   const [showLoader, setShowLoader] = useState(true)
+    const {loading,isMobileNav}=useContext(AuthContext)
+    const [showLoader, setShowLoader] = useState(true)
   
      
-  //   useEffect(() => {
-  //     const timer = setTimeout(() => {
-  //       setShowLoader(false)
-  //     }, 1000)
-  //     return () => clearTimeout(timer)
-  //   }, [])
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        setShowLoader(false)
+      }, 1000)
+      return () => clearTimeout(timer)
+    }, [])
   
-  //   if (loading || showLoader) {
-  //     return (
-  //       <div className={`w-full h-screen flex justify-center items-center
-  //       ${isDark ? 'bg-black' : ''}`}>
-  //         <div className='w-60 h-60'>
-  //           <Lottie animationData={loadingAnimation} loop={true} />
-  //         </div>
-  //       </div>
-  //     )
-  //   }
+    // if (loading || showLoader) {
+    //   return (<Loader />)
+    // }
   
     return (
       <> 
-      {/* <Toastify />  */}
-      {/* <ScrollVehaviour /> */}
+      <Toastify /> 
+      <ScrollVehaviour />
       <div className="inter-family">
   
         {/* navbar  */}
@@ -46,7 +43,7 @@ const App = () => {
           <div>
             <Footer />
           </div>
-        </div>
+      </div>
       </>
       
     )

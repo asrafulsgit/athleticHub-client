@@ -7,7 +7,7 @@ const Event_details = () => {
   const [event,setEvent]=useState({})
   
   useEffect(()=>{
-      const filterEvent = events.find(event => event._id == id)
+      const filterEvent = events.find(event => event._id === id)
       setEvent(filterEvent)
   },[])
   return (

@@ -13,6 +13,7 @@ import Create_event from "../components/manage_events/Create_event";
 import Profile from "../components/profile/Profile";
 import Manage_events from "../components/manage_events/Manage_events";
 import Book_event from "../components/book_event/Book_event";
+import NotFoundPage from "../components/aditionals/NotFoundPage";
 
 const Router = createBrowserRouter([
     {
@@ -26,11 +27,11 @@ const Router = createBrowserRouter([
             { 
                 path : 'events',
                 element :  <Events /> 
-            },
+        },
             { 
                 path : 'event-details/:id',
                 element : <Auth_middleware><Event_details /></Auth_middleware>,
-                // errorElement : <NotFoundPage />
+                errorElement : <NotFoundPage />
             },
             { 
                 path : 'manage-events',
@@ -39,7 +40,7 @@ const Router = createBrowserRouter([
             { 
                 path : 'update-event/:id',
                 element : <Auth_middleware><Update_event /></Auth_middleware>,
-                // errorElement : <NotFoundPage />
+                errorElement : <NotFoundPage />
             },
             { 
                 path : 'create-event',
@@ -71,9 +72,9 @@ const Router = createBrowserRouter([
     //         }
         ]
     },
-    // {
-    //     path: '/*',
-    //     Component : NotFoundPage
-    // }
+    {
+        path: '/*',
+        Component : NotFoundPage
+    }
 ]) 
 export default Router;
