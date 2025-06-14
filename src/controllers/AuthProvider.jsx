@@ -11,6 +11,7 @@ import {GoogleAuthProvider,signInWithPopup} from 'firebase/auth';
 const googleProvider = new GoogleAuthProvider();
 import {app} from "./firebase_config";
 import { ToastContainer } from "react-toastify";
+import { apiRequiestWithCredentials } from "../utilities/ApiCall";
 
 
 
@@ -18,22 +19,28 @@ const AuthContext = createContext(null)
 const auth = getAuth(app)
 
 const AuthProvider = ({children})=>{
-    const [isDark,setIsDark]=useState(JSON.parse(localStorage.getItem('isDark')))
     const [userInfo,setUserInfo]=useState(null)
-    const [isLoggedIn,setIsLoggedIn]=useState(true)
+    const [isLoggedIn,setIsLoggedIn]=useState(false)
     const [loading,setLoading]=useState(true)
     const [isMobileNav,setIsMobileNav] = useState(false)
 
-    const register = (email, password) => {
-        return createUserWithEmailAndPassword(auth, email, password);
-      };
-    const googleRegister = () => {
-        return signInWithPopup(auth, googleProvider);
-      };
-      const login = (email, password) => {
-        setLoading(true);
-        return signInWithEmailAndPassword(auth, email, password);
-      };
+    
+    const handleLoginWithGoogle =async()=>{
+        const provider = new GoogleAuthProvider();
+        try {
+          const result = await signInWithPopup(auth, provider);
+          const token = await result.user.getIdToken();
+  
+          await apiRequiestWithCredentials('post','/google/login',{token})
+          return true;
+        } catch (err) {
+          console.error("Google login failed:", err);
+          return false;
+        }
+    }
+
+
+
       const forget_password =async(email)=>{
         try {
           return await sendPasswordResetEmail(auth, email);
@@ -42,10 +49,7 @@ const AuthProvider = ({children})=>{
         }
       }
     
-      const logout = () => {
-        setLoading(true);
-        return signOut(auth);
-      };
+      
       useEffect(() => {
         // const unsubscribe = onAuthStateChanged(auth, currentUser => {
         //   if(currentUser){
@@ -61,8 +65,8 @@ const AuthProvider = ({children})=>{
     
     return(
         <AuthContext.Provider value={{isLoggedIn,setIsLoggedIn,forget_password,
-        loading,setLoading,register,login,logout,
-        googleRegister,userInfo,setUserInfo,isDark,setIsDark,isMobileNav,setIsMobileNav}}>
+        loading,setLoading,handleLoginWithGoogle,
+        userInfo,setUserInfo,isMobileNav,setIsMobileNav}}>
             {children}
         </AuthContext.Provider>
     )

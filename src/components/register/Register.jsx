@@ -1,22 +1,27 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { apiRequiest } from "../../utilities/ApiCall";
+import { AuthContext } from "../../controllers/AuthProvider";
 
 const Register = () => {
+  const navigate = useNavigate();
+  const {handleLoginWithGoogle} = useContext(AuthContext)
   const [showPassword, setShowPassword] = useState(false);
-  const [signupInfo, setSignupInfo] = useState({
+  const initSignupInfo ={
     name: "",
     email: "",
-    profilePicture: "",
+    avatar: "",
     password: "",
-    confirmPassword: "",
-  });
-
+    cPassword: "",
+  }
+  const [signupInfo, setSignupInfo] = useState(initSignupInfo); 
   const [passwordValidations, setPasswordValidations] = useState({
     length: false,
     uppercase: false,
     lowercase: false,
   });
-
+  const [registerLoading,setRegisterLoading]=useState(false)
   const handleChange = (e) => {
     const { name, value } = e.target;
     setSignupInfo((prev) => ({
@@ -35,20 +40,48 @@ const Register = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
   e.preventDefault();
-  if (signupInfo.password !== signupInfo.confirmPassword) {
-    alert("Passwords do not match");
+  if (!passwordValidations.length ) {
+    toast.error("Password must be at least 6 characters long.");
     return;
   }
-  console.log("Form submitted", signupInfo);
+  if (!passwordValidations.lowercase ) {
+    toast.error("Password must include at least one lowercase letter.");
+    return;
+  }
+  if (!passwordValidations.uppercase) {
+    toast.error("Password must include at least one uppercase letter.");
+    return;
+  }
+  if (signupInfo.password !== signupInfo.cPassword) {
+    toast.error("Passwords do not match");
+    return;
+  }
   // Add further form submission logic here
+   setRegisterLoading(true)
+   try {
+     await apiRequiest('post', '/user/register', signupInfo)
+     setRegisterLoading(false)
+     toast.success('Register successfull')
+   } catch (error) {
+      setRegisterLoading(false)
+      toast.error(error?.response?.data?.message)
+      console.log(error)
+   }
 };
 
-  const handleGoogleSignup = () => {
-    console.log("Triggering Google sign up...");
-    // Add your Firebase or other Google signup logic here
-  };
+  const handleGoogleRegister =()=>{
+    const isRegister = handleLoginWithGoogle();
+    if(isRegister){
+      toast.success('Register successfull')
+      navigate('/')
+    }else{
+      toast.error('Register failed')
+    }
+  }
+
+  
   return (
     <section
       id="register"
@@ -104,10 +137,7 @@ const Register = () => {
                 placeholder="Enter your full name"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none   transition-colors duration-200"
               />
-              <div
-                id="nameError"
-                className="hidden text-red-500 text-sm mt-1"
-              ></div>
+              
             </div>
 
             {/* Email Field */}
@@ -128,25 +158,22 @@ const Register = () => {
                 placeholder="Enter your email"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none   transition-colors duration-200"
               />
-              <div
-                id="emailError"
-                className="hidden text-red-500 text-sm mt-1"
-              ></div>
+              
             </div>
 
             {/* Profile Picture URL Field */}
             <div>
               <label
-                htmlFor="profilePicture"
+                htmlFor="avatar"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
                 Profile Picture URL
               </label>
               <input
-                type="url"
-                id="profilePicture"
-                name="profilePicture"
-                value={signupInfo.profilePicture}
+                type="text"
+                id="avatar"
+                name="avatar"
+                value={signupInfo.avatar}
           onChange={handleChange}
                 placeholder="https://example.com/your-photo.jpg"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none   transition-colors duration-200"
@@ -154,10 +181,7 @@ const Register = () => {
               <p className="text-xs text-gray-500 mt-1">
                 Optional: Add a URL to your profile picture
               </p>
-              <div
-                id="profilePictureError"
-                className="hidden text-red-500 text-sm mt-1"
-              ></div>
+              
             </div>
 
             {/* Password Field */}
@@ -266,16 +290,12 @@ const Register = () => {
                 </li>
               </ul>
               </div>
-              <div
-                id="passwordError"
-                className="hidden text-red-500 text-sm mt-1"
-              ></div>
             </div>
 
             {/* Confirm Password Field */}
             <div>
               <label
-                htmlFor="confirmPassword"
+                htmlFor="cPassword"
                 className="block text-sm font-medium
                text-gray-700 mb-2"
               >
@@ -283,18 +303,15 @@ const Register = () => {
               </label>
               <input
                 type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                value={signupInfo.confirmPassword}
+                id="cPassword"
+                name="cPassword"
+                value={signupInfo.cPassword}
           onChange={handleChange}
                 required
                 placeholder="Confirm your password"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none   transition-colors duration-200"
               />
-              <div
-                id="confirmPasswordError"
-                className="hidden text-red-500 text-sm mt-1"
-              ></div>
+             
             </div>
 
             {/* Terms and Conditions */}
@@ -303,7 +320,6 @@ const Register = () => {
                 type="checkbox"
                 id="terms"
                 name="terms"
-                required
                 className="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
               />
               <label htmlFor="terms" className="ml-2 text-sm text-gray-700">
@@ -330,8 +346,9 @@ const Register = () => {
             <button
               type="submit"
               className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700  focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200"
+              disabled={registerLoading}
             >
-              Create Account
+             {registerLoading ? 'Loading...' :' Create Account'}
             </button>
 
             {/* Divider */}
@@ -350,7 +367,7 @@ const Register = () => {
 
             <button
               type="button"
-              onClick={handleGoogleSignup}
+              onClick={handleGoogleRegister}
               id="googleLogin"
               className="w-[100%] cursor-pointer flex items-center justify-center px-4 py-3 
                 border border-gray-300 rounded-lg text-sm font-medium text-gray-700
