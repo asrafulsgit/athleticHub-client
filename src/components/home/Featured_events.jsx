@@ -3,62 +3,18 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../../controllers/AuthProvider';
 import { apiRequiest } from '../../utilities/ApiCall';
 import { toast } from 'react-toastify';
-// const events = [
-//   { id : 1,
-//     title: "City Marathon Championship",
-//     date: "March 15, 2024",
-//     location: "Central Park, New York",
-//     image: "https://placehold.co/400x250?text=Marathon+Event",
-//     alt: "Marathon Event",
-//   },
-//   {id : 2,
-//     title: "State Swimming Championships",
-//     date: "March 22, 2024",
-//     location: "Aquatic Center, Los Angeles",
-//     image: "https://placehold.co/400x250?text=Swimming+Competition",
-//     alt: "Swimming Competition",
-//   },
-//   {id : 3,
-//     title: "Regional Track & Field Meet",
-//     date: "April 5, 2024",
-//     location: "Olympic Stadium, Chicago",
-//     image: "https://placehold.co/400x250?text=Track+Field",
-//     alt: "Track and Field",
-//   },
-//   {id : 4,
-//     title: "Mountain Bike Challenge",
-//     date: "April 12, 2024",
-//     location: "Rocky Mountains, Colorado",
-//     image: "https://placehold.co/400x250?text=Cycling+Race",
-//     alt: "Cycling Race",
-//   },
-//   {id : 5,
-//     title: "3v3 Basketball Tournament",
-//     date: "April 18, 2024",
-//     location: "Sports Complex, Miami",
-//     image: "https://placehold.co/400x250?text=Basketball+Tournament",
-//     alt: "Basketball Tournament",
-//   },
-//   {id : 6,
-//     title: "Open Tennis Championship",
-//     date: "April 25, 2024",
-//     location: "Tennis Club, Phoenix",
-//     image: "https://placehold.co/400x250?text=Tennis+Championship",
-//     alt: "Tennis Championship",
-//   },
-// ];
+
 const Featured_events = () => {
   const [events,setEvents]=useState([])
-  const {setLoading}=useContext(AuthContext)
   const getFeaturedEvents =async()=>{
-    setLoading(true)
+    
     try {
         const data = await apiRequiest('get','/featured-events');
         setEvents(data?.events)
-        setLoading(false)
+        
     } catch (error) {
       setEvents([])
-      setLoading(false)
+      
       toast.error(error?.response?.data?.message)
       console.log(error)
     }
@@ -95,7 +51,7 @@ const Featured_events = () => {
               </h3>
               <p className="text-gray-600 mb-2">{event?.date}</p>
               <p className="text-gray-600 mb-4">{event?.location}</p>
-             <Link to={`/event-details/${event?.id}`}> <button className="w-full cursor-pointer bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-200">
+             <Link to={`/event-details/${event?._id}`}> <button className="w-full cursor-pointer bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-200">
                 View Details
               </button></Link>
             </div>

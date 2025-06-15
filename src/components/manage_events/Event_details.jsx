@@ -1,17 +1,37 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { events } from "../../utilities/events";
+import { apiRequiestWithCredentials } from "../../utilities/ApiCall";
+import Spinner from "../aditionals/Spinner";
+import { toast } from "react-toastify";
 
 const Event_details = () => {
   const {id}=useParams()
   const [event,setEvent]=useState({})
-  
+  const [pageLoading,setPageLoading]=useState(true);
+  const getEvent=async()=>{
+      try {
+        const data = await apiRequiestWithCredentials('get',`/event-details/${id}`);
+        setEvent(data?.event)
+        setPageLoading(false)
+      } catch (error) {
+        console.log(error)
+        toast.error(error?.response?.data?.message)
+        setEvent({})
+        setPageLoading(false)
+      }
+  }
   useEffect(()=>{
-      const filterEvent = events.find(event => event._id === id)
-      setEvent(filterEvent)
+    getEvent()
   },[])
+  if(pageLoading){
+    return (<Spinner /> )
+  }
   return (
     <section  className="min-h-screen bg-gray-50 py-8">
+        {(!event.name || !event.type || !event.image) ? 
+        <div className="flex justify-center items-center pt-10">
+          <p className="text-red-500 ">This event is not available for now!</p></div> :
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 px-4">
           {/* Main Event Details */}
           <div className="lg:col-span-2">
@@ -99,7 +119,7 @@ const Event_details = () => {
 
           {/* Booking Sidebar will be added next */}
             <BookingCard event={event} />
-        </div>
+        </div>}
     </section>
   );
 };

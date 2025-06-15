@@ -2,11 +2,24 @@ import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import './navbar.css'
 import { AuthContext } from '../../controllers/AuthProvider';
+import { apiRequiestWithCredentials } from '../../utilities/ApiCall';
+import { toast } from 'react-toastify';
 
 const Navbar = () => {
 
-  const {isLoggedIn} = useContext(AuthContext)
-
+  const {isLoggedIn,setIsLoggedIn,setLoading} = useContext(AuthContext)
+  const handleLogout = async()=>{
+    setLoading(true)
+      try {
+        await apiRequiestWithCredentials('get','/user/logout');
+        setIsLoggedIn(false)
+        setLoading(false)
+        toast.success('User logout successfull')
+      } catch (error) {
+        console.log(error)
+        setLoading(false)
+      }
+  }
   return (
     <nav
       className="sticky top-0 px-10 flex items-center justify-between z-50 
@@ -63,7 +76,7 @@ const Navbar = () => {
          Login  </button></NavLink>  
       </div> :
       <div className='flex items-center'> 
-        <button className='mr-3 bg-blue-600 text-white px-4 py-1 rounded-sm
+        <button onClick={handleLogout} className='mr-3 bg-blue-600 text-white px-4 py-1 rounded-sm
          hover:bg-blue-700 cursor-pointer transition-colors duration-200'>Logout</button> 
         <div className="dropdown dropdown-end">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">

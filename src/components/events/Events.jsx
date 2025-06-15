@@ -1,6 +1,9 @@
 import React from "react";
-import { events } from "../../utilities/events";
 import { Link } from "react-router-dom";
+import { apiRequiest } from "../../utilities/ApiCall";
+import Spinner from "../aditionals/Spinner";
+import { useState } from "react";
+import { useEffect } from "react";
 
 
 
@@ -30,6 +33,26 @@ const EventCard = ({ event }) => (
 );
 
 const Events = () => {
+  const [events,setEvents]=useState([])
+  const [pageLoading,setPageLoading]=useState(true);
+  const getEvents =async()=>{ 
+      try {
+          const data = await apiRequiest('get','/browse-events');
+          setEvents(data?.events)
+          setPageLoading(false)
+      } catch (error) {
+        setEvents([])
+        toast.error(error?.response?.data?.message)
+        console.log(error)
+        setPageLoading(false)
+      }
+    }
+    useEffect(()=>{
+      getEvents()
+    },[])
+    if(pageLoading){
+        return (<Spinner /> )
+      }
   return (
    <> <div className="px-10 pt-8">
       {/* Header */}
@@ -82,14 +105,20 @@ const Events = () => {
         </div>
       </div>
 
+     { events.lenght === 0 ? 
+        <div className="flex justify-center items-center py-10">
+          <p className="text-red-500 ">No events available for now!</p>
+        </div>:
+     <> 
       {/* Events Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {events.map((event) => (
-          <EventCard key={event.id} event={event} />
-        ))}
-      </div>
-
-     <Pagination />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {events.map((event,index) => (
+            <EventCard key={index} event={event} />
+          ))}
+        </div>
+        <Pagination />
+      </>
+      }
     </div>
     </>
   );
@@ -121,7 +150,10 @@ const Pagination = () => {
                 <path fillRule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clipRule="evenodd" />
               </svg>
             </button>
-            <button className="relative z-10 inline-flex items-center bg-blue-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+            <button className="relative z-10 inline-flex items-center bg-blue-600 px-4 
+            py-2 text-sm font-semibold text-white focus:z-20 
+            focus-visible:outline-2 focus-visible:outline-offset-2
+             focus-visible:outline-blue-600">
               1
             </button>
             <button className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">

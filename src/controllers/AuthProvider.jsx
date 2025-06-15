@@ -48,19 +48,22 @@ const AuthProvider = ({children})=>{
            ToastContainer.error(error)
         }
       }
-    
+      
+      const userObserver=async()=>{
+          try {
+            const data = await apiRequiestWithCredentials('get','/user/observer');
+            setUserInfo(data?.user)
+            setIsLoggedIn(true)
+            setLoading(false)
+          } catch (error) {
+            setIsLoggedIn(false)
+            setLoading(false)
+            console.log(error)
+          }
+      }
       
       useEffect(() => {
-        // const unsubscribe = onAuthStateChanged(auth, currentUser => {
-        //   if(currentUser){
-        //     setUserInfo(currentUser)
-        //      setIsLoggedIn(true)
-        //      setLoading(false);
-        //     }else{
-        //       setLoading(false);
-        //   }
-        // });
-        // return () => unsubscribe();
+        userObserver()
       }, []);
     
     return(

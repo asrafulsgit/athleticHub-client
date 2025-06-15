@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
-  const {handleLoginWithGoogle} = useContext(AuthContext)
+  const {handleLoginWithGoogle,setIsLoggedIn} = useContext(AuthContext)
   const [showPassword, setShowPassword] = useState(false);
   const initLoginInfo={
       email: "",
@@ -25,13 +25,12 @@ const Login = () => {
 
     const [loginLoading,setLoginLoading]=useState(false)
   
-   
-  
     const handleSubmit = async(e) => {
      e.preventDefault();
      setLoginLoading(true)
      try {
        await apiRequiestWithCredentials('post', '/user/login', loginInfo)
+       setIsLoggedIn(true)
        setLoginLoading(false)
        toast.success('User login successfull')
        setLoginInfo(initLoginInfo)
@@ -46,6 +45,7 @@ const Login = () => {
     const handleGoogleRegister =async()=>{
       const isRegister =await handleLoginWithGoogle();
       if(isRegister){
+        setIsLoggedIn(true)
         toast.success('User Login successfull')
         navigate('/')
       }else{

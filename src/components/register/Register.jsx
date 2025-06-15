@@ -6,7 +6,7 @@ import { AuthContext } from "../../controllers/AuthProvider";
 
 const Register = () => {
   const navigate = useNavigate();
-  const {handleLoginWithGoogle} = useContext(AuthContext)
+  const {handleLoginWithGoogle,setIsLoggedIn} = useContext(AuthContext)
   const [showPassword, setShowPassword] = useState(false);
   const initSignupInfo ={
     name: "",
@@ -76,6 +76,7 @@ const Register = () => {
   const handleGoogleRegister =async()=>{
     const isRegister =await handleLoginWithGoogle();
     if(isRegister){
+      setIsLoggedIn(true)
       toast.success('Register successfull')
       navigate('/')
     }else{

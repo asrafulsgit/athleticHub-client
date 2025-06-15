@@ -1,46 +1,65 @@
 import React, { useState } from "react";
+import { useContext } from "react";
+import { AuthContext } from "../../controllers/AuthProvider";
+import { getDate, getTime } from "../../utilities/minimizeData";
+import { apiRequiestWithCredentials } from "../../utilities/ApiCall";
+import Spinner from "../aditionals/Spinner";
+import { toast } from "react-toastify";
 
 const Create_event = () => {
-  const [eventData, setEventData] = useState({
-    eventName: "",
-    eventType: "",
-    eventDate: "",
-    eventLocation: "",
-    registrationFee: "",
-    eventDescription: "",
-    imageUrl: "",
-    maxParticipants: "",
+  const {userInfo}= useContext(AuthContext)
+  const [dateTime,setDateTime]=useState("")
+  const initEvent = {
+    name: "",
+    type: "",
+    date: "",
+    location: "",
+    fee: 0,
+    description: "",
+    image: "",
+    participants: 0,
     requirements: "",
-    creatorName: "John Athlete",
-    creatorEmail: "john@athletichub.com",
-  });
-
+    organizer :{
+      image : userInfo?.avatar,
+      name: userInfo?.name,
+      email: userInfo?.email,
+    }
+  } 
+  const [eventData, setEventData] = useState(initEvent);
+  const [createLoading,setCreateLoading]=useState(false)
   const handleChange = (e) => {
     const { name, value } = e.target;
+      if(name === 'date'){
+        setDateTime(value)
+        setEventData((prev) => ({
+          ...prev,
+          date : getDate(value),
+          time : getTime(value)
+        }))
+        return;
+      };
+    
     setEventData((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-
-    console.log("Form submitted:", {
-      ...eventData,
-    });
-
-    // setEventData({
-    //   eventName: "",
-    //   eventType: "",
-    //   eventDate: "",
-    //   eventLocation: "",
-    //   registrationFee: "",
-    //   eventDescription: "",
-    //   imageUrl: "",
-    //   maxParticipants: "",
-    //   requirements: "",
-    // });
+     setCreateLoading(true)
+       try {
+         await apiRequiestWithCredentials('post', '/create-event', eventData)
+         toast.success('Event created successfull')
+         setCreateLoading(false)
+         setEventData(initEvent)
+         setDateTime('')
+       } catch (error) {
+          setCreateLoading(false)
+          toast.error(error?.response?.data?.message)
+          console.log(error)
+       }
+    
   };
 
   const sports=[
@@ -57,6 +76,9 @@ const Create_event = () => {
                   "Triathlon",
                   "Weightlifting",
                 ]
+  if(!userInfo.name || !userInfo.email){
+    return (<Spinner /> )
+  }
   return (
     <section id="create-event" className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-4xl mx-auto px-4">
@@ -73,8 +95,8 @@ const Create_event = () => {
               </label>
               <input
                 type="text"
-                name="eventName"
-                value={eventData.eventName}
+                name="name"
+                value={eventData.name}
                 onChange={handleChange}
                 required
                 placeholder="Enter event name"
@@ -89,8 +111,8 @@ const Create_event = () => {
                 Event Type <span className="text-red-500">*</span>
               </label>
               <select
-                name="eventType"
-                value={eventData.eventType}
+                name="type"
+                value={eventData.type}
                 onChange={handleChange}
                 required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none"
@@ -111,8 +133,8 @@ const Create_event = () => {
               </label>
               <input
                 type="datetime-local"
-                name="eventDate"
-                value={eventData.eventDate}
+                name="date"
+                value={dateTime}
                 onChange={handleChange}
                 required
                 min="2025-06-12T06:39"
@@ -127,8 +149,8 @@ const Create_event = () => {
               </label>
               <input
                 type="text"
-                name="eventLocation"
-                value={eventData.eventLocation}
+                name="location"
+                value={eventData.location}
                 onChange={handleChange}
                 required
                 placeholder="Enter event location"
@@ -145,14 +167,13 @@ const Create_event = () => {
                 <span className="absolute left-3 top-3 text-gray-500">$</span>
                 <input
                   type="number"
-                  name="registrationFee"
-                  value={eventData.registrationFee}
+                  name="fee"
+                  value={eventData.fee}
                   onChange={handleChange}
                   required
-                  min="0"
-                  step="0.01"
                   placeholder="0.00"
-                  className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg outline-none"
+                  className="w-full pl-8 pr-4 py-3 border border-gray-300 
+                  rounded-lg outline-none"
                 />
               </div>
             </div>
@@ -163,8 +184,8 @@ const Create_event = () => {
                 Event Description <span className="text-red-500">*</span>
               </label>
               <textarea
-                name="eventDescription"
-                value={eventData.eventDescription}
+                name="description"
+                value={eventData.description}
                 onChange={handleChange}
                 required
                 rows={5}
@@ -180,8 +201,8 @@ const Create_event = () => {
               </label>
               <input
                 type="url"
-                name="imageUrl"
-                value={eventData.imageUrl}
+                name="image"
+                value={eventData.image }
                 onChange={handleChange}
                 required
                 placeholder="https://example.com/image.jpg"
@@ -192,45 +213,18 @@ const Create_event = () => {
               </p>
             </div>
 
-            {/* Creator Info */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Creator Name
-                </label>
-                <input
-                  type="text"
-                  value={eventData?.creatorName || ''}
-                  readOnly
-                  disabled
-                  className="w-full px-4 py-3 border border-gray-300 
-                  rounded-lg bg-gray-50 text-gray-600"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Creator Email
-                </label>
-                <input
-                  type="email"
-                  value={eventData?.creatorEmail || ''}
-                  disabled
-                  readOnly
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-600"
-                />
-              </div>
-            </div>
+            
 
             {/* Max Participants */}
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Maximum Participants
+                Maximum Participants <span className="text-red-500">*</span>
               </label>
               <input
                 type="number"
-                name="maxParticipants"
-                value={eventData.maxParticipants}
+                name="participants"
+                value={eventData.participants}
                 onChange={handleChange}
                 placeholder="Enter maximum number of participants"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none"
@@ -254,7 +248,34 @@ const Create_event = () => {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none resize-vertical"
               />
             </div>
-
+            {/* Creator Info */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Creator Name 
+                </label>
+                <input
+                  type="text"
+                  value={eventData?.organizer?.name || ''}
+                  readOnly
+                  disabled
+                  className="w-full px-4 py-3 border border-gray-300 
+                  rounded-lg bg-gray-50 text-gray-600"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Creator Email
+                </label>
+                <input
+                  type="email"
+                  value={eventData?.organizer?.email || ''}
+                  disabled
+                  readOnly
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-600"
+                />
+              </div>
+            </div>      
             {/* Terms */}
             <div className="flex items-start">
               <input
@@ -289,7 +310,7 @@ const Create_event = () => {
                 type="submit"
                 className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium"
               >
-                Create Event
+               {createLoading ? 'Creating...' : 'Create Event'}
               </button>
             </div>
           </form>

@@ -8,20 +8,21 @@ import Loader from './components/aditionals/Loader'
 import { AuthContext } from './controllers/AuthProvider'
 
 const App = () => {
-    const {loading,isMobileNav}=useContext(AuthContext)
+    const {loading}=useContext(AuthContext)
     const [showLoader, setShowLoader] = useState(true)
   
      
     useEffect(() => {
+      console.log('App loading...')
       const timer = setTimeout(() => {
         setShowLoader(false)
       }, 1000)
       return () => clearTimeout(timer)
     }, [])
   
-    // if (loading || showLoader) {
-    //   return (<Loader />)
-    // }
+    if (loading || showLoader) {
+      return (<Loader />)
+    }
   
     return (
       <> 

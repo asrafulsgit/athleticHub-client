@@ -1,66 +1,88 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { toast } from "react-toastify";
+import Spinner from "../aditionals/Spinner";
+import { apiRequiestWithCredentials } from "../../utilities/ApiCall";
 
 const Manage_events = () => {
-  const initEvents = [
-    {
-    _id: "665e5d4a6f5c9bcd123a0001",
-    name: "Summer Sprint Challenge",
-    type: "Track & Field",
-    date: "2025-07-05",
-    time: "10:00 AM",
-    location: "Dhaka Stadium, Dhaka",
-    fee: 20,
-    description: "A 100m and 200m sprint race for all age groups. Show your speed and win exciting prizes.",
-    image: "https://example.com/images/sprint.jpg",
-    participants:70,
-    requirements: "Running shoes, water bottle",
-    organizer: {
-      image: "",
-      name: "John Athlete",
-      email: "john@athletichub.com"
-    }
-  },
-  {
-    _id: "665e5d4a6f5c9bcd123a0002",
-    name: "Mountain Trail Marathon",
-    type: "Marathon",
-    date: "2025-09-15",
-    time: "6:00 AM",
-    location: "Bandarban Trails",
-    fee: 20,
-    description: "A thrilling 21km and 42km mountain trail run for serious endurance athletes.",
-    image: "https://example.com/images/marathon.jpg",
-    participants:70,
-    requirements: "Trail shoes, hydration pack, medical clearance",
-    organizer: {
-      image: "",
-      name: "John Athlete",
-      email: "john@athletichub.com"
-    }
-  },
-  {
-    _id: "665e5d4a6f5c9bcd123a0003",
-    name: "Youth Football League Finals",
-    type: "Football",
-    date: "2025-08-22",
-    time: "4:00 PM",
-    location: "Bashundhara Sports Ground",
-    fee: 20,
-    description: "Watch the top youth football teams battle it out for the championship.",
-    image: "https://example.com/images/football.jpg",
-    participants:70 ,
-    requirements: "Team jersey, shin guards",
-    organizer: {
-      image: "",
-      name: "John Athlete",
-      email: "john@athletichub.com"
-    }
-  },
-  ];
-  const [events, setEvents] = useState(initEvents);
+  // const initEvents = [
+  //   {
+  //   _id: "665e5d4a6f5c9bcd123a0001",
+  //   name: "Summer Sprint Challenge",
+  //   type: "Track & Field",
+  //   date: "2025-07-05",
+  //   time: "10:00 AM",
+  //   location: "Dhaka Stadium, Dhaka",
+  //   fee: 20,
+  //   description: "A 100m and 200m sprint race for all age groups. Show your speed and win exciting prizes.",
+  //   image: "https://example.com/images/sprint.jpg",
+  //   participants:70,
+  //   requirements: "Running shoes, water bottle",
+  //   organizer: {
+  //     image: "",
+  //     name: "John Athlete",
+  //     email: "john@athletichub.com"
+  //   }
+  // },
+  // {
+  //   _id: "665e5d4a6f5c9bcd123a0002",
+  //   name: "Mountain Trail Marathon",
+  //   type: "Marathon",
+  //   date: "2025-09-15",
+  //   time: "6:00 AM",
+  //   location: "Bandarban Trails",
+  //   fee: 20,
+  //   description: "A thrilling 21km and 42km mountain trail run for serious endurance athletes.",
+  //   image: "https://example.com/images/marathon.jpg",
+  //   participants:70,
+  //   requirements: "Trail shoes, hydration pack, medical clearance",
+  //   organizer: {
+  //     image: "",
+  //     name: "John Athlete",
+  //     email: "john@athletichub.com"
+  //   }
+  // },
+  // {
+  //   _id: "665e5d4a6f5c9bcd123a0003",
+  //   name: "Youth Football League Finals",
+  //   type: "Football",
+  //   date: "2025-08-22",
+  //   time: "4:00 PM",
+  //   location: "Bashundhara Sports Ground",
+  //   fee: 20,
+  //   description: "Watch the top youth football teams battle it out for the championship.",
+  //   image: "https://example.com/images/football.jpg",
+  //   participants:70 ,
+  //   requirements: "Team jersey, shin guards",
+  //   organizer: {
+  //     image: "",
+  //     name: "John Athlete",
+  //     email: "john@athletichub.com"
+  //   }
+  // },
+  // ];
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deleteEvent, setDeleteEvent] = useState("");
+
+  const [pageLoading,setPageLoading]=useState(true)
+  const [myEvents,setMyEvents]=useState([])
+    const getMyEvents =async()=>{
+      try {
+          const data = await apiRequiestWithCredentials('get','/my-events');
+          setMyEvents(data?.events)
+          setPageLoading(false)
+      } catch (error) {
+        setMyEvents([])
+        console.log(error)
+        setPageLoading(false)
+      }
+    }
+    useEffect(()=>{
+      getMyEvents()
+    },[])
+    if(pageLoading){
+      return (<Spinner /> )
+    }
   return (
     <>
       <section
@@ -104,7 +126,10 @@ const Manage_events = () => {
           <ManageEventStats />
 
           {/* Events Table */}
-          <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+        {myEvents.length === 0 ?
+         <div className="flex justify-center items-center py-10">
+          <p className="text-red-500 ">You have no event!</p>
+        </div> :  <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-200">
               <h3 className="text-lg font-semibold text-gray-900">
                 Your Created Events
@@ -117,8 +142,8 @@ const Manage_events = () => {
                     {[
                       "Event",
                       "Date",
+                      "Time",
                       "Participants",
-                      "Revenue",
                       "Actions",
                     ].map((heading, i) => (
                       <th
@@ -131,7 +156,7 @@ const Manage_events = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {events.map((event, index) => (
+                  {myEvents.map((event, index) => (
                     <tr key={index} className="hover:bg-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
@@ -157,15 +182,16 @@ const Manage_events = () => {
                         {event?.date}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {event?.time}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         <div className="flex items-center">
                           <span className="font-medium">
                             {event?.participants}
                           </span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {event?.participants * event?.fee}
-                      </td>
+                      
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
                         <button className="text-blue-600 hover:text-blue-900 transition-colors duration-200">
                           Edit
@@ -185,7 +211,7 @@ const Manage_events = () => {
                 </tbody>
               </table>
             </div>
-          </div>
+          </div>}
         </div>
       </section>
       <DeleteModal
