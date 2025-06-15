@@ -76,7 +76,7 @@ const Create_event = () => {
                   "Triathlon",
                   "Weightlifting",
                 ]
-  if(!userInfo.name || !userInfo.email){
+  if(!userInfo?.name || !userInfo?.email){
     return (<Spinner /> )
   }
   return (
@@ -171,6 +171,7 @@ const Create_event = () => {
                   value={eventData.fee}
                   onChange={handleChange}
                   required
+                  min ='1'
                   placeholder="0.00"
                   className="w-full pl-8 pr-4 py-3 border border-gray-300 
                   rounded-lg outline-none"
@@ -226,6 +227,7 @@ const Create_event = () => {
                 name="participants"
                 value={eventData.participants}
                 onChange={handleChange}
+                min='1'
                 placeholder="Enter maximum number of participants"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none"
               />

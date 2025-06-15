@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
-import { toast } from "react-toastify";
+import { Link, NavLink } from "react-router-dom";
 import Spinner from "../aditionals/Spinner";
 import { apiRequiestWithCredentials } from "../../utilities/ApiCall";
+import { toast } from "react-toastify";
 
 const Manage_events = () => {
   // const initEvents = [
@@ -63,9 +63,10 @@ const Manage_events = () => {
   // ];
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deleteEvent, setDeleteEvent] = useState("");
-
+   
   const [pageLoading,setPageLoading]=useState(true)
   const [myEvents,setMyEvents]=useState([])
+   
     const getMyEvents =async()=>{
       try {
           const data = await apiRequiestWithCredentials('get','/my-events');
@@ -80,6 +81,10 @@ const Manage_events = () => {
     useEffect(()=>{
       getMyEvents()
     },[])
+    const deleteFronUi=(id)=>{
+      const filteredEvents = myEvents.filter(event => event._id !== id)
+      setMyEvents(filteredEvents)
+    }
     if(pageLoading){
       return (<Spinner /> )
     }
@@ -193,15 +198,16 @@ const Manage_events = () => {
                       </td>
                       
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                        <button className="text-blue-600 hover:text-blue-900 transition-colors duration-200">
+                       <Link  to={`/update-event/${event?._id}`}> 
+                       <button className="text-blue-600 cursor-pointer hover:text-blue-900 transition-colors duration-200">
                           Edit
-                        </button>
+                        </button></Link>
                         <button
                           onClick={() =>{ 
                             setDeleteEvent(event?._id);
                             setIsModalOpen(!isModalOpen)
                           }}
-                          className="text-red-600 hover:text-red-900 transition-colors duration-200"
+                          className="text-red-600 cursor-pointer hover:text-red-900 transition-colors duration-200"
                         >
                           Delete
                         </button>
@@ -217,6 +223,9 @@ const Manage_events = () => {
       <DeleteModal
         isModalOpen={isModalOpen}
         setIsModalOpen={() => setIsModalOpen(!isModalOpen)}
+        deleteEvent={deleteEvent}
+        setDeleteEvent={()=>setDeleteEvent('')}
+        deleteFronUi={deleteFronUi}
       />
     </>
   );
@@ -318,9 +327,25 @@ const ManageEventStats = () => {
   );
 };
 
-const DeleteModal = ({ isModalOpen, setIsModalOpen }) => {
+const DeleteModal = ({ isModalOpen, setIsModalOpen, deleteEvent,setDeleteEvent,deleteFronUi }) => {
   if (!isModalOpen) return null;
-  const handleDelete = () => {};
+  const handleDelete = async() => {
+     try {
+        await apiRequiestWithCredentials('delete', `/delete-event/${deleteEvent}`);
+        setDeleteEvent();
+        setIsModalOpen();
+        deleteFronUi(deleteEvent);
+        toast.success('Event delete successfull.')
+     } catch (error) {
+        setDeleteEvent();
+        toast.error(error?.response?.data?.message);
+        console.log(error)
+     }
+  };
+  const handleCencelDelete=()=>{
+    setIsModalOpen();
+    setDeleteEvent()
+  }
   return (
     <div
       className="fixed inset-0 z-50 overflow-y-auto"
@@ -338,8 +363,9 @@ const DeleteModal = ({ isModalOpen, setIsModalOpen }) => {
           {/* Close Button (top-right) */}
           <button
             type="button"
-            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
-            onClick={setIsModalOpen}
+             
+            className="absolute cursor-pointer top-4 right-4 text-gray-400 hover:text-gray-600"
+            onClick={handleCencelDelete}
           >
             <svg
               className="h-6 w-6"
@@ -398,15 +424,15 @@ const DeleteModal = ({ isModalOpen, setIsModalOpen }) => {
           <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
             <button
               type="button"
-              className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+              className="w-full cursor-pointer inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
               onClick={handleDelete}
             >
               Delete
             </button>
             <button
               type="button"
-              className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-              onClick={setIsModalOpen}
+              className="mt-3 cursor-pointer w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+              onClick={handleCencelDelete}
             >
               Cancel
             </button>

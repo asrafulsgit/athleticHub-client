@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { events } from "../../utilities/events";
 import { apiRequiestWithCredentials } from "../../utilities/ApiCall";
 import Spinner from "../aditionals/Spinner";
 import { toast } from "react-toastify";
