@@ -64,6 +64,8 @@ const Register = () => {
      await apiRequiest('post', '/user/register', signupInfo)
      setRegisterLoading(false)
      toast.success('Register successfull')
+     setSignupInfo(initSignupInfo)
+     navigate('/login')
    } catch (error) {
       setRegisterLoading(false)
       toast.error(error?.response?.data?.message)
@@ -71,8 +73,8 @@ const Register = () => {
    }
 };
 
-  const handleGoogleRegister =()=>{
-    const isRegister = handleLoginWithGoogle();
+  const handleGoogleRegister =async()=>{
+    const isRegister =await handleLoginWithGoogle();
     if(isRegister){
       toast.success('Register successfull')
       navigate('/')

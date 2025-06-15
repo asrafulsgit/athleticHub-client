@@ -1,13 +1,20 @@
 
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../controllers/AuthProvider";
+import { apiRequiestWithCredentials } from "../../utilities/ApiCall";
+import { toast } from "react-toastify";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const {handleLoginWithGoogle} = useContext(AuthContext)
   const [showPassword, setShowPassword] = useState(false);
-  const [loginInfo, setLoginInfo] = useState({
+  const initLoginInfo={
       email: "",
       password: "",
-    });
+    }
+  const [loginInfo, setLoginInfo] = useState(initLoginInfo);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setLoginInfo((prev) => ({
@@ -15,14 +22,36 @@ const Login = () => {
       [name]: value,
     }));
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
+
+    const [loginLoading,setLoginLoading]=useState(false)
+  
+   
+  
+    const handleSubmit = async(e) => {
+     e.preventDefault();
+     setLoginLoading(true)
      try {
-      
+       await apiRequiestWithCredentials('post', '/user/login', loginInfo)
+       setLoginLoading(false)
+       toast.success('User login successfull')
+       setLoginInfo(initLoginInfo)
+       navigate('/')
      } catch (error) {
-      
+        setLoginLoading(false)
+        toast.error(error?.response?.data?.message)
+        console.log(error)
      }
   };
+  
+    const handleGoogleRegister =async()=>{
+      const isRegister =await handleLoginWithGoogle();
+      if(isRegister){
+        toast.success('User Login successfull')
+        navigate('/')
+      }else{
+        toast.error('User Login failed')
+      }
+    }
 
   return (
     <section
@@ -165,7 +194,7 @@ const Login = () => {
               type="submit"
               className="w-full cursor-pointer bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200"
             >
-              Login
+            {loginLoading ? 'Loading...' : 'Login'}
             </button>
 
             {/* Divider */}
@@ -184,6 +213,7 @@ const Login = () => {
               <button
                 type="button"
                 id="googleLogin"
+                onClick={handleGoogleRegister}
                 className="w-[100%] cursor-pointer flex items-center justify-center px-4 py-3 
                 border border-gray-300 rounded-lg text-sm font-medium text-gray-700
                  bg-white hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 
