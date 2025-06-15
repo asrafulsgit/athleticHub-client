@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { apiRequiestWithCredentials } from "../../utilities/ApiCall";
 import Spinner from "../aditionals/Spinner";
 import { toast } from "react-toastify";
+import { useContext } from "react";
+import { AuthContext } from "../../controllers/AuthProvider";
 
 const Event_details = () => {
   const {id}=useParams()
@@ -125,9 +127,11 @@ const Event_details = () => {
 
 
 const BookingCard =({event})=> {
+  const {userInfo}=useContext(AuthContext)
+  const [bookLoading,setBookLoading]=useState(false)
   const [form, setForm] = useState({
-    name:  'Asraful',
-    email:  'sourob@gmail.com',
+    name:  userInfo?.name,
+    email:  userInfo?.email,
     phone: '',
   });
  const handleChange=(e)=>{
@@ -139,10 +143,19 @@ const BookingCard =({event})=> {
     }
    })
  }
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    // Handle form submission logic
-    console.log(form);
+    setBookLoading(true)
+     try {
+      await apiRequiestWithCredentials('post',`/create/booking/${event?._id}`,form)
+      setBookLoading(false)
+      toast.success('Event booking successfull.')
+    } catch (error) {
+      setBookLoading(false)
+      console.log(error)
+      toast.error(error?.response?.data?.message)
+     }
+     
   };
 
   return (
@@ -223,7 +236,7 @@ const BookingCard =({event})=> {
             type="submit"
             className="w-full cursor-pointer bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200"
           >
-            Book Now - $45.00
+            {bookLoading ? "Booking..." : `Book Now - ${event?.fee}.00`}
           </button>
         </form>
 

@@ -63,31 +63,48 @@ const Manage_events = () => {
   // ];
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deleteEvent, setDeleteEvent] = useState("");
-   
-  const [pageLoading,setPageLoading]=useState(true)
-  const [myEvents,setMyEvents]=useState([])
-   
-    const getMyEvents =async()=>{
-      try {
-          const data = await apiRequiestWithCredentials('get','/my-events');
-          setMyEvents(data?.events)
-          setPageLoading(false)
-      } catch (error) {
-        setMyEvents([])
-        console.log(error)
-        setPageLoading(false)
+
+  const [pageLoading, setPageLoading] = useState(true);
+  const [myEvents, setMyEvents] = useState([]);
+  const getMyEvents = async () => {
+    try {
+      const data = await apiRequiestWithCredentials("get", "/my-events");
+      setMyEvents(data?.events);
+      setPageLoading(false);
+    } catch (error) {
+      setMyEvents([]);
+      console.log(error);
+      setPageLoading(false);
+    }
+  };
+  useEffect(() => {
+    getMyEvents();
+  }, []);
+  const deleteFromUi = (id) => {
+    const filteredEvents = myEvents.filter((event) => event._id !== id);
+    setMyEvents(filteredEvents);
+  };
+  const calculateActiveEvents = () => {
+    let activeEvents = 0;
+    let totalParticipants =0;
+    let totalRevenue = 0;
+    myEvents.forEach((event) => {
+      const dateTimeString = `${event?.date} ${event?.time}`;
+      const eventDateTime = new Date(dateTimeString);
+      const now = new Date();
+      if(eventDateTime > now){
+        activeEvents++
       }
-    }
-    useEffect(()=>{
-      getMyEvents()
-    },[])
-    const deleteFronUi=(id)=>{
-      const filteredEvents = myEvents.filter(event => event._id !== id)
-      setMyEvents(filteredEvents)
-    }
-    if(pageLoading){
-      return (<Spinner /> )
-    }
+      totalParticipants += event?.participants;
+      totalRevenue  = totalRevenue + (event?.participants * event?.fee) ;
+    });
+    return {activeEvents,totalParticipants,totalRevenue};
+  };
+ 
+
+  if (pageLoading) {
+    return <Spinner />;
+  }
   return (
     <>
       <section
@@ -128,110 +145,114 @@ const Manage_events = () => {
           </div>
 
           {/* Stats Cards */}
-          <ManageEventStats />
+          <ManageEventStats
+            totalEvents={myEvents.length}
+            activeEvents={() => calculateActiveEvents()}
+          />
 
           {/* Events Table */}
-        {myEvents.length === 0 ?
-         <div className="flex justify-center items-center py-10">
-          <p className="text-red-500 ">You have no event!</p>
-        </div> :  <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h3 className="text-lg font-semibold text-gray-900">
-                Your Created Events
-              </h3>
+          {myEvents.length === 0 ? (
+            <div className="flex justify-center items-center py-10">
+              <p className="text-red-500 ">You have no event!</p>
             </div>
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    {[
-                      "Event",
-                      "Date",
-                      "Time",
-                      "Participants",
-                      "Actions",
-                    ].map((heading, i) => (
-                      <th
-                        key={i}
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                      >
-                        {heading}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {myEvents.map((event, index) => (
-                    <tr key={index} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <img
-                            className="h-10 w-10 bg-gray-300 rounded-lg object-cover"
-                            src={event?.image}
-                            alt={event?.name}
-                          />
-                          <div className="ml-4">
-                            <div className="text-sm font-medium text-gray-900">
-                              {event?.name}
-                            </div>
-                            <div className="text-sm text-gray-500">
-                              {event?.type}
+          ) : (
+            <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+              <div className="px-6 py-4 border-b border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Your Created Events
+                </h3>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      {["Event", "Date", "Time", "Participants", "Actions"].map(
+                        (heading, i) => (
+                          <th
+                            key={i}
+                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          >
+                            {heading}
+                          </th>
+                        )
+                      )}
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {myEvents.map((event, index) => (
+                      <tr key={index} className="hover:bg-gray-50">
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <img
+                              className="h-10 w-10 bg-gray-300 rounded-lg object-cover"
+                              src={event?.image}
+                              alt={event?.name}
+                            />
+                            <div className="ml-4">
+                              <div className="text-sm font-medium text-gray-900">
+                                {event?.name}
+                              </div>
+                              <div className="text-sm text-gray-500">
+                                {event?.type}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </td>
-                      <td
-                        className="px-6 py-4 whitespace-nowrap 
+                        </td>
+                        <td
+                          className="px-6 py-4 whitespace-nowrap 
                     text-sm text-gray-900"
-                      >
-                        {event?.date}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {event?.time}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        <div className="flex items-center">
-                          <span className="font-medium">
-                            {event?.participants}
-                          </span>
-                        </div>
-                      </td>
-                      
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                       <Link  to={`/update-event/${event?._id}`}> 
-                       <button className="text-blue-600 cursor-pointer hover:text-blue-900 transition-colors duration-200">
-                          Edit
-                        </button></Link>
-                        <button
-                          onClick={() =>{ 
-                            setDeleteEvent(event?._id);
-                            setIsModalOpen(!isModalOpen)
-                          }}
-                          className="text-red-600 cursor-pointer hover:text-red-900 transition-colors duration-200"
                         >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                          {event?.date}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {event?.time}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          <div className="flex items-center">
+                            <span className="font-medium">
+                              {event?.participants}
+                            </span>
+                          </div>
+                        </td>
+
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                          <Link to={`/update-event/${event?._id}`}>
+                            <button className="text-blue-600 cursor-pointer hover:text-blue-900 transition-colors duration-200">
+                              Edit
+                            </button>
+                          </Link>
+                          <button
+                            onClick={() => {
+                              setDeleteEvent(event?._id);
+                              setIsModalOpen(!isModalOpen);
+                            }}
+                            className="text-red-600 cursor-pointer hover:text-red-900 transition-colors duration-200"
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>}
+          )}
         </div>
       </section>
       <DeleteModal
         isModalOpen={isModalOpen}
         setIsModalOpen={() => setIsModalOpen(!isModalOpen)}
         deleteEvent={deleteEvent}
-        setDeleteEvent={()=>setDeleteEvent('')}
-        deleteFronUi={deleteFronUi}
+        setDeleteEvent={() => setDeleteEvent("")}
+        deleteFromUi={deleteFromUi}
       />
     </>
   );
 };
 
-const ManageEventStats = () => {
+const ManageEventStats = ({ totalEvents,activeEvents }) => {
+   
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
       {/* Total Events */}
@@ -252,7 +273,7 @@ const ManageEventStats = () => {
           </div>
           <div className="ml-4">
             <p className="text-sm font-medium text-gray-600">Total Events</p>
-            <p className="text-2xl font-bold text-gray-900">8</p>
+            <p className="text-2xl font-bold text-gray-900">{totalEvents}</p>
           </div>
         </div>
       </div>
@@ -275,7 +296,7 @@ const ManageEventStats = () => {
           </div>
           <div className="ml-4">
             <p className="text-sm font-medium text-gray-600">Active Events</p>
-            <p className="text-2xl font-bold text-gray-900">5</p>
+            <p className="text-2xl font-bold text-gray-900">{activeEvents()?.activeEvents}</p>
           </div>
         </div>
       </div>
@@ -296,7 +317,7 @@ const ManageEventStats = () => {
             <p className="text-sm font-medium text-gray-600">
               Total Participants
             </p>
-            <p className="text-2xl font-bold text-gray-900">342</p>
+            <p className="text-2xl font-bold text-gray-900">{activeEvents()?.totalParticipants}</p>
           </div>
         </div>
       </div>
@@ -319,7 +340,7 @@ const ManageEventStats = () => {
           </div>
           <div className="ml-4">
             <p className="text-sm font-medium text-gray-600">Revenue</p>
-            <p className="text-2xl font-bold text-gray-900">$2,840</p>
+            <p className="text-2xl font-bold text-gray-900">${activeEvents()?.totalRevenue}</p>
           </div>
         </div>
       </div>
@@ -327,29 +348,36 @@ const ManageEventStats = () => {
   );
 };
 
-const DeleteModal = ({ isModalOpen, setIsModalOpen, deleteEvent,setDeleteEvent,deleteFronUi }) => {
+const DeleteModal = ({
+  isModalOpen,
+  setIsModalOpen,
+  deleteEvent,
+  setDeleteEvent,
+  deleteFromUi,
+}) => {
   if (!isModalOpen) return null;
-  const handleDelete = async() => {
-     try {
-        await apiRequiestWithCredentials('delete', `/delete-event/${deleteEvent}`);
-        setDeleteEvent();
-        setIsModalOpen();
-        deleteFronUi(deleteEvent);
-        toast.success('Event delete successfull.')
-     } catch (error) {
-        setDeleteEvent();
-        toast.error(error?.response?.data?.message);
-        console.log(error)
-     }
+  const handleDelete = async () => {
+    try {
+      await apiRequiestWithCredentials(
+        "delete",
+        `/delete-event/${deleteEvent}`
+      );
+      setDeleteEvent();
+      setIsModalOpen();
+      deleteFromUi(deleteEvent);
+      toast.success("Event delete successfull.");
+    } catch (error) {
+      setDeleteEvent();
+      toast.error(error?.response?.data?.message);
+      console.log(error);
+    }
   };
-  const handleCencelDelete=()=>{
+  const handleCencelDelete = () => {
     setIsModalOpen();
-    setDeleteEvent()
-  }
+    setDeleteEvent();
+  };
   return (
-    <div
-      className="fixed inset-0 z-50 overflow-y-auto"
-    >
+    <div className="fixed inset-0 z-50 overflow-y-auto">
       <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         {/* Overlay */}
         <div
@@ -363,7 +391,6 @@ const DeleteModal = ({ isModalOpen, setIsModalOpen, deleteEvent,setDeleteEvent,d
           {/* Close Button (top-right) */}
           <button
             type="button"
-             
             className="absolute cursor-pointer top-4 right-4 text-gray-400 hover:text-gray-600"
             onClick={handleCencelDelete}
           >
