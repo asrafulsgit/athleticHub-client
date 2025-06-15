@@ -147,8 +147,10 @@ const My_bookings = () => {
         </div>
        {/* stats cards */}
         <StatCards totalBookings={bookings.length} calculateBookingsStats={()=>calculateBookingsStats()}/>
-
-        {table ?
+        
+      {bookings.length ===0 ?<div className="flex justify-center items-center py-10">
+          <p className="text-red-500 ">You have no booking!</p>
+        </div> :  table ?
         <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
           <div className="px-6 py-4 border-b border-gray-200">
             <h3 className="text-lg font-semibold text-gray-900">Your Event Bookings</h3>
@@ -241,7 +243,6 @@ const My_bookings = () => {
              </div> 
         </div>
         }
-       
       </div>
     </section>
     <CencelBooking

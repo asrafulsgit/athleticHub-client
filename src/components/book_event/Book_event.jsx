@@ -1,46 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { apiRequiestWithCredentials } from "../../utilities/ApiCall";
+import { toast } from "react-toastify";
+import Spinner from "../aditionals/Spinner";
 
 const Book_event = () => {
-  const initEvents=[
-                   {
-    _id: "665e5d4a6f5c9bcd123a0008",
-    name: "Kickboxing Clash",
-    type: "Kickboxing",
-    date: "2025-09-05",
-    time: "5:00 PM",
-    location: "Mirpur Combat Zone",
-    fee: 20,
-    description: "One-on-one competitive kickboxing bouts across multiple weight classes.",
-    image: "https://example.com/images/kickboxing.jpg",
-    participants: "40 fighters",
-    requirements: "Mouthguard, gloves, medical form",
-    organizer: {
-      image: "",
-      name: "John Athlete",
-      email: "john@athletichub.com"
-    }
-  },
-  {
-    _id: "665e5d4a6f5c9bcd123a0009",
-    name: "National Badminton Series",
-    type: "Badminton",
-    date: "2025-07-12",
-    time: "9:00 AM",
-    location: "Indoor Sports Complex, Uttara",
-    fee: 20,
-    description: "A national-level badminton competition with singles and doubles events.",
-    image: "https://example.com/images/badminton.jpg",
-    participants: "80+ players",
-    requirements: "Badminton gear, registration receipt",
-    organizer: {
-      image: "",
-      name: "John Athlete",
-      email: "john@athletichub.com"
-    }
-  },
-                ]
-  const [events,setEvents]=useState(initEvents)
+  const [events,setEvents]=useState([])
+  const [pageLoading,setPageLoading]=useState(true)
+  const getBookEvents=async()=>{
+    
+    try {
+            const data= await apiRequiestWithCredentials('get',`/book-events`)
+            setEvents(data?.events)
+            setPageLoading(false)
+          } catch (error) {
+            console.log(error)
+            setEvents([])
+            toast.error(error?.response?.data?.message)
+            setPageLoading(false)
+          }
+  }
+  useEffect(()=>{
+      getBookEvents()
+  },[])
+  const handleDeleteEvent=async(id)=>{
+    try {
+            await apiRequiestWithCredentials('delete',`/book-event/${id}`)
+            const fileterEvents = events.filter(events => events.event._id !== id);
+            setEvents(fileterEvents)
+            const fileterEventsIds = fileterEvents.map(book=> book.event._id)
+            localStorage.setItem('bookeEvent',JSON.stringify(fileterEventsIds))
+            toast.success('Book event deleted.')
+          } catch (error) {
+            console.log(error)
+            toast.error(error?.response?.data?.message)
+          }
+  }
+  if(pageLoading){
+    return (<Spinner /> )
+  }
   return (
     <section  className="min-h-screen bg-gray-50 py-8 block">
       <div className="max-w-7xl mx-auto px-4">
@@ -51,7 +49,11 @@ const Book_event = () => {
         </div>
 
         {/* Events Table */}
-        <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+        {events.length===0 ? 
+         <div className="flex justify-center items-center py-10">
+          <p className="text-red-500 ">You have no book event!</p>
+        </div>
+        :<div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
           
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
@@ -66,7 +68,9 @@ const Book_event = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {events.map(({ _id, image, name, type, date, location, fee }) => (
+                {events.map((events) => {
+                  const { _id, image, name, type, date, location, fee }=events?.event;
+                  return(
                   <tr key={_id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
@@ -83,19 +87,21 @@ const Book_event = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${fee}</td>
                     <td className="flex gap-3 px-6 py-4 whitespace-nowrap text-sm font-medium">
                      <Link to={`/event-details/${_id}`}> <button className="text-green-600 cursor-pointer
-                       hover:text-green-900 transition-colors duration-200" onClick={() => cancelBooking(id)}>
+                       hover:text-green-900 transition-colors duration-200">
                         Book Now
                       </button></Link>
-                      <button className="text-red-600 cursor-pointer hover:text-red-900 transition-colors duration-200" onClick={() => cancelBooking(id)}>
+                      <button className="text-red-600 cursor-pointer
+                       hover:text-red-900 transition-colors duration-200" 
+                       onClick={()=>handleDeleteEvent(_id)}>
                         Delete
                       </button>
                     </td>
                   </tr>
-                ))}
+                )})}
               </tbody>
             </table>
           </div>
-        </div>
+        </div>}
       </div>
     </section>
   );

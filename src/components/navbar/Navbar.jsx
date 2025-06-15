@@ -7,11 +7,12 @@ import { toast } from 'react-toastify';
 
 const Navbar = () => {
 
-  const {isLoggedIn,setIsLoggedIn,setLoading} = useContext(AuthContext)
+  const {isLoggedIn,setIsLoggedIn,setLoading,setUserInfo} = useContext(AuthContext)
   const handleLogout = async()=>{
     setLoading(true)
       try {
         await apiRequiestWithCredentials('get','/user/logout');
+        setUserInfo(null)
         setIsLoggedIn(false)
         setLoading(false)
         toast.success('User logout successfull')

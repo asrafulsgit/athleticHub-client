@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
-  const {handleLoginWithGoogle,setIsLoggedIn} = useContext(AuthContext)
+  const {handleLoginWithGoogle,setIsLoggedIn,setUserInfo} = useContext(AuthContext)
   const [showPassword, setShowPassword] = useState(false);
   const initLoginInfo={
       email: "",
@@ -29,7 +29,8 @@ const Login = () => {
      e.preventDefault();
      setLoginLoading(true)
      try {
-       await apiRequiestWithCredentials('post', '/user/login', loginInfo)
+      const data = await apiRequiestWithCredentials('post', '/user/login', loginInfo)
+       setUserInfo(data.user)
        setIsLoggedIn(true)
        setLoginLoading(false)
        toast.success('User login successfull')

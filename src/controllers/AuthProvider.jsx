@@ -12,6 +12,7 @@ const googleProvider = new GoogleAuthProvider();
 import {app} from "./firebase_config";
 import { ToastContainer } from "react-toastify";
 import { apiRequiestWithCredentials } from "../utilities/ApiCall";
+import { bookeEvents } from "../utilities/bookedEvent";
 
 
 
@@ -23,7 +24,6 @@ const AuthProvider = ({children})=>{
     const [isLoggedIn,setIsLoggedIn]=useState(false)
     const [loading,setLoading]=useState(true)
     const [isMobileNav,setIsMobileNav] = useState(false)
-
     
     const handleLoginWithGoogle =async()=>{
         const provider = new GoogleAuthProvider();
@@ -31,7 +31,8 @@ const AuthProvider = ({children})=>{
           const result = await signInWithPopup(auth, provider);
           const token = await result.user.getIdToken();
   
-          await apiRequiestWithCredentials('post','/google/login',{token})
+         const data = await apiRequiestWithCredentials('post','/google/login',{token});
+         setUserInfo(data.user)
           return true;
         } catch (err) {
           console.error("Google login failed:", err);
@@ -53,10 +54,12 @@ const AuthProvider = ({children})=>{
           try {
             const data = await apiRequiestWithCredentials('get','/user/observer');
             setUserInfo(data?.user)
+            bookeEvents()
             setIsLoggedIn(true)
             setLoading(false)
           } catch (error) {
             setIsLoggedIn(false)
+            setUserInfo(null)
             setLoading(false)
             console.log(error)
           }
