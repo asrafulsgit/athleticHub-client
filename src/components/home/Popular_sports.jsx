@@ -29,28 +29,29 @@ const sports = [
 
 const Popular_sports = () => {
   return (
-    <div className="bg-white py-16">
-      <div className="max-w-7xl mx-auto px-4">
+    <div className="bg-white py-16 px-5">
+      <div className="max-w-7xl mx-auto ">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Popular Sports</h2>
-          <p className="text-lg text-gray-600">Choose from a variety of athletic disciplines</p>
+          <h2 className="text-2xl sm:text-3xl 
+        md:text-4xl font-bold text-gray-900 mb-1 sm:mb-2">Popular Sports</h2>
+          <p className="sm:text-lg text-gray-600">Choose from a variety of athletic disciplines</p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-          {sports.map((sport, index) => (
-            <div
-              key={index}
-              className="text-center p-6 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all duration-200"
-            >
-              <img
-                src={sport.img}
-                alt={sport.name}
-                className="w-16 h-16 mx-auto mb-3 rounded-full object-cover"
-              />
-              <h3 className="font-semibold text-gray-900">{sport.name}</h3>
-            </div>
-          ))}
-        </div>
+        <div className="flex flex-wrap justify-center gap-6">
+  {sports.map((sport, index) => (
+    <div
+      key={index}
+      className="w-[45%] md:w-[22%] lg:w-[15%] text-center p-6 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all duration-200"
+    >
+      <img
+        src={sport.img}
+        alt={sport.name}
+        className="w-16 h-16 mx-auto mb-3 rounded-full object-cover"
+      />
+      <h3 className="font-semibold text-gray-900">{sport.name}</h3>
+    </div>
+  ))}
+</div>
       </div>
     </div>
   );

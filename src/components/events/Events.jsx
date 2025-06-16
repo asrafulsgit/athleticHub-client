@@ -10,28 +10,32 @@ import { Helmet } from "react-helmet";
 
 
 const EventCard = ({ event }) => (
-  <div className="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300">
-    <img src={event?.image} alt={event.name} className="w-full h-48 bg-gray-300 object-cover" />
-    <div className="p-6">
-      <div className="flex items-center justify-between mb-2">
-        <span className={`bg-blue-100 text-blue-800 text-xs font-medium 
-          px-2.5 py-0.5 rounded`}>
-          {event?.type}
-        </span>
-        <span className="text-sm text-gray-500">{event?.date}</span>
-      </div>
-      <h3 className="text-xl font-semibold text-gray-900 mb-2">{event?.name}</h3>
-      <p className="text-gray-600 mb-2">{event?.location}</p>
-      <p className="text-gray-700 text-sm mb-4">{event?.description}</p>
-      <div className="flex items-center justify-between">
-        <span className="text-lg font-bold text-green-600">${event?.fee}</span>
-       <Link to={`/event-details/${event?._id}`} > 
-       <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200">
-          View Details
-        </button></Link>
-      </div>
-    </div>
-  </div>
+  <div  className="bg-white rounded-lg 
+              border border-gray-200 overflow-hidden hover:shadow-lg 
+              transition-shadow duration-300">
+                  <img src={event?.image} alt={event.name} className="w-full h-48 bg-gray-300 object-cover" />
+                  <div className="py-4 px-3">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className={`bg-blue-100 text-blue-800 text-xs font-medium 
+                        px-2.5 py-0.5 rounded`}>
+                        {event?.type}
+                      </span>
+                      <span className="text-sm text-gray-500">{event?.date}</span>
+                    </div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-0.5">{event?.name}</h3>
+                    <p className="text-gray-600  mb-2">{event?.location}</p>
+                    <p className="text-gray-700 text-sm mb-4">
+                {event?.description.length > 70 ? `${event?.description.slice(0,70)}...` : event?.description }</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-lg font-bold text-green-600">${event?.fee}</span>
+                     <Link to={`/event-details/${event?._id}`} > 
+                     <button className="bg-blue-600 text-sm sm:text-[16px] cursor-pointer text-white px-3 sm:px-4 
+                     py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200">
+                        View Details
+                      </button></Link>
+                    </div>
+                  </div>
+                </div>
 );
 
 const Events = () => {
@@ -128,11 +132,12 @@ const Events = () => {
         <title>Events</title>
       </Helmet>
    
-   <div className="px-10 py-8">
+   <section className="px-5 py-8">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">All Events</h1>
-        <p className="text-lg text-gray-600">Discover and book athletic events near you</p>
+        <h1 className="text-2xl sm:text-3xl 
+        md:text-4xl font-bold text-gray-900 mb-1 sm:mb-2">All Events</h1>
+        <p className="sm:text-lg text-gray-600">Discover and book athletic events near you</p>
       </div>
 
       {/* Search and Filter */}
@@ -211,7 +216,7 @@ const Events = () => {
               <Pagination />
             </div>
       }
-    </div>
+    </section>
     </>
   );
 };

@@ -13,7 +13,7 @@ const NotFoundPage = () => {
         style={{ height: 400, width: 500  }} />
       <Link to='/'>
       <button className="mt-3 px-5 cursor-pointer py-2 border-none rounded-[3px]
-       bg-blue-900 text-white font-bold text-[16px]">
+       bg-blue-700 text-white font-bold text-[16px]">
               Go Back Home
             </button></Link>
     </div>

@@ -70,6 +70,22 @@ const Profile_Update = () => {
       experties: prev.experties.filter((exp) => exp !== expertise)
     }));
   };
+  const sports=[
+                  "Running",
+                  "Swimming",
+                  "Sprinting",
+                  "Long-jump",
+                  "High-jump",
+                  "Hurdle-race",
+                  "Cycling",
+                  "Basketball",
+                  "Tennis",
+                  "Track-field",
+                  "Triathlon",
+                  "Weightlifting",
+                  "Volleyball",
+                  "Marathon"
+                ]
   return (
    <>
    <Helmet>
@@ -189,20 +205,7 @@ const Profile_Update = () => {
             className="flex-1 px-4 py-3 border border-gray-300 rounded-lg outline-none"
           >
             <option value="">Select an expertise</option>
-            {[
-              "Running",
-              "Swimming",
-              "Sprinting",
-              "Long-jump",
-              "High-jump",
-              "Hurdle-race",
-              "Cycling",
-              "Basketball",
-              "Tennis",
-              "Track-field",
-              "Triathlon",
-              "Weightlifting",
-            ].map((option) => (
+            {sports.map((option) => (
               <option key={option} value={option}>
                 {option}
               </option>
@@ -252,7 +255,7 @@ const Profile_Update = () => {
   </div>
 </div>
   {/* Form Actions */}
-  <div className="flex flex-col sm:flex-row gap-4 pt-6 border-t border-gray-200">
+  <div className="flex  gap-4 pt-6 border-t border-gray-200">
     <Link to='/profile'> 
         <button
             type="button"

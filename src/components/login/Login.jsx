@@ -93,7 +93,7 @@ const Login = () => {
         </div>
 
         {/* Login Form */}
-        <div className="bg-white rounded-lg border border-gray-200 p-8 shadow-sm">
+        <div className="bg-white rounded-lg border border-gray-200 p-4 sm:p-6 shadow-sm">
           <form id="loginForm" className="space-y-6" onSubmit={handleSubmit}>
             {/* Email Field */}
             <div>

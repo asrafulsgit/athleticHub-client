@@ -23,6 +23,7 @@ const Update_event = () => {
         toast.error(error?.response?.data?.message)
         setEventData({})
         setPageLoading(false)
+        navigate('/404')
       }
   }
   useEffect(()=>{
@@ -86,13 +87,14 @@ const Update_event = () => {
   return (
   <><Helmet>
         <title>Update event</title>
-      </Helmet> <section id="update-event" className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-4xl mx-auto px-4">
+      </Helmet> 
+      <section id="update-event" className="min-h-screen px-5 bg-gray-50 py-8">
+      <div className="max-w-4xl mx-auto ">
         {/* Header */}
         <Header />
 
         {/* Form Container */}
-        <div className="bg-white rounded-lg border border-gray-200 p-6 md:p-8">
+        <div className="bg-white rounded-lg border border-gray-200 p-4 sm:p-6 md:p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Event Name */}
             <div>
@@ -334,16 +336,9 @@ const Update_event = () => {
 const Header =()=>{
   return (
     <div className="mb-8">
-          <div className="flex items-center mb-4">
-            <button className="flex items-center text-blue-600 hover:text-blue-800 transition-colors duration-200 mr-4">
-              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-              </svg>
-              Back to Manage Events
-            </button>
-          </div>
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Update Event</h1>
-          <p className="text-lg text-gray-600">Edit your event details and save changes</p>
+          <h1 className="text-2xl sm:text-3xl 
+        md:text-4xl font-bold text-gray-900 mb-1 sm:mb-2">Update Event</h1>
+          <p className="sm:text-lg text-gray-600">Edit your event details and save changes</p>
         </div>
   )
 }

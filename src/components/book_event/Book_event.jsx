@@ -43,12 +43,13 @@ const Book_event = () => {
   return (
    <><Helmet>
         <title>Book event</title>
-      </Helmet> <section  className="min-h-screen bg-gray-50 py-8 block">
-      <div className="max-w-7xl mx-auto px-4">
+      </Helmet> <section  className="min-h-[70vh] px-5 bg-gray-50 py-8 block">
+      <div className="max-w-7xl mx-auto ">
         {/* Header Section */}
         <div className="flex flex-col  md:items-start md:justify-start mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Book Events</h1>
-            <p className="text-lg text-gray-600">Book Your Event – Be Game Ready.</p>
+            <h1 className="text-2xl sm:text-3xl 
+        md:text-4xl font-bold text-gray-900 mb-1 sm:mb-2">Book Events</h1>
+            <p className="sm:text-lg text-gray-600">Book Your Event – Be Game Ready.</p>
         </div>
 
         {/* Events Table */}

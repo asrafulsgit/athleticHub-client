@@ -118,13 +118,14 @@ const My_bookings = () => {
    <Helmet>
         <title>My bookings</title>
       </Helmet>
-   <section id="my-bookings" className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-7xl mx-auto px-4">
+   <section id="my-bookings" className="min-h-screen px-5 bg-gray-50 py-8">
+      <div className="max-w-7xl mx-auto ">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
           <div>
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">My Bookings</h1>
-            <p className="text-lg text-gray-600">Manage your event registrations and bookings</p>
+            <h1 className="text-2xl sm:text-3xl 
+        md:text-4xl font-bold text-gray-900 mb-1 sm:mb-2">My Bookings</h1>
+            <p className="sm:text-lg text-gray-600">Manage your event registrations and bookings</p>
           </div>
           <div className="flex items-center space-x-2 mt-4 md:mt-0">
             <span className="text-sm text-gray-600">View:</span>

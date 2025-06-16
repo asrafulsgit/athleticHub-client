@@ -82,13 +82,13 @@ const Create_event = () => {
     return (<Spinner /> )
   }
   return (
-    <section id="create-event" className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-4xl mx-auto px-4">
+    <section id="create-event" className="min-h-screen px-5 bg-gray-50 py-8">
+      <div className="max-w-4xl mx-auto ">
         {/* Header */}
         <Header />
 
         {/* Form Container */}
-        <div className="bg-white rounded-lg border border-gray-200 p-6 md:p-8">
+        <div className="bg-white rounded-lg border border-gray-200 p-4 sm:p-6 md:p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Event Name */}
             <div>
@@ -330,10 +330,11 @@ const Create_event = () => {
 const Header = () => {
   return (
     <div className="mb-8">
-      <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+      <h1 className="text-2xl sm:text-3xl 
+        md:text-4xl font-bold text-gray-900 mb-1 sm:mb-2">
         Create New Event
       </h1>
-      <p className="text-lg text-gray-600">
+      <p className="sm:text-lg text-gray-600">
         Fill out the form below to create and publish your athletic event
       </p>
     </div>

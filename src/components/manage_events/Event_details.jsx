@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { apiRequiestWithCredentials } from "../../utilities/ApiCall";
 import Spinner from "../aditionals/Spinner";
 import { toast } from "react-toastify";
@@ -9,6 +9,7 @@ import { Helmet } from "react-helmet";
 
 const Event_details = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [event, setEvent] = useState({});
 
   const [bookeEvents, setBookeEvents] = useState(
@@ -30,6 +31,7 @@ const Event_details = () => {
       toast.error(error?.response?.data?.message);
       setEvent({});
       setPageLoading(false);
+      navigate('/404')
     }
   };
 
@@ -118,9 +120,10 @@ const Event_details = () => {
             </div>
 
             {/* Event Information */}
-            <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">
-              <div className="flex items-center justify-between mb-4">
-                <span className="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">
+            <div className="bg-white rounded-lg border border-gray-200 p-4 sm:p-6 mb-6">
+              <div className="flex flex-col gap-2 sm:flex-row items-center justify-between mb-4">
+                <span className="bg-blue-100 text-blue-800 text-sm font-medium 
+                px-3 py-1 rounded-full">
                   {event?.type}
                 </span>
                 <span className="text-sm text-gray-500">
@@ -128,10 +131,10 @@ const Event_details = () => {
                 </span>
               </div>
 
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              <h1 className="text-[28px] sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 {event?.name}
               </h1>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div className="grid grid-cols-2 gap-6 mb-6">
                 {[
                   {
                     label: "Date",

@@ -36,19 +36,19 @@ const Hero = ({heroEvents}) => {
             nextEl: '.custom-next',
             prevEl: '.custom-prev',
           }}
-          className="w-full max-w-4xl h-[65%] mt-40 "
+          className="w-full max-w-4xl h-[65%] mt-40 md:mt-60 "
         >
           {heroEvents.map((event,index)=>{
             return(
-              <SwiperSlide className=''>
+              <SwiperSlide className='px-15 md:px-30' key={index}>
             <div>
-              <h1 className="text-4xl md:text-6xl font-bold mb-4">
-                {event?.type}
-              </h1>
-              <p className="text-xl md:text-2xl mb-8">
+              <h1 className="text-[26px] sm:text-3xl md:text-4xl leading-9 md:leading-11 font-bold mb-2">
                 {event?.name}
+              </h1>
+              <p className="md:text-xl font-[300] text-gray-300 mb-8">
+                {event?.description.length > 100 ? `${event?.description.slice(0,100)}...` : event?.description}
               </p>
-              <p className="text-sm md:text-xl mb-8">
+              <p className="text-[12px] md:text-[14px] mb-2">
                 {event?.date} || {event?.time}
               </p>
              <Link to={`/event-details/${event?._id}`} > <button className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-200">

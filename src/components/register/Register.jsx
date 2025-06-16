@@ -123,7 +123,7 @@ const Register = () => {
         </div>
 
         {/* Registration Form */}
-        <div className="bg-white rounded-lg border border-gray-200 p-8 shadow-sm">
+        <div className="bg-white rounded-lg border border-gray-200 p-4 sm:p-6 shadow-sm">
           <form id="registerForm" className="space-y-6" onSubmit={handleSubmit}>
             {/* Name Field */}
             <div>

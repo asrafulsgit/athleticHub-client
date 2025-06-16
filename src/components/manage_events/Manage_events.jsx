@@ -112,22 +112,26 @@ const Manage_events = () => {
       </Helmet> 
       <section
         id="manage-events"
-        className="min-h-screen bg-gray-50 py-8 block"
+        className="min-h-screen bg-gray-50 py-8 px-5 block"
       >
-        <div className="max-w-7xl mx-auto px-4">
+        <div className="max-w-7xl mx-auto ">
           {/* Header Section */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
             <div>
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              <h1 className="text-2xl sm:text-3xl 
+        md:text-4xl font-bold text-gray-900 mb-1 sm:mb-2">
                 Manage Events
               </h1>
-              <p className="text-lg text-gray-600">
+              <p className="sm:text-lg text-gray-600">
                 Organize and manage your created athletic events
               </p>
             </div>
             <div className="mt-4 md:mt-0">
               <NavLink to="/create-event">
-                <button className="bg-blue-600 cursor-pointer text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium flex items-center">
+                <button className="bg-blue-600 cursor-pointer
+                 text-white text-[14px] sm:text-[16px] px-4 sm:px-6 py-2  sm:py-3 rounded-lg
+                 hover:bg-blue-700 
+                 transition-colors duration-200 font-medium flex items-center">
                   <svg
                     className="w-5 h-5 mr-2"
                     fill="none"
@@ -257,9 +261,9 @@ const Manage_events = () => {
 const ManageEventStats = ({ totalEvents,activeEvents }) => {
    
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
       {/* Total Events */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white rounded-lg border border-gray-200 p-2 sm:p-4">
         <div className="flex items-center">
           <div className="p-2 bg-blue-100 rounded-lg">
             <svg
@@ -282,7 +286,7 @@ const ManageEventStats = ({ totalEvents,activeEvents }) => {
       </div>
 
       {/* Active Events */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white rounded-lg border border-gray-200 p-2 sm:p-4">
         <div className="flex items-center">
           <div className="p-2 bg-green-100 rounded-lg">
             <svg
@@ -305,7 +309,7 @@ const ManageEventStats = ({ totalEvents,activeEvents }) => {
       </div>
 
       {/* Total Participants */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white rounded-lg border border-gray-200 p-2 sm:p-4">
         <div className="flex items-center">
           <div className="p-2 bg-purple-100 rounded-lg">
             <svg
@@ -326,7 +330,7 @@ const ManageEventStats = ({ totalEvents,activeEvents }) => {
       </div>
 
       {/* Revenue */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white rounded-lg border border-gray-200 p-2 sm:p-4">
         <div className="flex items-center">
           <div className="p-2 bg-yellow-100 rounded-lg">
             <svg
