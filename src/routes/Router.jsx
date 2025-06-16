@@ -14,6 +14,7 @@ import Profile from "../components/profile/Profile";
 import Manage_events from "../components/manage_events/Manage_events";
 import Book_event from "../components/book_event/Book_event";
 import NotFoundPage from "../components/aditionals/NotFoundPage";
+import Profile_Update from "../components/profile/Profile_Update";
 
 const Router = createBrowserRouter([
     {
@@ -57,6 +58,10 @@ const Router = createBrowserRouter([
             { 
                 path : 'profile',
                 element : <Auth_middleware><Profile /></Auth_middleware>
+            },
+            { 
+                path : 'update-profile',
+                element : <Auth_middleware><Profile_Update /></Auth_middleware>
             },
             { 
                 path : 'login', 

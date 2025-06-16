@@ -215,9 +215,10 @@ const BookingCard =({event})=> {
   };
 
   return (
-    <div className="lg:col-span-1">
+   <> 
+   <div className="lg:col-span-1 sticky top-8">
       {/* Booking Card */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6 sticky top-8">
+      <div className="bg-white rounded-lg border border-gray-200 p-6  ">
         <div className="text-center mb-6">
           <p className="text-3xl font-bold text-gray-900 mb-2">${event?.fee}</p>
           <p className="text-sm text-gray-600">Registration Fee</p>
@@ -326,32 +327,80 @@ const BookingCard =({event})=> {
           </div>
         </div> */}
       </div>
-
-      {/* Event Stats */}
-      {/* <div className="bg-white rounded-lg border border-gray-200 p-6 mt-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Event Statistics</h3>
-        <div className="space-y-3">
-          <div className="flex justify-between">
-            <span className="text-gray-600">Total Participants</span>
-            <span className="font-semibold">253</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-gray-600">Average Finish Time</span>
-            <span className="font-semibold">4:15:32</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-gray-600">Course Distance</span>
-            <span className="font-semibold">26.2 miles</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-gray-600">Elevation Gain</span>
-            <span className="font-semibold">1,200 ft</span>
-          </div>
-        </div>
-      </div> */}
+     <CreateReviewCard eventId={event._id}/>
     </div>
+    </>
   );
 }
+
+
+const CreateReviewCard =({eventId})=>{
+   const [rating, setRating] = useState(0); 
+   const [comment, setComment] = useState(''); 
+   const handleClick = (index) => {
+    setRating(index);
+  };
+  const {reviewLoading,setReviewLoading}=useState(false)
+  const handleSubmitReview=async(e)=>{
+    e.preventDefault()
+    const review = {
+    event : eventId, 
+    rating,
+    comment,
+    date : new Date().toISOString().split('T')[0]}
+    if(!comment || rating <= 0 || !eventId){
+        toast.error('comment, rating and event is required!')
+        return;
+    }
+    setReviewLoading(true)
+    try {
+      await apiRequiestWithCredentials('post','/create-review',review);
+      setComment('')
+      setRating(0)
+      toast.success("Thanks a lot for sharing your thoughts with us!")
+      setReviewLoading(false)
+    } catch (error) {
+      console.log(error)
+      toast.success(error?.response?.data?.message)
+      setReviewLoading(false)
+    }
+    
+  }
+  return(
+  <>
+      <div className="border  border-[#00000034] p-4 rounded-lg  mt-10">
+        <div className="border-b border-[#0000002a]  pb-2 justify-between items-center">
+          <p className="text-[15px] font-medium opacity-80">Your Rating</p>
+          {/* implement rating */}
+          <div className="">  
+            {[1, 2, 3, 4, 5].map((star) => (
+              <span
+                key={star}
+                className={`text-3xl cursor-pointer transition-colors duration-200 ${
+    rating >= star ? "text-yellow-400" : "text-gray-300"
+  }`}
+                onClick={() => handleClick(star)}
+              >
+                ★
+              </span>
+            ))}
+          </div>
+        </div>
+        <form onSubmit={handleSubmitReview} className="mb-3">
+            <textarea name="review" value={comment} onChange={(e)=> setComment(e.target.value)} id="review" rows={5} placeholder="Comment" className="w-[100%] p-1 outline-none mt-2 h-[100px] border border-[#0000002a] resize-none" ></textarea>
+            <div>
+                <input type="checkbox" name="term" id="term" className="mr-3"/>
+                <span className="opacity-90 text-[15px] ">We care about your data, here is our <a className="opacity-100 font-semibold" href="">Privacy Policy</a></span>
+            </div>
+            <button type="submit" className="px-4 cursor-pointer py-2 rounded-[3px] 
+            font-[400] mt-3  text-[16px] bg-[#0000008a] text-white">{reviewLoading? 'Submiting...' : 'Submit Review'}</button>
+        </form>
+      </div>
+  </>
+  )
+}
+
+
 
 
 export default Event_details;

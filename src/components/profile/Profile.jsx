@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
+import { apiRequiestWithCredentials } from '../../utilities/ApiCall';
+import Spinner from '../aditionals/Spinner';
+import { useContext } from 'react';
+import { AuthContext } from '../../controllers/AuthProvider';
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
+  const {userInfo}=useContext(AuthContext)
   const [activeTab, setActiveTab] = useState('overview');
-
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
@@ -13,6 +19,44 @@ const Profile = () => {
     { id: 'achievements', label: 'Achievements' },
     { id: 'preferences', label: 'Preferences' }
   ];
+  const [pageLoading,setPageLoading]=useState(true)
+  const [stats,setStats]=useState({})
+  const [profile,setProfile]=useState({
+    name :userInfo?.name,
+    email :userInfo?.email,
+    avatar : userInfo?.avatar,
+    experties: [],
+    bio : '',
+    phone : '',
+    location : '',
+    dob : ''
+  })
+  const getProfileInfo=async()=>{
+    try {
+      const data = await apiRequiestWithCredentials('get','/profile');
+      setStats(data?.stats)
+      const profileInfo = data?.profile;
+      setProfile((prev)=>{
+        return{
+          ...prev,
+          ...profileInfo
+        }
+      })
+      setPageLoading(false)
+    } catch (error) {
+      console.log(error)
+      setPageLoading(false)
+    }
+  }
+
+  useEffect(()=>{
+    getProfileInfo();
+  },[])
+
+
+  if(pageLoading){
+    return(<Spinner /> )
+  }
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-10">
@@ -22,11 +66,11 @@ const Profile = () => {
           {/* Profile Picture */}
           <div className="relative">
             <img
-              src="https://avatar.iran.liara.run/public/45"
+              src={profile?.avatar || "https://avatar.iran.liara.run/public/45"}
               alt="Profile"
               className="w-24 h-24 rounded-full border-4 border-blue-100"
             />
-            <button className="absolute bottom-0 right-0 bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 transition-colors duration-200">
+            {/* <button className="absolute bottom-0 right-0 bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 transition-colors duration-200">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
@@ -35,32 +79,36 @@ const Profile = () => {
                   d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
                 />
               </svg>
-            </button>
+            </button> */}
           </div>
 
           {/* Profile Info */}
           <div className="flex-1 text-center md:text-left">
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">John Athlete</h1>
-            <p className="text-gray-600 mb-2">john@athletichub.com</p>
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">{profile?.name}</h1>
+            <p className="text-gray-600 mb-2">{profile?.email}</p>
             <div className="flex flex-wrap justify-center md:justify-start gap-2 mb-4">
-              <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Athlete</span>
-              <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Event Organizer</span>
-              <span className="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Premium Member</span>
-            </div>
+              {profile?.experties.map((expert,index)=>{
+                return(
+                  <span key={index} className="bg-blue-100 text-blue-800 
+              text-xs font-medium px-2.5 py-0.5 rounded-full">{expert}</span>
+                )
+              }) }
+             </div>
             <p className="text-gray-700 text-sm">
-              Passionate runner and event organizer with 5+ years of experience in athletic competitions. Love connecting
-              athletes with amazing events!
+              {profile?.bio}
             </p>
           </div>
 
           {/* Action Buttons */}
           <div className="flex flex-col space-y-2">
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium">
-              Edit Profile
-            </button>
-            <button className="border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors duration-200 font-medium">
+           <Link to='/update-profile' state={profile}> 
+              <button className="bg-blue-600 cursor-pointer text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium">
+                  Edit Profile
+                </button>
+            </Link>
+            {/* <button className="border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors duration-200 font-medium">
               Settings
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
@@ -68,14 +116,16 @@ const Profile = () => {
       {/* Profile Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
         {[
-          { label: 'Events Participated', value: 12, color: 'blue' },
-          { label: 'Events Organized', value: 8, color: 'green' },
-          { label: 'Total Participants', value: 247, color: 'purple' },
-          { label: 'Average Rating', value: '4.9', color: 'yellow' }
+          { label: 'Events Participated', value: stats?.eventsPaticipated || 0, color: 'blue' },
+          { label: 'Events Organized', value: stats?.eventsOrganized || 0, color: 'green' },
+          { label: 'Total Participants', value: stats?.totalParticipants || 0, color: 'purple' },
+          { label: 'Average Rating', value: stats?.avgRating || 0, color: 'yellow' }
         ].map((stat, idx) => (
           <div key={idx} className="bg-white rounded-lg border border-gray-200 p-6 text-center">
-            <div className={`text-3xl font-bold text-${stat.color}-600 mb-2`}>{stat.value}</div>
-            <div className="text-sm text-gray-600">{stat.label}</div>
+            <div className={`text-3xl font-bold text-${stat?.color}-600 mb-2`}>
+              {stat?.value < 10 ? `0${stat?.value}` : stat?.value}
+            </div>
+            <div className="text-sm text-gray-600">{stat?.label}</div>
           </div>
         ))}
       </div>
@@ -110,12 +160,11 @@ const Profile = () => {
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Personal Information</h3>
                 <div className="space-y-4">
                   {[
-                    { label: 'Full Name', value: 'John Athlete' },
-                    { label: 'Email', value: 'john@athletichub.com' },
-                    { label: 'Phone', value: '+1 (555) 123-4567' },
-                    { label: 'Location', value: 'New York, NY' },
-                    { label: 'Member Since', value: 'January 2023' },
-                    { label: 'Date of Birth', value: 'March 15, 1990' }
+                    { label: 'Full Name', value: profile?.name },
+                    { label: 'Email', value: profile?.email },
+                    { label: 'Phone', value: profile?.phone },
+                    { label: 'Location', value: profile?.location },
+                    { label: 'Date of Birth', value: profile?.dob}
                   ].map((item, idx) => (
                     <div key={idx} className="flex justify-between">
                       <span className="text-gray-600">{item.label}:</span>
@@ -126,7 +175,7 @@ const Profile = () => {
               </div>
 
               {/* Athletic Profile */}
-              <div>
+              {/* <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Athletic Profile</h3>
                 <div className="space-y-4">
                   <div>
@@ -152,14 +201,14 @@ const Profile = () => {
                     <span className="font-medium">Jane Doe - (555) 987-6543</span>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           )}
 
           {activeTab === 'activity' && (
             <div>
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h3>
-              {/* Similar to your HTML structure, map through activity data if needed */}
+              
               <p className="text-gray-500">Activity list goes here...</p>
             </div>
           )}
