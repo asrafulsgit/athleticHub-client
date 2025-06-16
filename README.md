@@ -34,4 +34,5 @@ AthleticHub is a **sports event management platform** that enables users to disc
 - `lottie-react` – Animation support  
 - `react-helmet` – Managing document head  
 - `react-toastify` – Notification system  
-- `swiper` – Carousel/slider library
+- `swiper` – Carousel/slider library  
+- `react-tooltip` – Lightweight tooltip component for React
