@@ -12,7 +12,7 @@ const googleProvider = new GoogleAuthProvider();
 import {app} from "./firebase_config";
 import { ToastContainer } from "react-toastify";
 import { apiRequiestWithCredentials } from "../utilities/ApiCall";
-import { bookeEvents } from "../utilities/bookedEvent";
+import { bookeEvents, myBookingEvents } from "../utilities/bookedEvent";
 
 
 
@@ -54,7 +54,8 @@ const AuthProvider = ({children})=>{
           try {
             const data = await apiRequiestWithCredentials('get','/user/observer');
             setUserInfo(data?.user)
-            bookeEvents()
+            bookeEvents();
+            myBookingEvents();
             setIsLoggedIn(true)
             setLoading(false)
           } catch (error) {

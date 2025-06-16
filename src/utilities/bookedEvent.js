@@ -2,9 +2,16 @@ import { toast } from "react-toastify";
 import { apiRequiestWithCredentials } from "./ApiCall"
 
 
-const myBookingEvents = async()=>{
-
+export const myBookingEvents = async()=>{
+    try {
+     const data = await apiRequiestWithCredentials('get','/my-booking-ids');
+     localStorage.setItem('myBookings',JSON.stringify(data?.events))
+    } catch (error) {
+      console.log(error)
+      toast.error(error?.response?.data?.message)
+    }
 }
+
 export const bookeEvents =async()=>{
     try {
      const data = await apiRequiestWithCredentials('get','/book-event-ids');

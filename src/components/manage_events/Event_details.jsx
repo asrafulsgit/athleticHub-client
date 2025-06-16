@@ -7,10 +7,12 @@ import { useContext } from "react";
 import { AuthContext } from "../../controllers/AuthProvider";
 
 const Event_details = () => {
-  const {id}=useParams()
-  const [event,setEvent]=useState({})
+  const {id}=useParams();
+  const [event,setEvent]=useState({});
+
   const [bookeEvents,setBookeEvents]=useState(JSON.parse(localStorage.getItem('bookeEvent')) || [])
-  const [isBooked,setIsBooked]=useState(bookeEvents.includes(id))
+  const [isBookedEvent,setIsBookedEvent]=useState(bookeEvents.includes(id))
+  
   
   const [pageLoading,setPageLoading]=useState(true);
   const getEvent=async()=>{
@@ -25,6 +27,7 @@ const Event_details = () => {
         setPageLoading(false)
       }
   }
+
   useEffect(()=>{
     getEvent()
   },[])
@@ -32,7 +35,7 @@ const Event_details = () => {
       try {
           await apiRequiestWithCredentials('post',`/create/book-event/${id}`)
           localStorage.setItem('bookeEvent',JSON.stringify([...bookeEvents,id]))
-          setIsBooked(true)
+          setIsBookedEvent(true)
           toast.success('Book event successfull.')
       } catch (error) {
         console.log(error)
@@ -57,7 +60,7 @@ const Event_details = () => {
                 alt='Event Banner'
                 className="w-full bg-gray-300 h-64 md:h-80 object-cover"
               />
-            {isBooked?  
+            {isBookedEvent?  
               <button disabled className="absolute top-5 
             right-5 w-8 cursor-pointer bg-blue-900 rounded-sm">
                 <svg
@@ -174,13 +177,17 @@ const Event_details = () => {
 
 const BookingCard =({event})=> {
   const {userInfo}=useContext(AuthContext)
-  console.log(userInfo)
   const [bookLoading,setBookLoading]=useState(false)
   const [form, setForm] = useState({
     name:  userInfo?.name,
     email:  userInfo?.email,
     phone: '',
   });
+
+  const [bookings,setBookings]=useState(JSON.parse(localStorage.getItem('myBookings')) || [])
+  const [isBooked,setIsBooked]=useState(bookings.includes(event._id))
+
+
  const handleChange=(e)=>{
    const {name,value}=e.target;
    setForm((prev)=>{
@@ -195,6 +202,8 @@ const BookingCard =({event})=> {
     setBookLoading(true)
      try {
       await apiRequiestWithCredentials('post',`/create/booking/${event?._id}`,form)
+      localStorage.setItem('myBookings',JSON.stringify([...bookings,event._id]))
+      setIsBooked(true)
       setBookLoading(false)
       toast.success('Event booking successfull.')
     } catch (error) {
@@ -281,9 +290,12 @@ const BookingCard =({event})=> {
 
           <button
             type="submit"
-            className="w-full cursor-pointer bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200"
+            disabled={isBooked}
+            className={`w-full  bg-blue-600 text-white 
+            py-3 px-4 rounded-lg font-semibold ${isBooked ?'cursor-no-drop' :'cursor-pointer  hover:bg-blue-700'} 
+            transition-colors duration-200`}
           >
-            {bookLoading ? "Booking..." : `Book Now - ${event?.fee}.00`}
+            {isBooked ? "Booked" : bookLoading ? "Booking..." : `Book Now - ${event?.fee}.00`}
           </button>
         </form>
 

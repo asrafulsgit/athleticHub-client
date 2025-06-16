@@ -66,12 +66,9 @@ const My_bookings = () => {
    const [isModalOpen, setIsModalOpen] = useState(false);
    const [deleteEvent, setDeleteEvent] = useState("");
    const [bookings,setBookings]=useState(initBookings)
-
-       
       const getMyBookings = async () => {
         try {
           const data = await apiRequiestWithCredentials("get", "/my-bookings");
-          console.log(data)
           setBookings(data?.events);
           setPageLoading(false);
         } catch (error) {
@@ -87,6 +84,8 @@ const My_bookings = () => {
       const deleteFromUi = (id) => {
         const filteredEvents = bookings.filter((booking) => booking.event._id !== id);
         setBookings(filteredEvents);
+        const filteredBookingsIds = filteredEvents.map(booking=> booking.event._id)
+        localStorage.setItem('myBookings',JSON.stringify(filteredBookingsIds))
       };
       const calculateBookingsStats = () => {
         let upcomingBookings =0;
