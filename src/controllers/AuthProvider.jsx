@@ -24,7 +24,7 @@ const AuthProvider = ({children})=>{
     const [isLoggedIn,setIsLoggedIn]=useState(false)
     const [loading,setLoading]=useState(true)
     const [isMobileNav,setIsMobileNav] = useState(false)
-    
+    const [newReview,setNewReview]=useState({})
     const handleLoginWithGoogle =async()=>{
         const provider = new GoogleAuthProvider();
         try {
@@ -73,7 +73,7 @@ const AuthProvider = ({children})=>{
     return(
         <AuthContext.Provider value={{isLoggedIn,setIsLoggedIn,forget_password,
         loading,setLoading,handleLoginWithGoogle,
-        userInfo,setUserInfo,isMobileNav,setIsMobileNav}}>
+        userInfo,setUserInfo,isMobileNav,setIsMobileNav,newReview,setNewReview}}>
             {children}
         </AuthContext.Provider>
     )
