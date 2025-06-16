@@ -41,7 +41,7 @@ const Router = createBrowserRouter([
             { 
                 path : 'update-event/:id',
                 element : <Auth_middleware><Update_event /></Auth_middleware>,
-                // errorElement : <NotFoundPage />
+                errorElement : <NotFoundPage />
             },
             { 
                 path : 'create-event',

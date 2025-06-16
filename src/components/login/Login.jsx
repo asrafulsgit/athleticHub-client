@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../controllers/AuthProvider";
 import { apiRequiestWithCredentials } from "../../utilities/ApiCall";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -55,7 +56,9 @@ const Login = () => {
     }
 
   return (
-    <section
+   <><Helmet>
+        <title>Login</title>
+      </Helmet> <section
       id="login"
       className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 
       sm:px-6 lg:px-8"
@@ -255,7 +258,7 @@ const Login = () => {
           </form>
         </div>
       </div>
-    </section>
+    </section></>
   );
 };
 

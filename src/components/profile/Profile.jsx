@@ -5,6 +5,7 @@ import Spinner from '../aditionals/Spinner';
 import { useContext } from 'react';
 import { AuthContext } from '../../controllers/AuthProvider';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 const Profile = () => {
   const {userInfo}=useContext(AuthContext)
@@ -59,7 +60,9 @@ const Profile = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-10">
+  <> <Helmet>
+        <title>Profile</title>
+      </Helmet> <div className="max-w-4xl mx-auto px-4 py-10">
       {/* Profile Header */}
       <div className="bg-white rounded-lg border border-gray-200 p-6 mb-8">
         <div className="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-6">
@@ -217,7 +220,7 @@ const Profile = () => {
           {activeTab === 'preferences' && <p className="text-gray-500">Preferences content goes here...</p>}
         </div>
       </div>
-    </div>
+    </div></>
   );
 };
 

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { apiRequiest } from "../../utilities/ApiCall";
 import { AuthContext } from "../../controllers/AuthProvider";
+import { Helmet } from "react-helmet";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -86,7 +87,9 @@ const Register = () => {
 
   
   return (
-    <section
+  <><Helmet>
+        <title>Signup</title>
+      </Helmet>  <section
       id="register"
       className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
     >
@@ -416,7 +419,7 @@ const Register = () => {
           </form>
         </div>
       </div>
-    </section>
+    </section></>
   );
 };
 

@@ -5,6 +5,7 @@ import { apiRequiestWithCredentials } from '../../utilities/ApiCall';
 import Spinner from '../aditionals/Spinner';
 import { getDate, getTime } from '../../utilities/minimizeData';
 import { toast } from 'react-toastify';
+import { Helmet } from 'react-helmet';
 const Update_event = () => {
   const {id} = useParams();
   const navigate = useNavigate();
@@ -75,13 +76,17 @@ const Update_event = () => {
                   "Track-field",
                   "Triathlon",
                   "Weightlifting",
+                  "Volleyball",
+                  "Marathon"
                 ]
   if(pageLoading){
     return (<Spinner /> )
   }
 
   return (
-    <section id="update-event" className="min-h-screen bg-gray-50 py-8">
+  <><Helmet>
+        <title>Update event</title>
+      </Helmet> <section id="update-event" className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-4xl mx-auto px-4">
         {/* Header */}
         <Header />
@@ -322,7 +327,7 @@ const Update_event = () => {
         </div>
         
       </div>
-    </section>
+    </section></> 
   );
 };
 

@@ -5,6 +5,7 @@ import { apiRequiestWithCredentials } from '../../utilities/ApiCall';
 import { useContext } from 'react';
 import { AuthContext } from '../../controllers/AuthProvider';
 import { toast } from 'react-toastify';
+import { Helmet } from 'react-helmet';
 
 const Profile_Update = () => {
   const navigate = useNavigate();
@@ -70,7 +71,12 @@ const Profile_Update = () => {
     }));
   };
   return (
-   <><section id="create-event" className="min-h-screen bg-gray-50 py-8"> 
+   <>
+   <Helmet>
+        <title>Update profile</title>
+      </Helmet>
+   
+   <section id="create-event" className="min-h-screen bg-gray-50 py-8"> 
       <div className="max-w-4xl mx-auto px-4">
 
       {/* Account Settings */}

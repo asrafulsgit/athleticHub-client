@@ -1,12 +1,37 @@
-# React + Vite
+# 🏅 AthleticHub Web Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Project Name:** AthleticHub  
+**Live URL:** *[Add your deployed site link here]*
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📌 Purpose
 
-## Expanding the ESLint configuration
+AthleticHub is a **sports event management platform** that enables users to discover, register for, and manage various athletic events. It provides features for both users and administrators, such as event creation, participant tracking, and performance insights.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🚀 Key Features
+
+- ✅ User registration and login (JWT & Firebase/Google Auth)
+- 🏁 Event creation and management
+- 🧾 Participant registration 
+- 👤 User profile management
+- 👨‍💼 Manage events and users
+- ⭐ Review and feedback system
+- 📊 Event analytics and insights
+- 🌐 Responsive and modern UI using Tailwind CSS
+
+---
+
+## 🧰 Tech Stack
+
+- **React.js**
+- **Tailwind CSS**
+
+### NPM Packages Used
+- `axios` – HTTP client for API communication  
+- `lottie-react` – Animation support  
+- `react-helmet` – Managing document head  
+- `react-toastify` – Notification system  
+- `swiper` – Carousel/slider library

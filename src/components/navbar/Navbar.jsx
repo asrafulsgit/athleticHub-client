@@ -4,10 +4,10 @@ import './navbar.css'
 import { AuthContext } from '../../controllers/AuthProvider';
 import { apiRequiestWithCredentials } from '../../utilities/ApiCall';
 import { toast } from 'react-toastify';
-
+import { Tooltip } from 'react-tooltip';
 const Navbar = () => {
 
-  const {isLoggedIn,setIsLoggedIn,setLoading,setUserInfo} = useContext(AuthContext)
+  const {isLoggedIn,setIsLoggedIn,userInfo,setLoading,setUserInfo} = useContext(AuthContext)
   const handleLogout = async()=>{
     setLoading(true)
       try {
@@ -83,8 +83,11 @@ const Navbar = () => {
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
               <img
+                  data-tooltip-id="my-tooltip" 
+                  data-tooltip-content={isLoggedIn && userInfo?.name}
                 alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                src={userInfo?.avatar || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"} />
+              <Tooltip id="my-tooltip" place="bottom" />
             </div>
           </div>
           <ul

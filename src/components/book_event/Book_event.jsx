@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { apiRequiestWithCredentials } from "../../utilities/ApiCall";
 import { toast } from "react-toastify";
 import Spinner from "../aditionals/Spinner";
+import { Helmet } from "react-helmet";
 
 const Book_event = () => {
   const [events,setEvents]=useState([])
@@ -40,7 +41,9 @@ const Book_event = () => {
     return (<Spinner /> )
   }
   return (
-    <section  className="min-h-screen bg-gray-50 py-8 block">
+   <><Helmet>
+        <title>Book event</title>
+      </Helmet> <section  className="min-h-screen bg-gray-50 py-8 block">
       <div className="max-w-7xl mx-auto px-4">
         {/* Header Section */}
         <div className="flex flex-col  md:items-start md:justify-start mb-8">
@@ -103,7 +106,7 @@ const Book_event = () => {
           </div>
         </div>}
       </div>
-    </section>
+    </section></>
   );
 };
 

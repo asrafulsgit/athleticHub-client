@@ -3,8 +3,10 @@ import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import { Link } from 'react-router-dom';
 
-const Hero = () => {
+const Hero = ({heroEvents}) => {
+   
   return (
     <div className=" relative h-[90vh] overflow-hidden 
     bg-gradient-to-r from-blue-600 to-purple-700">
@@ -36,43 +38,26 @@ const Hero = () => {
           }}
           className="w-full max-w-4xl h-[65%] mt-40 "
         >
-          <SwiperSlide className=''>
+          {heroEvents.map((event,index)=>{
+            return(
+              <SwiperSlide className=''>
             <div>
               <h1 className="text-4xl md:text-6xl font-bold mb-4">
-                Find Your Next Athletic Challenge
+                {event?.type}
               </h1>
               <p className="text-xl md:text-2xl mb-8">
-                Join thousands of athletes competing in events nationwide
+                {event?.name}
               </p>
-              <button className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-200">
-                Browse Events
-              </button>
+              <p className="text-sm md:text-xl mb-8">
+                {event?.date} || {event?.time}
+              </p>
+             <Link to={`/event-details/${event?._id}`} > <button className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-200">
+                Book Event
+              </button></Link>
             </div>
           </SwiperSlide>
-
-          <SwiperSlide>
-            <div>
-              <h1 className="text-4xl md:text-6xl font-bold mb-4">Train with the Best</h1>
-              <p className="text-xl md:text-2xl mb-8">
-                Access professional coaching and training programs
-              </p>
-              <button className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-200">
-                Start Training
-              </button>
-            </div>
-          </SwiperSlide>
-
-          <SwiperSlide>
-            <div>
-              <h1 className="text-4xl md:text-6xl font-bold mb-4">Track Your Progress</h1>
-              <p className="text-xl md:text-2xl mb-8">
-                Monitor your performance and achieve your goals
-              </p>
-              <button className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-200">
-                View Stats
-              </button>
-            </div>
-          </SwiperSlide>
+            )
+          }) }
         </Swiper>
       </div>
     </div>

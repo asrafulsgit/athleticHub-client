@@ -3,6 +3,7 @@ import { apiRequiestWithCredentials } from '../../utilities/ApiCall';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 import Spinner from '../aditionals/Spinner';
+import { Helmet } from 'react-helmet';
 
 const My_bookings = () => {
   const initBookings = [
@@ -114,6 +115,9 @@ const My_bookings = () => {
 
   return (
    <> 
+   <Helmet>
+        <title>My bookings</title>
+      </Helmet>
    <section id="my-bookings" className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4">
         {/* Header */}

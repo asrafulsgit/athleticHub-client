@@ -5,6 +5,7 @@ import Spinner from "../aditionals/Spinner";
 import { toast } from "react-toastify";
 import { useContext } from "react";
 import { AuthContext } from "../../controllers/AuthProvider";
+import { Helmet } from "react-helmet";
 
 const Event_details = () => {
   const { id } = useParams();
@@ -54,7 +55,11 @@ const Event_details = () => {
     return <Spinner />;
   }
   return (
-    <section className="min-h-screen bg-gray-50 py-8 px-4">
+  <>   
+  <Helmet>
+        <title>Event details</title>
+      </Helmet>
+  <section className="min-h-screen bg-gray-50 py-8 px-4">
       {!event.name || !event.type || !event.image ? (
         <div className="flex justify-center items-center pt-10">
           <p className="text-red-500 ">This event is not available for now!</p>
@@ -255,6 +260,7 @@ const Event_details = () => {
       {/* event reviews */}
       <EventReviews eventId={id} newReview={createReview} />
     </section>
+  </>
   );
 };
 

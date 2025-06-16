@@ -4,12 +4,13 @@ import { AuthContext } from '../../controllers/AuthProvider';
 import { apiRequiest } from '../../utilities/ApiCall';
 import { toast } from 'react-toastify';
 
-const Featured_events = () => {
+const Featured_events = ({setCarouselEvents}) => {
   const [events,setEvents]=useState([])
   const getFeaturedEvents =async()=>{
     
     try {
         const data = await apiRequiest('get','/featured-events');
+        setCarouselEvents(data?.events.slice(0,3))
         setEvents(data?.events)
         
     } catch (error) {
@@ -35,32 +36,34 @@ const Featured_events = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
         {events.map((event, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-lg border border-gray-200 
-            overflow-hidden hover:shadow-sm transition-shadow duration-300"
-          >
-            <img
-              src={event?.image}
-              alt={event?.alt}
-              className="w-full h-48 object-cover"
-            />
-            <div className="p-6">
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                {event?.title}
-              </h3>
-              <p className="text-gray-600 mb-2">{event?.date}</p>
-              <p className="text-gray-600 mb-4">{event?.location}</p>
-             <Link to={`/event-details/${event?._id}`}> <button className="w-full cursor-pointer bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-200">
-                View Details
-              </button></Link>
-            </div>
-          </div>
+            <div key={index} className="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                <img src={event?.image} alt={event.name} className="w-full h-48 bg-gray-300 object-cover" />
+                <div className="p-6">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className={`bg-blue-100 text-blue-800 text-xs font-medium 
+                      px-2.5 py-0.5 rounded`}>
+                      {event?.type}
+                    </span>
+                    <span className="text-sm text-gray-500">{event?.date}</span>
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-0.5">{event?.name}</h3>
+                  <p className="text-gray-600  mb-2">{event?.location}</p>
+                  <p className="text-gray-700 text-sm mb-4">
+              {event?.description.length > 70 ? `${event?.description.slice(0,70)}...` : event?.description }</p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-lg font-bold text-green-600">${event?.fee}</span>
+                   <Link to={`/event-details/${event?._id}`} > 
+                   <button className="bg-blue-600 cursor-pointer text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200">
+                      View Details
+                    </button></Link>
+                  </div>
+                </div>
+              </div>
         ))}
       </div>
 
       <div className="text-center">
-       <Link to='/events'> <button className="bg-gray-900 text-white px-8 py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors duration-200">
+       <Link to='/events'> <button className="bg-gray-900 cursor-pointer text-white px-8 py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors duration-200">
           See All Events
         </button></Link>
       </div>

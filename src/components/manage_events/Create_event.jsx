@@ -75,6 +75,8 @@ const Create_event = () => {
                   "Track-field",
                   "Triathlon",
                   "Weightlifting",
+                  "Volleyball",
+                  "Marathon"
                 ]
   if(!userInfo?.name || !userInfo?.email){
     return (<Spinner /> )

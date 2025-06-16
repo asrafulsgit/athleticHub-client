@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import Spinner from "../aditionals/Spinner";
 import { apiRequiestWithCredentials } from "../../utilities/ApiCall";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet";
 
 const Manage_events = () => {
   // const initEvents = [
@@ -106,7 +107,9 @@ const Manage_events = () => {
     return <Spinner />;
   }
   return (
-    <>
+    <><Helmet>
+        <title>Manage events</title>
+      </Helmet> 
       <section
         id="manage-events"
         className="min-h-screen bg-gray-50 py-8 block"
@@ -377,7 +380,7 @@ const DeleteModal = ({
     setDeleteEvent();
   };
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto">
+   <><div className="fixed inset-0 z-50 overflow-y-auto">
       <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         {/* Overlay */}
         <div
@@ -474,7 +477,7 @@ const DeleteModal = ({
           </div>
         </div>
       </div>
-    </div>
+    </div></>
   );
 };
 

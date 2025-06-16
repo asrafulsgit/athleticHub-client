@@ -4,6 +4,7 @@ import { apiRequiest } from "../../utilities/ApiCall";
 import Spinner from "../aditionals/Spinner";
 import { useState } from "react";
 import { useEffect } from "react";
+import { Helmet } from "react-helmet";
 
 
 
@@ -24,7 +25,8 @@ const EventCard = ({ event }) => (
       <p className="text-gray-700 text-sm mb-4">{event?.description}</p>
       <div className="flex items-center justify-between">
         <span className="text-lg font-bold text-green-600">${event?.fee}</span>
-       <Link to={`/event-details/${event?._id}`} > <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200">
+       <Link to={`/event-details/${event?._id}`} > 
+       <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200">
           View Details
         </button></Link>
       </div>
@@ -50,11 +52,83 @@ const Events = () => {
     useEffect(()=>{
       getEvents()
     },[])
+    const sports=[
+                  "Running",
+                  "Swimming",
+                  "Sprinting",
+                  "Long-jump",
+                  "High-jump",
+                  "Hurdle-race",
+                  "Cycling",
+                  "Basketball",
+                  "Tennis",
+                  "Track-field",
+                  "Triathlon",
+                  "Weightlifting",
+                  "Volleyball",
+                  "Marathon"
+                ]
+
+    const [filterType,setFilterType]=useState('')
+    const [filterLoading,setFilterLoading]=useState(false)
+    const handleTypefilter=async(e)=>{
+      const type = e.target.value;
+      if(!type){
+        return;
+      }
+      setFilterType(type)
+      setFilterLoading(true)
+      try {
+        const data = await apiRequiest('get',`/filter-events?eventType=${type}`)
+        setEvents(data?.events)
+        setFilterLoading(false)
+        } catch (error) {
+          toast.error(error?.response?.data?.message)
+        setFilterLoading(false)
+        
+      }
+    }
+ let interval;
+   const searchFunctionality=async(searchValue)=>{ 
+     clearTimeout(interval)
+     if (!searchValue.trim()) {
+      getEvents();
+      return;
+    } 
+     setFilterLoading(true)
+
+       interval = setTimeout(async() => {
+        
+       try {
+         const data = await apiRequiest('get',`/search-events?search=${searchValue}`)
+           setEvents(data?.events)
+            setFilterLoading(false)
+         } catch (error) {
+           console.log(error)
+           setEvents([])
+           toast.error(error?.response?.data?.message)
+           setFilterLoading(false)
+         }
+      }, 1000); 
+   }
+
+   const handleSearchEvents =(e)=>{
+     const searchValue = e.target.value.trim();
+     searchFunctionality(searchValue)
+   }
+
+
+
     if(pageLoading){
         return (<Spinner /> )
       }
   return (
-   <> <div className="px-10 pt-8">
+   <> 
+   <Helmet>
+        <title>Events</title>
+      </Helmet>
+   
+   <div className="px-10 py-8">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">All Events</h1>
@@ -64,31 +138,45 @@ const Events = () => {
       {/* Search and Filter */}
       <div className="bg-white rounded-lg border border-gray-200 p-6 mb-8">
         <div className="flex flex-col md:flex-row gap-4">
+          
           <div className="flex-1">
-            <label htmlFor="search" className="block text-sm font-medium text-gray-700 mb-2">Search Events</label>
-            <input
-              type="text"
-              id="search"
-              placeholder="Search by event name or location..."
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            />
+              <label htmlFor="search" className="block text-sm
+               font-medium text-gray-700 mb-2">Search Events</label>
+            <form  className="flex relative">
+              <input
+                type="text"
+                id="search"
+                onChange={handleSearchEvents}
+                placeholder="Search by event name..."
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg 
+                outline-none"
+              />
+              {/* <button className="absolute cursor-pointer right-0 top-0 bg-blue-600
+               text-white px-4 py-[9px] rounded-r-lg hover:bg-blue-700 
+               transition-colors duration-200">
+                Search
+              </button> */}
+            </form>
           </div>
+
           <div className="md:w-48">
             <label htmlFor="eventType" className="block text-sm font-medium text-gray-700 mb-2">Event Type</label>
-            <select
-              id="eventType"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            >
-              <option value="">All Types</option>
-              <option value="running">Running</option>
-              <option value="swimming">Swimming</option>
-              <option value="cycling">Cycling</option>
-              <option value="basketball">Basketball</option>
-              <option value="tennis">Tennis</option>
-              <option value="track-field">Track & Field</option>
-            </select>
+              <select
+                name="type"
+                value={filterType}
+                onChange={handleTypefilter}
+                className="w-full px-4 py-[9px] border border-gray-300 rounded-lg 
+                outline-none"
+              >
+                <option value="">Select event type</option>
+                {sports.map((type) => (
+                  <option key={type} value={type}>
+                    {type.replace(/-/g, " ")}
+                  </option>
+                ))}
+              </select>
           </div>
-          <div className="md:w-48">
+          {/* <div className="md:w-48">
             <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-2">Location</label>
             <select
               id="location"
@@ -101,23 +189,27 @@ const Events = () => {
               <option value="miami">Miami</option>
               <option value="phoenix">Phoenix</option>
             </select>
-          </div>
+          </div> */}
         </div>
       </div>
 
-     { events.lenght === 0 ? 
+     {filterLoading ? 
+        <div className="flex justify-center items-center py-10">
+          <p className="text-red-500">Loading...</p>
+        </div>
+     : events.length === 0 ? 
         <div className="flex justify-center items-center py-10">
           <p className="text-red-500 ">No events available for now!</p>
         </div>:
-     <> 
-      {/* Events Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {events.map((event,index) => (
-            <EventCard key={index} event={event} />
-          ))}
-        </div>
-        <Pagination />
-      </>
+          <div> 
+            {/* Events Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {events.map((event,index) => (
+                  <EventCard key={index} event={event} />
+                ))}
+              </div>
+              <Pagination />
+            </div>
       }
     </div>
     </>
@@ -138,9 +230,9 @@ const Pagination = () => {
       </div>
       <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
         <div>
-          <p className="text-sm text-gray-700">
+          {/* <p className="text-sm text-gray-700">
             Showing <span className="font-medium">1</span> to <span className="font-medium">9</span> of <span className="font-medium">27</span> results
-          </p>
+          </p> */}
         </div>
         <div>
           <nav className="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
