@@ -1,7 +1,7 @@
 # 🏅 AthleticHub Web Application
 
 **Project Name:** AthleticHub  
-**Live URL:** *[Add your deployed site link here]*
+**Live URL:** *[https://gleeful-kitten-23d3a7.netlify.app/]*
 
 ---
 
