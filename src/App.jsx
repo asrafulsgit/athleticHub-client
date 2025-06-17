@@ -13,7 +13,6 @@ const App = () => {
   
      
     useEffect(() => {
-      console.log('App loading...')
       const timer = setTimeout(() => {
         setShowLoader(false)
       }, 1000)

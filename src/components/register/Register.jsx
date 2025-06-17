@@ -70,7 +70,7 @@ const Register = () => {
    } catch (error) {
       setRegisterLoading(false)
       toast.error(error?.response?.data?.message)
-      console.log(error)
+      
    }
 };
 
@@ -351,7 +351,7 @@ const Register = () => {
             {/* Register Button */}
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700  focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200"
+              className="w-full cursor-pointer bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700  focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200"
               disabled={registerLoading}
             >
              {registerLoading ? 'Loading...' :' Create Account'}

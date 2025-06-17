@@ -12,10 +12,10 @@ const Action = () => {
           Join our community of athletes and discover your next challenge
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-         <NavLink to='/events'> <button className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-200">
+         <NavLink to='/events'> <button className="bg-white cursor-pointer text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-200">
             Browse Events
           </button></NavLink>
-          <NavLink to='/signin'><button className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors duration-200">
+          <NavLink to='/login'><button className="border-2 cursor-pointer border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors duration-200">
             Create Account
           </button></NavLink> 
         </div>

@@ -74,7 +74,6 @@ const Manage_events = () => {
       setPageLoading(false);
     } catch (error) {
       setMyEvents([]);
-      console.log(error);
       setPageLoading(false);
     }
   };
@@ -376,7 +375,7 @@ const DeleteModal = ({
     } catch (error) {
       setDeleteEvent();
       toast.error(error?.response?.data?.message);
-      console.log(error);
+      
     }
   };
   const handleCencelDelete = () => {
@@ -384,8 +383,11 @@ const DeleteModal = ({
     setDeleteEvent();
   };
   return (
-   <><div className="fixed inset-0 z-50 overflow-y-auto">
-      <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+   <>
+    <div className="fixed inset-0 z-50 overflow-y-auto">
+      <div className=" items-end justify-center min-h-screen pt-4 px-4 pb-20 
+      
+      text-center block sm:p-0">
         {/* Overlay */}
         <div
           className="fixed inset-0 bg-gray-500/70 bg-opacity-75 transition-opacity"
@@ -481,7 +483,8 @@ const DeleteModal = ({
           </div>
         </div>
       </div>
-    </div></>
+    </div>
+    </>
   );
 };
 

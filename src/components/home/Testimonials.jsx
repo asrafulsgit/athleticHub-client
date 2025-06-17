@@ -3,20 +3,21 @@ const testimonials = [
   {
     name: "Sarah Johnson",
     role: "Marathon Runner",
-    image: "https://avatar.iran.liara.run/public/12",
     text: "AthleticHub made it so easy to find and register for local races. The platform is intuitive and the event organization is top-notch!",
+    rating : 3
   },
   {
     name: "Mike Chen",
     role: "Swimmer",
-    image: "https://avatar.iran.liara.run/public/25",
     text: "Great variety of events and excellent customer support. I've participated in 5 events through this platform and each was well-organized.",
+  rating : 5
   },
   {
     name: "Emily Rodriguez",
     role: "Track & Field",
-    image: "https://avatar.iran.liara.run/public/38",
+    image: "https://i.ibb.co/qLLttyh1/photo-1544717297-fa95b6ee9643.jpg",
     text: "As an event organizer, AthleticHub has streamlined my entire process. Registration management and participant communication is seamless.",
+  rating : 2
   },
 ];
 const Testimonials = () => {
@@ -37,7 +38,7 @@ const Testimonials = () => {
             >
               <div className="flex items-center mb-4">
                 <img
-                  src={testimonial?.image}
+                  src={testimonial.image || "https://i.ibb.co/PsHDfWt8/user-icon-illustration-for-graphic-design-logo-web-site-social-media-mobile-app-ui-png.png"}
                   alt={testimonial?.name}
                   className="w-12 h-12 rounded-full mr-4"
                 />
@@ -49,7 +50,19 @@ const Testimonials = () => {
                 </div>
               </div>
               <p className="text-gray-700">"{testimonial.text}"</p>
-              <div className="flex text-yellow-400 mt-3">⭐⭐⭐⭐⭐</div>
+              <div className="mt-3">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <span
+                key={star}
+                className={`text-3xl cursor-pointer transition-colors duration-200 ${
+                  testimonial.rating >= star ? "text-yellow-400" : "text-gray-400"
+                }`}
+                onClick={() => handleClick(star)}
+              >
+                ★
+              </span>
+            ))}
+          </div>
             </div>
           ))}
         </div>

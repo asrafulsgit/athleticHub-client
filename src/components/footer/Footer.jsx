@@ -74,11 +74,12 @@ const Footer = () => {
         
         <div className='flex-1/3'>
           <h3 className="text-xl font-bold mb-4 nunito-family">Stay Connected</h3>
-          <p className="text-gray-300 mb-4 roboto-family">Subscribe to our newsletter for seasonal tips and updates.</p>
+          <p className="text-gray-300 mb-4 roboto-family">Subscribe to our 
+            newsletter for seasonal events and updates.</p>
           <form id="footer-newsletter-form" className="space-y-2">
             <div className="flex">
               <input type="email" placeholder="Your email address" className="px-4 py-2 w-full rounded-l-md text-gray-800 bg-white focus:outline-none " required="" />
-              <button type="submit" className="bg-blue-900 hover:bg-blue-700 cursor-pointer px-4 py-2 rounded-r-md transition-colors duration-300">
+              <button type="submit" className="bg-blue-500 cursor-pointer px-4 py-2 rounded-r-md transition-colors duration-300">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                   <path clipRule="evenodd" 
                   d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" ></path>
@@ -92,7 +93,8 @@ const Footer = () => {
       
       
       <div className="mt-8 pt-8 border-t  border-blue-700">
-        <p className="text-gray-400 text-center text-sm mb-4 md:mb-0">© 2025 Garden Hub. All rights reserved.</p>
+        <p className="text-gray-400 text-center text-sm mb-4 md:mb-0">© 2025 
+          Athletic Hub. All rights reserved.</p>
       </div>
     </div>
     

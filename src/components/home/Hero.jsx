@@ -1,8 +1,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { Navigation,  Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 import { Link } from 'react-router-dom';
 
 const Hero = ({heroEvents}) => {
@@ -29,9 +28,8 @@ const Hero = ({heroEvents}) => {
       <div className=" relative z-10 flex items-center justify-center 
       h-full text-center text-white px-4">
         <Swiper
-          modules={[Autoplay, Pagination, Navigation]}
+          modules={[Autoplay, Navigation]}
           autoplay={{ delay: 2000 }}
-          pagination={{ clickable: true }}
           navigation={{
             nextEl: '.custom-next',
             prevEl: '.custom-prev',

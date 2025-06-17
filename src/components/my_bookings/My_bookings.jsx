@@ -74,7 +74,7 @@ const My_bookings = () => {
           setPageLoading(false);
         } catch (error) {
           setBookings([]);
-          console.log(error);
+     
           toast.error(error?.response?.data?.message)
           setPageLoading(false);
         }
@@ -300,11 +300,11 @@ const StatCards = ({totalBookings,calculateBookingsStats}) => {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-4 sm:mb-8">
       {cards.map((card, index) => (
         <div
           key={index}
-          className="bg-white rounded-lg border border-gray-200 p-6"
+          className="bg-white rounded-lg border border-gray-200 p-3 sm:p-6"
         >
           <div className="flex items-center">
             <div className={`p-2 rounded-lg ${card.iconBg}`}>
@@ -359,7 +359,6 @@ const CencelBooking = ({
     } catch (error) {
       setDeleteEvent();
       toast.error(error?.response?.data?.message);
-      console.log(error);
     }
   };
   const handleCencelDelete = () => {
@@ -368,7 +367,8 @@ const CencelBooking = ({
   };
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
-      <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+      <div className=" items-end justify-center 
+      min-h-screen pt-4 px-4 pb-20 text-center block  sm:p-0">
         {/* Overlay */}
         <div
           className="fixed inset-0 bg-gray-500/70 bg-opacity-75 transition-opacity"
@@ -377,7 +377,10 @@ const CencelBooking = ({
         ></div>
 
         {/* Modal panel */}
-        <div className="relative inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+        <div className="relative inline-block 
+        align-bottom bg-white rounded-lg text-left overflow-hidden 
+        shadow-xl transform transition-all sm:my-8 sm:align-middle 
+        sm:max-w-lg sm:w-full">
           {/* Close Button (top-right) */}
           <button
             type="button"

@@ -45,7 +45,7 @@ const Profile = () => {
       })
       setPageLoading(false)
     } catch (error) {
-      console.log(error)
+      
       setPageLoading(false)
     }
   }
@@ -69,7 +69,7 @@ const Profile = () => {
           {/* Profile Picture */}
           <div className="relative">
             <img
-              src={profile?.avatar || "https://avatar.iran.liara.run/public/45"}
+              src={profile.avatar || "https://i.ibb.co/PsHDfWt8/user-icon-illustration-for-graphic-design-logo-web-site-social-media-mobile-app-ui-png.png"}
               alt="Profile"
               className="w-24 h-24 rounded-full border-4 border-blue-100"
             />
@@ -117,7 +117,7 @@ const Profile = () => {
       </div>
 
       {/* Profile Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
         {[
           { label: 'Events Participated', value: stats?.eventsPaticipated || 0, color: 'blue' },
           { label: 'Events Organized', value: stats?.eventsOrganized || 0, color: 'green' },

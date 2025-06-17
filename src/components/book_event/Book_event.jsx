@@ -15,7 +15,6 @@ const Book_event = () => {
             setEvents(data?.events)
             setPageLoading(false)
           } catch (error) {
-            console.log(error)
             setEvents([])
             toast.error(error?.response?.data?.message)
             setPageLoading(false)
@@ -33,7 +32,6 @@ const Book_event = () => {
             localStorage.setItem('bookeEvent',JSON.stringify(fileterEventsIds))
             toast.success('Book event deleted.')
           } catch (error) {
-            console.log(error)
             toast.error(error?.response?.data?.message)
           }
   }

@@ -24,7 +24,7 @@ const EventCard = ({ event }) => (
                     </div>
                     <h3 className="text-xl font-semibold text-gray-900 mb-0.5">{event?.name}</h3>
                     <p className="text-gray-600  mb-2">{event?.location}</p>
-                    <p className="text-gray-700 text-sm mb-4">
+                    <p className="text-gray-700 text-sm mb-2 md:min-h-[40px]">
                 {event?.description.length > 70 ? `${event?.description.slice(0,70)}...` : event?.description }</p>
                     <div className="flex items-center justify-between">
                       <span className="text-lg font-bold text-green-600">${event?.fee}</span>
@@ -49,7 +49,6 @@ const Events = () => {
       } catch (error) {
         setEvents([])
         toast.error(error?.response?.data?.message)
-        console.log(error)
         setPageLoading(false)
       }
     }
@@ -108,7 +107,6 @@ const Events = () => {
            setEvents(data?.events)
             setFilterLoading(false)
          } catch (error) {
-           console.log(error)
            setEvents([])
            toast.error(error?.response?.data?.message)
            setFilterLoading(false)

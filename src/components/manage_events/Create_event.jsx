@@ -57,7 +57,6 @@ const Create_event = () => {
        } catch (error) {
           setCreateLoading(false)
           toast.error(error?.response?.data?.message)
-          console.log(error)
        }
     
   };
@@ -312,7 +311,7 @@ const Create_event = () => {
               </button>
               <button
                 type="submit"
-                className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium"
+                className="flex-1 cursor-pointer px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium"
               >
                {createLoading ? 'Creating...' : 'Create Event'}
               </button>

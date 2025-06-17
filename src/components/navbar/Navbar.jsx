@@ -15,11 +15,13 @@ const Navbar = () => {
       try {
         await apiRequiestWithCredentials('get','/user/logout');
         setUserInfo(null)
+        localStorage.clear('bookeEvent')
+        localStorage.clear('myBookings')
         setIsLoggedIn(false)
         setLoading(false)
         toast.success('User logout successfull')
       } catch (error) {
-        console.log(error)
+        
         setLoading(false)
       }
   }
@@ -146,7 +148,7 @@ const Navbar = () => {
                   data-tooltip-id="my-tooltip" 
                   data-tooltip-content={isLoggedIn && userInfo?.name}
                 alt="Tailwind CSS Navbar component"
-                src={userInfo?.avatar || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"} />
+                src={userInfo.avatar || "https://i.ibb.co/PsHDfWt8/user-icon-illustration-for-graphic-design-logo-web-site-social-media-mobile-app-ui-png.png"} />
               <Tooltip id="my-tooltip" place="bottom" />
             </div>
           </div>

@@ -27,7 +27,6 @@ const Event_details = () => {
       setEvent(data?.event);
       setPageLoading(false);
     } catch (error) {
-      console.log(error);
       toast.error(error?.response?.data?.message);
       setEvent({});
       setPageLoading(false);
@@ -45,7 +44,6 @@ const Event_details = () => {
       setIsBookedEvent(true);
       toast.success("Book event successfull.");
     } catch (error) {
-      console.log(error);
       toast.error(error?.response?.data?.message);
     }
   };
@@ -229,14 +227,8 @@ const Event_details = () => {
               <h3 className="text-lg font-semibold text-gray-900 mb-4">
                 Requirements & Information
               </h3>
-              <div className="space-y-3">
-                {[
-                  "Minimum age requirement: 18 years",
-                  "Medical clearance recommended",
-                  "Registration closes 48 hours before event",
-                  "Packet pickup required day before event",
-                ].map((text, idx) => (
-                  <div className="flex items-start" key={idx}>
+             {event?.requirements && <div className="space-y-3">
+                  <div className="flex items-start" >
                     <svg
                       className="w-5 h-5 text-green-500 mr-3 mt-0.5"
                       fill="currentColor"
@@ -248,10 +240,9 @@ const Event_details = () => {
                         d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
                       />
                     </svg>
-                    <p className="text-gray-700">{text}</p>
+                    <p className="text-gray-700">{event?.requirements}</p>
                   </div>
-                ))}
-              </div>
+              </div>}
             </div>
           </div>
 
@@ -308,7 +299,6 @@ const BookingCard = ({ event, setNewReview }) => {
       toast.success("Event booking successfull.");
     } catch (error) {
       setBookLoading(false);
-      console.log(error);
       toast.error(error?.response?.data?.message);
     }
   };
@@ -460,7 +450,6 @@ const EventReviews = ({ eventId, newReview }) => {
       setEventReviews(data?.reviews);
     } catch (error) {
       setEventReviews([]);
-      console.log(error);
     }
   };
   useEffect(() => {
@@ -488,7 +477,6 @@ const EventReviews = ({ eventId, newReview }) => {
       setEventReviews(filterReview);
       toast.success("Review deleted!");
     } catch (error) {
-      console.log(error);
       toast.error(error?.response?.data?.message);
     }
   };
@@ -583,13 +571,13 @@ const CreateReviewCard = ({ eventId, setNewReview }) => {
         "/create-review",
         review
       );
-      setNewReview(review);
+      
+      setNewReview({...review,_id : data?.id});
       setComment("");
       setRating(0);
       toast.success("Thanks a lot for sharing your thoughts with us!");
       setReviewLoading(false);
-    } catch (error) {
-      console.log(error);
+    } catch (error) {  
       toast.error(error?.response?.data?.message);
       setReviewLoading(false);
     }
@@ -667,7 +655,6 @@ const UpdateReview = ({
     } catch (error) {
       setDeleteEvent();
       toast.error(error?.response?.data?.message);
-      console.log(error);
     }
   };
   const handleCencelDelete = () => {

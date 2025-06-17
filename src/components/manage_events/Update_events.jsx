@@ -19,7 +19,7 @@ const Update_event = () => {
         setEventData(data?.event)
         setPageLoading(false)
       } catch (error) {
-        console.log(error)
+        
         toast.error(error?.response?.data?.message)
         setEventData({})
         setPageLoading(false)
@@ -59,7 +59,7 @@ const Update_event = () => {
        } catch (error) {
           setUpdateLoading(false)
           toast.error(error?.response?.data?.message)
-          console.log(error)
+          
        }
     
   };
