@@ -2,7 +2,7 @@
 
 **Project Name:** AthleticHub  
 **Live URL:** *[https://gleeful-kitten-23d3a7.netlify.app/]*
-
+ 
 ---
 
 ## 📌 Purpose
