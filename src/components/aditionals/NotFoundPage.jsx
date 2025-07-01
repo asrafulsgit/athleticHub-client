@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import Lottie from 'lottie-react'
-import animation from '../../../public/404.json'
+import animation from '../../assets/404.json'
 const NotFoundPage = () => {
 
   return (

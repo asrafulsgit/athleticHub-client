@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import Lottie from 'lottie-react'
-import animation from '../../../public/loader.json'
+import animation from '../../assets/loader.json'
 const Loader = () => {
    
   return (

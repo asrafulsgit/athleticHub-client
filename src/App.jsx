@@ -27,22 +27,19 @@ const App = () => {
       <> 
       <Toastify /> 
       <ScrollVehaviour />
-      <div className="inter-family">
-  
-        {/* navbar  */}
-         <Navbar />
-  
-        {/*mobile nav*/}
-          
-         
-   
-        {/* Main Content */}
-          <main >
-                <Outlet />     
-          </main>
-          <div>
-            <Footer />
-          </div>
+      <div className=' bg-blue-50/70'>
+        <div className="max-w-[1340px] bg-white inter-family">
+          {/* navbar  */}
+          <Navbar />
+          {/*mobile nav*/}
+          {/* Main Content */}
+            <main >
+                  <Outlet />     
+            </main>
+            <div>
+              <Footer />
+            </div>
+        </div>
       </div>
       </>
       

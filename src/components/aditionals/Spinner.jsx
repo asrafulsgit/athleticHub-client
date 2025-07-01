@@ -1,6 +1,6 @@
 import React from 'react'
 import Lottie from 'lottie-react';
-import myAnimation from '../../../public/spinner.json'
+import myAnimation from '../../assets/spinner.json'
 const Spinner = () => {
   return (
     <div className="w-[100%] h-[90vh] flex items-center justify-center">

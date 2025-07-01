@@ -33,6 +33,14 @@ const Navbar = () => {
         {
             name : "Events",
             path : '/events'
+        },
+        {
+            name : "About Us",
+            path : '/about'
+        },
+        {
+            name : "Blogs",
+            path : '/blogs'
         }
         
 ]
@@ -44,15 +52,13 @@ const Navbar = () => {
       {/* mobile nav */}
       {!isMobileNav ?  <button
         type="button"
-        className={`sm:hidden cursor-pointer 
+        className={`md:hidden cursor-pointer 
         ${isMobileNav ? '' : 'top-4 left-4'} z-20 px-1  rounded-sm sm:px-2 sm:py-1 sm:rounded-md 
           text-white hover:text-white 
           focus:outline-none border border-blue-700/50 `}
         onClick={() => {
           setIsMobileNav(!isMobileNav)
         }}
-        aria-controls="mobile-menu"
-        aria-expanded={isMobileNav}
       >
           <svg xmlns="http://www.w3.org/2000/svg" 
           className="h-6 w-6  text-blue-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -62,15 +68,13 @@ const Navbar = () => {
       </button> : 
       <button
         type="button"
-        className={`sm:hidden cursor-pointer 
-         z-20 px-2 py-1 rounded-md bg-blue-700
+        className={`md:hidden cursor-pointer 
+         z-20 px-2 py-1 rounded-md  
           text-white hover:text-white 
           focus:outline-none `}
         onClick={() => {
           setIsMobileNav(!isMobileNav)
         }}
-        aria-controls="mobile-menu"
-        aria-expanded={isMobileNav}
       >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -78,9 +82,9 @@ const Navbar = () => {
      
       </button>}
 
-        {isMobileNav && <aside className="sm:hidden w-[100%] 
-         h-screen text-white bg-blue-700  
-         fixed inset-0 z-10">
+        {isMobileNav && <div className="md:hidden w-full
+         h-screen text-white bg-blue-700 fixed inset-0 z-10 
+         mobile-nav">
           {/* <Asidebar/> */}
          <nav className="space-y-1 w-[100%] pt-15 lg:pt-0 mt-6 px-2 
          flex flex-col  items-center nav-item-active ">
@@ -91,9 +95,13 @@ const Navbar = () => {
                 hover:bg-blue-600 '>
                 {item.name}</NavLink> 
            ))}
-           
+          <button  onClick={handleLogout} 
+                className='sm:hidden text-[15px] xl:text-[16px] font-[400]  
+                rounded-md py-1 px-2
+                hover:bg-blue-600 '>
+                Logout</button>
           </nav>
-        </aside>}
+        </div>}
 
       {/* Logo Section */}
       <NavLink to='/'> 
@@ -120,26 +128,25 @@ const Navbar = () => {
      
           <span className="text-[18px] sm:text-xl font-bold text-gray-900">AthleticHub</span>
         </div>
-      </div></NavLink>
+      </div>
+      </NavLink>
 
       {/* Navigation Menu */}
-      <div className="hidden sm:flex gap-5 nav-item-active">
-         <NavLink to='/'  className='px-3 py-1 
+      <div className="hidden md:flex gap-2 nav-item-active">
+         { asideItems.map((item,index)=>(
+          <NavLink to={item.path} key={index}  className='px-3 py-1 
          text-[15px] font-medium text-gray-700 rounded-md border 
          border-transparent transition-all duration-200 
          hover:bg-gray-100 hover:text-gray-900 
-         hover:border-gray-200' >Home</NavLink>
-         <NavLink to='/events' className="px-3 py-1 
-         text-[15px] font-medium text-gray-700 rounded-md border 
-         border-transparent transition-all duration-200 
-         hover:bg-gray-100 hover:text-gray-900 
-         hover:border-gray-200">Events</NavLink>
+         hover:border-gray-200' >{item.name}</NavLink>
+         )) }
+         
       </div>
 
       {/* login/logout */}
       {isLoggedIn ? 
       <div className='flex items-center'> 
-        <button onClick={handleLogout} className='mr-3 bg-blue-600 text-white px-4 py-1 rounded-sm
+        <button onClick={handleLogout} className='hidden sm:block mr-3 bg-blue-600 text-white px-4 py-1 rounded-sm
          hover:bg-blue-700 cursor-pointer transition-colors duration-200'>Logout</button> 
         <div className="dropdown dropdown-end">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
@@ -148,7 +155,7 @@ const Navbar = () => {
                   data-tooltip-id="my-tooltip" 
                   data-tooltip-content={isLoggedIn && userInfo?.name}
                 alt="Tailwind CSS Navbar component"
-                src={userInfo.avatar || "https://i.ibb.co/PsHDfWt8/user-icon-illustration-for-graphic-design-logo-web-site-social-media-mobile-app-ui-png.png"} />
+                src={userInfo?.avatar || "https://i.ibb.co/PsHDfWt8/user-icon-illustration-for-graphic-design-logo-web-site-social-media-mobile-app-ui-png.png"} />
               <Tooltip id="my-tooltip" place="bottom" />
             </div>
           </div>
@@ -174,7 +181,7 @@ const Navbar = () => {
       :
       <div className="flex gap-5">
         <NavLink to='/signup'>
-        <button className=' w-full cursor-pointer font-medium 
+        <button className='hidden sm:block w-full cursor-pointer font-medium 
         text-blue-600  px-4 py-1 rounded-sm
          bg-blue-100 transition-colors duration-200 '> 
          Signup

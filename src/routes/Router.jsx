@@ -15,6 +15,8 @@ import Manage_events from "../components/manage_events/Manage_events";
 import Book_event from "../components/book_event/Book_event";
 import NotFoundPage from "../components/aditionals/NotFoundPage";
 import Profile_Update from "../components/profile/Profile_Update";
+import About from "../components/about/About";
+import Blog from "../components/blogs/Blog";
 
 const Router = createBrowserRouter([
     {
@@ -28,7 +30,15 @@ const Router = createBrowserRouter([
             { 
                 path : 'events',
                 element :  <Events /> 
-        },
+            },
+            { 
+                path : 'about',
+                element :  <About /> 
+            },
+            { 
+                path : 'blogs',
+                element :  <Blog /> 
+            },
             { 
                 path : 'event-details/:id',
                 element : <Auth_middleware><Event_details /></Auth_middleware>,
