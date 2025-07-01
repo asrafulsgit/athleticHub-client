@@ -80,6 +80,7 @@ const Update_event = () => {
                   "Volleyball",
                   "Marathon"
                 ]
+  console.log(eventData)
   if(pageLoading){
     return (<Spinner /> )
   }
@@ -257,6 +258,26 @@ const Update_event = () => {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none resize-vertical"
               />
             </div>
+
+            {/* is open to register */}
+            <div >
+            <label className="inline-flex items-center space-x-2">
+                  
+          <input
+            type="checkbox"
+            checked={eventData?.isOpen}
+            onChange={(e) => {
+              setEventData((prev) => ({
+                ...prev,
+                isOpen: e.target.checked,
+              }));
+            }}
+            className="h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+          />
+          <span className="text-gray-700">Open for Registration</span>
+          </label>
+            </div>
+
             {/* Creator Info */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>

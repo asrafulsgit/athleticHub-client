@@ -1,4 +1,10 @@
 import React from "react";
+import { useState } from "react";
+import { apiRequiest } from "../../utilities/ApiCall";
+import { toast } from "react-toastify";
+import { useEffect } from "react";
+import Spinner from "../aditionals/Spinner";
+import { Link } from "react-router-dom";
 
 const blogPosts = [
   {
@@ -36,6 +42,27 @@ const blogPosts = [
 ];
 
 const Blog = () => {
+  const [blogs, setBlogs] = useState(null);
+    const [loading, setLoading] = useState(true);
+  
+      const fetchBlogs = async () => {
+        try {
+          const data = await apiRequiest( 'get',`/blogs`);
+          setBlogs(data?.blogs);
+        } catch (error) {
+          console.error("Error fetching blog:", error);
+          toast.error(error?.response?.data?.message)
+        } finally {
+          setLoading(false);
+        }
+      };
+    useEffect(() => {
+      fetchBlogs();
+    }, []);
+  console.log(blogs)
+    if (loading) {
+      return (<Spinner /> );
+    }
   return (
     <div className="max-w-6xl mx-auto px-6 py-16">
       {/* Hero Section */}
@@ -47,30 +74,30 @@ const Blog = () => {
       </header>
 
       <div className="grid md:grid-cols-2 gap-10">
-        {blogPosts.map(({ id, title, excerpt, date, url }) => (
+        {blogs.map(({ _id, title, excerpt, createdAt, slug }) => (
           <article
-            key={id}
+            key={_id}
             className="border border-blue-200 rounded-lg p-6 bg-white 
             transition-colors duration-300 hover:bg-blue-50 hover:shadow-lg"
           >
             <h2 className="text-2xl font-semibold mb-2">{title}</h2>
             <time
-              dateTime={date}
+              dateTime={createdAt}
               className="block text-sm text-gray-500 mb-4"
             >
-              {new Date(date).toLocaleDateString(undefined, {
+              {new Date(createdAt).toLocaleDateString(undefined, {
                 year: "numeric",
                 month: "long",
                 day: "numeric",
               })}
             </time>
             <p className="text-gray-700 mb-6">{excerpt}</p>
-            <a
-              href={url}
+            <Link
+              to={`/blog/${slug}`}
               className="inline-block px-5 py-2 border border-blue-600 text-blue-600 rounded font-medium hover:bg-blue-600 hover:text-white transition-colors duration-300"
             >
               Read More →
-            </a>
+            </Link>
           </article>
         ))}
       </div>

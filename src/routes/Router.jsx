@@ -17,6 +17,10 @@ import NotFoundPage from "../components/aditionals/NotFoundPage";
 import Profile_Update from "../components/profile/Profile_Update";
 import About from "../components/about/About";
 import Blog from "../components/blogs/Blog";
+import PrivacyPolicy from "../components/PrivacyPolicy";
+import TermsOfService from "../components/TermsOfService";
+import Contact from "../components/Contact";
+import BlogDetails from "../components/blogs/BlogDetails";
 
 const Router = createBrowserRouter([
     {
@@ -38,6 +42,10 @@ const Router = createBrowserRouter([
             { 
                 path : 'blogs',
                 element :  <Blog /> 
+            },
+            { 
+                path : 'blog/:slug',
+                element :<Auth_middleware><BlogDetails /> </Auth_middleware>  
             },
             { 
                 path : 'event-details/:id',
@@ -80,6 +88,18 @@ const Router = createBrowserRouter([
             { 
                 path : 'signup', 
                 element : <UnAuth_middleware><Register />  </UnAuth_middleware> 
+            },
+            { 
+                path : 'privacy-policy', 
+                element : <PrivacyPolicy /> 
+            },
+            { 
+                path : 'terms-service', 
+                element : <TermsOfService /> 
+            },
+            { 
+                path : '/contact', 
+                element : <Contact /> 
             },
     //         { 
     //             path : 'forget-password',

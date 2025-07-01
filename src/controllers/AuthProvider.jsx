@@ -62,7 +62,6 @@ const AuthProvider = ({children})=>{
             setIsLoggedIn(false)
             setUserInfo(null)
             setLoading(false)
-            
           }
       }
       

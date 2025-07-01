@@ -4,76 +4,73 @@ import { AuthContext } from '../../controllers/AuthProvider';
 import { apiRequiest } from '../../utilities/ApiCall';
 import { toast } from 'react-toastify';
 
-const upcomingTournaments = [
-  {
-    _id: "t001",
-    name: "City Marathon 2025",
-    type: "Running",
-    date: "2025-08-15",
-    location: "New York, NY",
-    fee: 50,
-    description: "Join thousands of runners for the annual City Marathon featuring multiple race categories.",
-    image: "https://images.unsplash.com/photo-1508606572321-901ea443707e?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    _id: "t002",
-    name: "National Cycling Championship",
-    type: "Cycling",
-    date: "2025-09-05",
-    location: "San Francisco, CA",
-    fee: 75,
-    description: "Compete with the best cyclists in the country in this highly anticipated championship event.",
-    image: "https://images.unsplash.com/photo-1508780709619-79562169bc64?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    _id: "t003",
-    name: "Regional Basketball Tournament",
-    type: "Basketball",
-    date: "2025-07-30",
-    location: "Chicago, IL",
-    fee: 30,
-    description: "Show off your skills and teamwork in the regional basketball tournament for all age groups.",
-    image: "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    _id: "t004",
-    name: "State Swimming Gala",
-    type: "Swimming",
-    date: "2025-08-22",
-    location: "Miami, FL",
-    fee: 40,
-    description: "Dive into competition with swimmers from across the state in this exciting gala event.",
-    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    _id: "t005",
-    name: "Youth Soccer Cup",
-    type: "Soccer",
-    date: "2025-09-12",
-    location: "Dallas, TX",
-    fee: 25,
-    description: "A fun and competitive tournament for youth soccer teams to showcase their talent.",
-    image: "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=800&q=80",
-  },
-];
+// const upcomingTournaments = [
+//   {
+//     _id: "t001",
+//     name: "City Marathon 2025",
+//     type: "Running",
+//     date: "2025-08-15",
+//     location: "New York, NY",
+//     fee: 50,
+//     description: "Join thousands of runners for the annual City Marathon featuring multiple race categories.",
+//     image: "https://images.unsplash.com/photo-1508606572321-901ea443707e?auto=format&fit=crop&w=800&q=80",
+//   },
+//   {
+//     _id: "t002",
+//     name: "National Cycling Championship",
+//     type: "Cycling",
+//     date: "2025-09-05",
+//     location: "San Francisco, CA",
+//     fee: 75,
+//     description: "Compete with the best cyclists in the country in this highly anticipated championship event.",
+//     image: "https://images.unsplash.com/photo-1508780709619-79562169bc64?auto=format&fit=crop&w=800&q=80",
+//   },
+//   {
+//     _id: "t003",
+//     name: "Regional Basketball Tournament",
+//     type: "Basketball",
+//     date: "2025-07-30",
+//     location: "Chicago, IL",
+//     fee: 30,
+//     description: "Show off your skills and teamwork in the regional basketball tournament for all age groups.",
+//     image: "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=800&q=80",
+//   },
+//   {
+//     _id: "t004",
+//     name: "State Swimming Gala",
+//     type: "Swimming",
+//     date: "2025-08-22",
+//     location: "Miami, FL",
+//     fee: 40,
+//     description: "Dive into competition with swimmers from across the state in this exciting gala event.",
+//     image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
+//   },
+//   {
+//     _id: "t005",
+//     name: "Youth Soccer Cup",
+//     type: "Soccer",
+//     date: "2025-09-12",
+//     location: "Dallas, TX",
+//     fee: 25,
+//     description: "A fun and competitive tournament for youth soccer teams to showcase their talent.",
+//     image: "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=800&q=80",
+//   },
+// ];
 
 const Upcoming_events = () => {
-  const [events,setEvents]=useState(upcomingTournaments)
-//   const getFeaturedEvents =async()=>{
-    
-//     try {
-//         const data = await apiRequiest('get','/featured-events');
-//         setCarouselEvents(data?.events.slice(0,4))
-//         setEvents(data?.events)
-        
-//     } catch (error) {
-//       setEvents([])
-//       toast.error(error?.response?.data?.message)
-//     }
-//   }
-//   useEffect(()=>{
-//     getFeaturedEvents()
-//   },[])
+  const [events,setEvents]=useState([])
+  const getUpcomingEvents =async()=>{
+    try {
+        const data = await apiRequiest('get','/upcoming-events');
+        setEvents(data?.events)
+    } catch (error) {
+      setEvents([])
+      toast.error(error?.response?.data?.message)
+    }
+  }
+  useEffect(()=>{
+    getUpcomingEvents()
+  },[])
   return (
     <div className="py-16 px-5 max-w-7xl mx-auto">
   <div className="text-center mb-12">
@@ -86,7 +83,7 @@ const Upcoming_events = () => {
   </div>
 
   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-    {upcomingTournaments.map((tournament, index) => (
+    {events.map((tournament, index) => (
       <div key={index} className="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300">
         <img
           src={tournament?.image}

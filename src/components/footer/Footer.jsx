@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Footer = () => {
   return (
@@ -52,21 +53,18 @@ const Footer = () => {
         <div className='flex-1/3'>
           <h3 className="text-xl font-bold mb-4 nunito-family">Quick Links</h3>
           <ul className="space-y-2 roboto-family">
-              <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors duration-300">Privacy Policy</a>
+             {[
+              {name : 'Privacy Policy',path : '/privacy-policy'},
+              {name : 'Terms of Service',path : '/terms-service'},
+              {name : 'Blog',path : '/blogs'},
+              {name : 'Contact',path : '/contact'}
+              ].map((link,index)=>(
+                <li key={index}>
+                <Link to={link.path}  className="text-gray-300 hover:text-white 
+                transition-colors duration-300">{link.name}</Link>
               </li>
-              <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors duration-300">Terms of Service</a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors duration-300">FAQ</a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors duration-300">Blog</a>
-              </li>
-              <li>
-                <a href="#contact" className="text-gray-300 hover:text-white transition-colors duration-300">Contact</a>
-              </li>
+              )) 
+              }
           </ul>
         </div>
         

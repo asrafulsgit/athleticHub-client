@@ -6,9 +6,10 @@ import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { apiRequiest } from '../../utilities/ApiCall';
+import { apiRequiest } from '../../utilities/ApiCall'; 
 
 const Hero = ({featuredEvents}) => {
+  
   const [events,setEvents]=useState([])
   const getFeaturedEvents =async()=>{
     try {
@@ -26,8 +27,6 @@ const Hero = ({featuredEvents}) => {
   return (
     <div className=" relative h-[70vh] overflow-hidden 
     ">
-       {/* bg-gradient-to-r from-blue-600 to-purple-700 */}
-      <div className="absolute inset-0 bg-black/20 bg-opacity-40"></div>
 
       {/* Custom Navigation Buttons */}
       <div className="absolute z-20 top-3/6 -translate-y-1/2 w-full px-4 
@@ -81,7 +80,7 @@ const Hero = ({featuredEvents}) => {
                 Book Event
               </button></Link>
             </div>
-          </SwiperSlide>
+            </SwiperSlide>
             )
           }) }
         </Swiper>

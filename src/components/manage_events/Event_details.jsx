@@ -386,20 +386,19 @@ const BookingCard = ({ event, setNewReview }) => {
 
             <button
               type="submit"
-              disabled={isBooked}
+              disabled={isBooked || !event?.isOpen}
               className={`w-full  bg-blue-600 text-white 
               py-3 px-4 rounded-lg font-semibold ${
-                isBooked
+                isBooked || !event?.isOpen
                   ? "cursor-no-drop"
                   : "cursor-pointer  hover:bg-blue-700"
               } 
               transition-colors duration-200`}
             >
-              {isBooked
-                ? "Booked"
-                : bookLoading
-                ? "Booking..."
-                : `Book Now - ${event?.fee}.00`}
+              {isBooked ? "Booked" : 
+              bookLoading ? "Booking..." : 
+              !event?.isOpen ? "Upcoming": 
+              `Book Now - ${event?.fee}.00`}
             </button>
           </form>
 
@@ -482,7 +481,7 @@ const EventReviews = ({ eventId, newReview }) => {
   };
   return (
     <div className="mt-5 md:mt-15 md:w-[50%]">
-      <h1 className="text-[18px] border-b mb-5 border-gray-400 font-bold text-blue-900">
+      <h1 className="text-[18px] border-b mb-5 border-gray-400 font-bold text-blue-600">
         Reviews
       </h1>
 
@@ -492,9 +491,9 @@ const EventReviews = ({ eventId, newReview }) => {
           return (
             <div
               key={index}
-              className="border  border-[#00000034] p-4 rounded-lg"
+              className="border  border-gray-200 p-4 rounded-lg"
             >
-              <div className="flex border-b border-[#0000002a]  py-3 justify-between items-center">
+              <div className="flex border-b border-gray-200 py-3 justify-between items-center">
                 <div className="flex gap-2 items-center">
                   <img
                     src={
@@ -521,7 +520,7 @@ const EventReviews = ({ eventId, newReview }) => {
               </div>
               {review?.user?.email === userInfo?.email && (
                 <div
-                  className="text-end border-t border-[#0000002a]  
+                  className="text-end border-t border-gray-200  
                    pt-1 "
                 >
                   <button
@@ -584,8 +583,8 @@ const CreateReviewCard = ({ eventId, setNewReview }) => {
   };
   return (
     <>
-      <div className="border  border-[#00000034] p-4 rounded-lg  mt-10">
-        <div className="border-b border-[#0000002a]  pb-2 justify-between items-center">
+      <div className="border  border-gray-200 p-4 rounded-lg  mt-10">
+        <div className="border-b border-gray-200  pb-2 justify-between items-center">
           <p className="text-[15px] font-medium opacity-80">Your Rating</p>
           {/* implement rating */}
           <div className="">
@@ -610,21 +609,21 @@ const CreateReviewCard = ({ eventId, setNewReview }) => {
             id="review"
             rows={5}
             placeholder="Comment"
-            className="w-[100%] p-1 outline-none mt-2 h-[100px] border border-[#0000002a] resize-none"
+            className="w-[100%] p-1 outline-none mt-2 h-[100px] border border-gray-200 resize-none"
           ></textarea>
           <div>
             <input type="checkbox" name="term" id="term" className="mr-3" />
             <span className="opacity-90 text-[15px] ">
               We care about your data, here is our{" "}
-              <a className="opacity-100 font-semibold" href="">
+              <a className="opacity-100 font-semibold text-blue-500" href="">
                 Privacy Policy
               </a>
             </span>
           </div>
           <button
             type="submit"
-            className="px-4 cursor-pointer py-2 rounded-[3px] 
-            font-[400] mt-3  text-[16px] bg-[#0000008a] text-white"
+            className="px-3 cursor-pointer py-2 rounded-[3px] 
+            font-[400] mt-3  text-sm bg-gray-900 text-white"
           >
             {reviewLoading ? "Submiting..." : "Submit Review"}
           </button>
