@@ -5,8 +5,7 @@ import { useEffect } from 'react';
 import Spinner from '../aditionals/Spinner';
 import { Helmet } from 'react-helmet';
 
-const My_bookings = () => {
-  // const initBookings = [
+// const initBookings = [
   //     {
   //   _id: "665e5d4a6f5c9bcd123a0008",
   //   name: "Kickboxing Clash",
@@ -24,50 +23,16 @@ const My_bookings = () => {
   //     name: "John Athlete",
   //     email: "john@athletichub.com"
   //   }
-  // },
-  // {
-  //   _id: "665e5d4a6f5c9bcd123a0009",
-  //   name: "National Badminton Series",
-  //   type: "Badminton",
-  //   date: "2025-07-12",
-  //   time: "9:00 AM",
-  //   location: "Indoor Sports Complex, Uttara",
-  //   fee: 20,
-  //   description: "A national-level badminton competition with singles and doubles events.",
-  //   image: "https://example.com/images/badminton.jpg",
-  //   participants: "80+ players",
-  //   requirements: "Badminton gear, registration receipt",
-  //   organizer: {
-  //     image: "",
-  //     name: "John Athlete",
-  //     email: "john@athletichub.com"
-  //   }
-  // },
-  // {
-  //   _id: "665e5d4a6f5c9bcd123a0010",
-  //   name: "Kids' Athletic Fun Day",
-  //   type: "Kids Sports",
-  //   date: "2025-06-30",
-  //   time: "9:00 AM",
-  //   location: "Savar Sports Ground",
-  //   fee: 20,
-  //   description: "Fun races, sack race, tug-of-war, and more for children aged 5–12.",
-  //   image: "https://example.com/images/kids-sports.jpg",
-  //   participants: "100+ kids",
-  //   requirements: "Parental consent, sports outfit",
-  //   organizer: {
-  //     image: "",
-  //     name: "John Athlete",
-  //     email: "john@athletichub.com"
-  //   }
   // }
   // ];
+
+const My_bookings = () => {
    const [table,setTable]=useState(true)
    const [pageLoading, setPageLoading] = useState(true);
    const [isModalOpen, setIsModalOpen] = useState(false);
    const [deleteEvent, setDeleteEvent] = useState("");
    const [bookings,setBookings]=useState([])
-   console.log(bookings)
+
       const getMyBookings = async () => {
         try {
           const data = await apiRequiestWithCredentials("get", "/my-bookings");
@@ -117,7 +82,7 @@ const My_bookings = () => {
   return (
    <> 
    <Helmet>
-        <title>My bookings</title>
+        <title>AthleticHub |My bookings</title>
       </Helmet>
    <section id="my-bookings" className="min-h-screen px-5 bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto ">

@@ -88,7 +88,7 @@ const Register = () => {
   
   return (
   <><Helmet>
-        <title>Signup</title>
+        <title>AthleticHub | Signup</title>
       </Helmet>  <section
       id="register"
       className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
@@ -422,78 +422,6 @@ const Register = () => {
     </section></>
   );
 };
-
-// const Register = () => {
-//   const [showPassword, setShowPassword] = useState(false);
-//   const [signupInfo, setSignupInfo] = useState({
-//     name: "",
-//     email: "",
-//     profilePicture: "",
-//     password: "",
-//     confirmPassword: "",
-//   });
-
-//   const [passwordValidations, setPasswordValidations] = useState({
-//     length: false,
-//     uppercase: false,
-//     lowercase: false,
-//   });
-
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     setSignupInfo((prev) => ({
-//       ...prev,
-//       [name]: value,
-//     }));
-
-//     if (name === "password") validatePassword(value);
-//   };
-
-//   const validatePassword = (password) => {
-//     setPasswordValidations({
-//       length: password.length >= 6,
-//       uppercase: /[A-Z]/.test(password),
-//       lowercase: /[a-z]/.test(password),
-//     });
-//   };
-
-//   const handleGoogleSignup = () => {
-//     console.log("Triggering Google sign up...");
-//     // Add your Firebase or other Google signup logic here
-//   };
-
-//   return (
-//     <section className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"> {/* keep existing layout */}
-//        <div className="text-center">
-//           <div className="flex justify-center mb-4">
-//  <svg
-//     width="50"
-//             height="50"
-//                viewBox="6 8 64 64"
-//                xmlns="http://www.w3.org/2000/svg"
-//                fill="#118df0"
-//              >
-//              <g transform="translate(0, 0) scale(0.85)">
-//                  <polygon points="71,48.7 71,18.2 54.8,9 38.7,9 63,22.8 63,36.7 63,53.3" />
-//                  <polygon points="29,66 54.8,81 54.7,81 55.1,81.3 71.7,71.7 79.7,57.8 55.3,72 29,56.8" />
-//                  <polygon points="61.2,57 61.3,57 46.9,65.2 54.8,69.8 81,54.5 81,35.2 73,21.3 73,49.8" />
-//                  <polygon points="61,23.9 34.8,8.7 18.2,18.3 10.2,32.3 35,18 47,25 46.8,25 61,33.2" />
-//                 <polygon points="35.2,20.3 9,35.6 9,54.8 17,68.7 17,40.2 28.8,33.2 28.8,33.2 43.2,24.9" />
-//                  <polygon points="19,41.3 19,71.8 35.2,81 51.4,81 27,67.2 27,53.3 27,36.7" />
-//                </g>
-//              </svg>
-//            </div>
-//            <h2 className="text-3xl font-bold text-gray-900 mb-2">
-//              Create Account
-//            </h2>
-//            <p className="text-gray-600">
-//              Join AthleticHub and start your athletic journey
-//            </p>
-//          </div>
-      
-//     </section>
-//   );
-// };
 
 export default Register;
 

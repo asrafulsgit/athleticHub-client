@@ -80,14 +80,13 @@ const Update_event = () => {
                   "Volleyball",
                   "Marathon"
                 ]
-  console.log(eventData)
   if(pageLoading){
     return (<Spinner /> )
   }
 
   return (
   <><Helmet>
-        <title>Update event</title>
+        <title>AthleticHub | Update event</title>
       </Helmet> 
       <section id="update-event" className="min-h-screen px-5 bg-gray-50 py-8">
       <div className="max-w-4xl mx-auto ">

@@ -5,6 +5,7 @@ import { getDate, getTime } from "../../utilities/minimizeData";
 import { apiRequiestWithCredentials } from "../../utilities/ApiCall";
 import Spinner from "../aditionals/Spinner";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet";
 
 const Create_event = () => {
   const {userInfo}= useContext(AuthContext)
@@ -82,7 +83,11 @@ const Create_event = () => {
     return (<Spinner /> )
   }
   return (
-    <section id="create-event" className="min-h-screen px-5 bg-gray-50 py-8">
+   <> 
+   <Helmet>
+    <title>AthleticHub | Create Event</title>
+   </Helmet>
+   <section id="create-event" className="min-h-screen px-5 bg-gray-50 py-8">
       <div className="max-w-4xl mx-auto ">
         {/* Header */}
         <Header />
@@ -342,7 +347,7 @@ const Create_event = () => {
         {/* Help Section */}
         <HelpCenter />
       </div>
-    </section>
+    </section></>
   );
 };
 

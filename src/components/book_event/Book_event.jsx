@@ -40,7 +40,7 @@ const Book_event = () => {
   }
   return (
    <><Helmet>
-        <title>Book event</title>
+        <title>AthleticHub | Book event</title>
       </Helmet> <section  className="min-h-[70vh] px-5 bg-gray-50 py-8 block">
       <div className="max-w-7xl mx-auto ">
         {/* Header Section */}

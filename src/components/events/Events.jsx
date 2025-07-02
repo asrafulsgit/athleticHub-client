@@ -127,7 +127,7 @@ const Events = () => {
   return (
    <> 
    <Helmet>
-        <title>Events</title>
+        <title>AthleticHub | Events</title>
       </Helmet>
    
    <section className="px-5 py-8">
@@ -154,11 +154,6 @@ const Events = () => {
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg 
                 outline-none"
               />
-              {/* <button className="absolute cursor-pointer right-0 top-0 bg-blue-600
-               text-white px-4 py-[9px] rounded-r-lg hover:bg-blue-700 
-               transition-colors duration-200">
-                Search
-              </button> */}
             </form>
           </div>
 
@@ -179,20 +174,6 @@ const Events = () => {
                 ))}
               </select>
           </div>
-          {/* <div className="md:w-48">
-            <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-2">Location</label>
-            <select
-              id="location"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            >
-              <option value="">All Locations</option>
-              <option value="new-york">New York</option>
-              <option value="los-angeles">Los Angeles</option>
-              <option value="chicago">Chicago</option>
-              <option value="miami">Miami</option>
-              <option value="phoenix">Phoenix</option>
-            </select>
-          </div> */}
         </div>
       </div>
 
@@ -232,11 +213,7 @@ const Pagination = () => {
         </button>
       </div>
       <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
-        <div>
-          {/* <p className="text-sm text-gray-700">
-            Showing <span className="font-medium">1</span> to <span className="font-medium">9</span> of <span className="font-medium">27</span> results
-          </p> */}
-        </div>
+        
         <div>
           <nav className="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
             <button className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">

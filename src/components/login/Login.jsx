@@ -56,7 +56,7 @@ const Login = () => {
 
   return (
    <><Helmet>
-        <title>Login</title>
+        <title>AthleticHub | Login</title>
       </Helmet> <section
       id="login"
       className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 

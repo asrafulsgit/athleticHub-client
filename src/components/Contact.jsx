@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Helmet } from "react-helmet";
+import { toast } from "react-toastify";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -14,9 +16,14 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // You can integrate your email service here
-    console.log("Form submitted:", formData);
-    alert("Your message has been sent!");
+    const {name,subject,email, message}=formData;
+    if(!name || !subject || !email || !message){
+      toast.error('Please, fillup all required field.')
+      return;
+    }
+
+    toast.success('Thanks for contacting us! We’ll be in touch shortly.')
+   
     setFormData({
       name: "",
       email: "",
@@ -26,9 +33,13 @@ const Contact = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto px-6 py-16">
-      <h1 className="text-3xl font-bold mb-6">Contact Us</h1>
-      <p className="mb-8 text-gray-700">
+   <> 
+   <Helmet>
+    <title>AthleticHub | Contact</title>
+   </Helmet>
+   <div className="max-w-3xl mx-auto px-6  py-10 md:py-16">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-1 sm:mb-2">Contact Us</h1>
+      <p className="sm:text-lg text-gray-600">
         Have questions or need help? Fill out the form below, and we’ll get back to you as soon as possible.
       </p>
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -43,7 +54,8 @@ const Contact = () => {
             required
             value={formData.name}
             onChange={handleChange}
-            className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring focus:border-blue-500"
+            className="w-full border border-gray-300 rounded px-4 py-2 
+            outline-none focus:ring focus:border-blue-500"
             placeholder="Your name"
           />
         </div>
@@ -58,7 +70,8 @@ const Contact = () => {
             required
             value={formData.email}
             onChange={handleChange}
-            className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring focus:border-blue-500"
+            className="w-full border border-gray-300 rounded px-4 py-2 
+            outline-none focus:ring focus:border-blue-500"
             placeholder="you@example.com"
           />
         </div>
@@ -73,7 +86,7 @@ const Contact = () => {
             required
             value={formData.subject}
             onChange={handleChange}
-            className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring focus:border-blue-500"
+            className="w-full border border-gray-300 rounded px-4 py-2  outline-none focus:ring focus:border-blue-500"
             placeholder="Subject of your message"
           />
         </div>
@@ -88,7 +101,8 @@ const Contact = () => {
             required
             value={formData.message}
             onChange={handleChange}
-            className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring focus:border-blue-500"
+            className="w-full border border-gray-300 rounded px-4 py-2  
+            outline-none focus:ring focus:border-blue-500"
             placeholder="Write your message here..."
           ></textarea>
         </div>
@@ -99,7 +113,7 @@ const Contact = () => {
           Send Message
         </button>
       </form>
-    </div>
+    </div></>
   );
 };
 

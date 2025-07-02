@@ -89,7 +89,7 @@ const Profile_Update = () => {
   return (
    <>
    <Helmet>
-        <title>Update profile</title>
+        <title>AthleticHub | Update profile</title>
       </Helmet>
    
    <section id="create-event" className="min-h-screen bg-gray-50 py-8"> 
@@ -278,57 +278,6 @@ const Profile_Update = () => {
 
     </div>
     </section>
-
-      {/* Account Security */}
-      {/* <div className="bg-white rounded-lg border border-gray-200 p-6 mt-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-6">
-          Account Security
-        </h3>
-
-        <div className="space-y-4">
-          <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
-            <div>
-              <h4 className="font-medium text-gray-900">Password</h4>
-              <p className="text-sm text-gray-500">Last updated 2 months ago</p>
-            </div>
-            <button
-              className="text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200"
-              onClick={() => alert("Open change password modal")}
-            >
-              Change Password
-            </button>
-          </div>
-
-          <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
-            <div>
-              <h4 className="font-medium text-gray-900">
-                Two-Factor Authentication
-              </h4>
-              <p className="text-sm text-gray-500">
-                Add an extra layer of security
-              </p>
-            </div>
-            <button className="text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200">
-              Enable 2FA
-            </button>
-          </div>
-
-          <div className="flex items-center justify-between p-4 border border-red-200 rounded-lg bg-red-50">
-            <div>
-              <h4 className="font-medium text-red-900">Delete Account</h4>
-              <p className="text-sm text-red-600">
-                Permanently delete your account and all data
-              </p>
-            </div>
-            <button
-              className="text-red-600 hover:text-red-800 font-medium transition-colors duration-200"
-              onClick={() => alert("Open delete modal")}
-            >
-              Delete Account
-            </button>
-          </div>
-        </div>
-      </div> */}
     </>
   
   )

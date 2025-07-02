@@ -57,7 +57,7 @@ const Event_details = () => {
   return (
   <>   
   <Helmet>
-        <title>Event details</title>
+        <title>AthleticHub | Event details</title>
       </Helmet>
   <section className="min-h-screen bg-gray-50 py-8 px-4">
       {!event.name || !event.type || !event.image ? (
@@ -79,7 +79,7 @@ const Event_details = () => {
                 <button
                   disabled
                   className="absolute top-5 
-            right-5 w-8 cursor-pointer bg-blue-900 rounded-sm"
+            right-5 w-8 cursor-pointer bg-blue-600 rounded-sm"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -97,7 +97,7 @@ const Event_details = () => {
               ) : (
                 <button
                   onClick={handleBookEvent}
-                  className="absolute top-5 right-5 w-8 cursor-pointer bg-blue-900 rounded-sm"
+                  className="absolute top-5 right-5 w-8 cursor-pointer bg-blue-600 rounded-sm"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

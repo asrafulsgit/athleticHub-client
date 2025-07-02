@@ -107,7 +107,7 @@ const Manage_events = () => {
   }
   return (
     <><Helmet>
-        <title>Manage events</title>
+        <title>AthleticHub | Manage events</title>
       </Helmet> 
       <section
         id="manage-events"

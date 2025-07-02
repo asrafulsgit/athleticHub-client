@@ -5,25 +5,10 @@ import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { apiRequiest } from '../../utilities/ApiCall'; 
 
-const Hero = ({featuredEvents}) => {
+const Hero = ({events}) => {
   
-  const [events,setEvents]=useState([])
-  const getFeaturedEvents =async()=>{
-    try {
-        const data = await apiRequiest('get','/featured-events');
-        setEvents(data?.events)
-        featuredEvents(data?.events)
-    } catch (error) {
-      setEvents([])
-      toast.error(error?.response?.data?.message)
-    }
-  }
-  useEffect(()=>{
-    getFeaturedEvents()
-  },[])
+  
   return (
     <div className=" relative h-[70vh] overflow-hidden 
     ">
@@ -55,7 +40,7 @@ const Hero = ({featuredEvents}) => {
           }}
           className="w-full h-[100%]"
         >
-          {events.map((event,index)=>{
+          {events?.slice(0,3).map((event,index)=>{
             return(
             <SwiperSlide className='relative  border-green-600
               w-[100%]' key={index}>

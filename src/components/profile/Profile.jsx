@@ -61,7 +61,7 @@ const Profile = () => {
 
   return (
   <> <Helmet>
-        <title>Profile</title>
+        <title>AthleticHub | Profile</title>
       </Helmet> <div className="max-w-4xl mx-auto px-4 py-10">
       {/* Profile Header */}
       <div className="bg-white rounded-lg border border-gray-200 p-6 mb-8">
