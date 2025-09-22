@@ -27,7 +27,8 @@ const App = () => {
       <> 
       <Toastify /> 
       <ScrollVehaviour />
-      <div className='flex justify-items-center bg-blue-50/70'>
+          <div className="flex justify-items-center w-[100%]">
+      <div className='bg-blue-50/70'>
         <div className="max-w-[1340px] bg-white inter-family">
           {/* navbar  */}
           <Navbar />
@@ -40,6 +41,7 @@ const App = () => {
               <Footer />
             </div>
         </div>
+      </div
       </div>
       </>
       
