@@ -27,7 +27,6 @@ const App = () => {
       <> 
       <Toastify /> 
       <ScrollVehaviour />
-         
       <div className='bg-blue-50/70 flex justify-center'>
         <div className="max-w-[1340px] bg-white inter-family">
           {/* navbar  */}
@@ -41,7 +40,6 @@ const App = () => {
               <Footer />
             </div>
         </div>
- 
       </div>
       </>
       
